@@ -7,7 +7,8 @@
 <div class="sidebar">
     <ul>
         <li th:each="date : ${dates}">
-            <a href="#" th:text="${date}"></a>
+            <a th:href="@{/reports/{date}(date=${date})}" th:text="${date}"
+               th:classappend="${date == report ? 'selected' : ''}"></a>
         </li>
     </ul>
 </div>

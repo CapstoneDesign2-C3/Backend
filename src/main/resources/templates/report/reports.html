@@ -7,13 +7,11 @@
 <div th:replace="~{fragments/header.html}"></div>
 
 <div class="container">
-    <!-- 좌측 날짜 목록 -->
     <div th:replace="~{report/sidebar.html}" th:with="dates=${dates}"></div>
 
-    <!-- 보고서 내용 -->
     <div class="main-content">
-        <h1>보고서</h1>
-        <p>여기는 보고서 내용이 들어갑니다.</p>
+        <h1>보고서 날짜: <span th:text="${report}"></span></h1>
+        <p>여기는 <span th:text="${report}"></span> 날짜에 대한 보고서 내용이 들어갑니다.</p>
     </div>
 </div>
 </body>

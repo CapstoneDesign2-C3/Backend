@@ -1,31 +1,37 @@
 .sidebar {
   width: 150px;
+  position: fixed;
   background-color: #f4f4f4;
-  padding: 8px 16px;
-  height: calc(100% - var(--header-height, 60px)); /* 헤더 높이를 고려한 높이 설정 */
-  position: fixed; /* 사이드바를 고정하여 항상 왼쪽에 붙도록 설정 */
-  top: var(--header-height, 60px); /* 헤더 높이에 맞춰 사이드바가 아래로 배치 */
-  left: 0; /* 화면 왼쪽에 고정 */
+  height: calc(100% - var(--header-height, 60px));
+  top: var(--header-height, 60px);
+  left: 0;
 }
 
 .sidebar ul {
   list-style-type: none;
   padding: 0;
+  margin: 0;
   text-align: center;
 }
 
-.sidebar ul li {
-  margin-bottom: 20px;
+.sidebar a {
+  padding: 10px 0 10px 0;
 }
-
 .sidebar ul li a {
+  display: block;
   text-decoration: none;
-  color: #333;
+  color: inherit;
   font-size: 20px;
 }
 
 .sidebar ul li a:hover {
   text-decoration: underline;
+}
+
+.sidebar a.selected {
+  font-weight: bold;
+  background-color: #808080;
+  width: 100%;
 }
 
 .main-content {
