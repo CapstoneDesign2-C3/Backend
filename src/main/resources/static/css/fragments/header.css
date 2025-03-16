@@ -1,13 +1,15 @@
-/* 기본 마진과 패딩을 0으로 설정 */
-html, body {
-  margin: 0;
-  padding: 0;
-}
-
 header {
   background-color: #333;
   padding: 10px;
-  margin: 0; /* 헤더와 상단 간격을 없애기 위해 */
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed; /* 헤더를 화면 상단에 고정 */
+  top: 0; /* 화면 상단에 붙게 설정 */
+  left: 0; /* 화면 왼쪽에 붙게 설정 */
+  width: 100%; /* 전체 너비로 설정 */
+  z-index: 10;
 }
 
 nav ul {

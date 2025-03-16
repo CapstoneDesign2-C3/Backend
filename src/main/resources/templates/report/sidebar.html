@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="/css/report/reports.css">
+</head>
+<body>
+<div class="sidebar">
+    <ul>
+        <li th:each="date : ${dates}">
+            <a href="#" th:text="${date}"></a>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

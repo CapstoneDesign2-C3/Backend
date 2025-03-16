@@ -1,0 +1,36 @@
+.sidebar {
+  width: 150px;
+  background-color: #f4f4f4;
+  padding: 8px 16px;
+  height: calc(100% - var(--header-height, 60px)); /* 헤더 높이를 고려한 높이 설정 */
+  position: fixed; /* 사이드바를 고정하여 항상 왼쪽에 붙도록 설정 */
+  top: var(--header-height, 60px); /* 헤더 높이에 맞춰 사이드바가 아래로 배치 */
+  left: 0; /* 화면 왼쪽에 고정 */
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+  text-align: center;
+}
+
+.sidebar ul li {
+  margin-bottom: 20px;
+}
+
+.sidebar ul li a {
+  text-decoration: none;
+  color: #333;
+  font-size: 20px;
+}
+
+.sidebar ul li a:hover {
+  text-decoration: underline;
+}
+
+.main-content {
+  margin-left: 220px;  /* 사이드바 너비 만큼 왼쪽 여백을 설정 */
+  padding: 20px;
+  background-color: #fff;
+  margin-top: var(--header-height, 60px);
+}
