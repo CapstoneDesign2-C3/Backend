@@ -1,6 +1,7 @@
 package capstone.design.control_automation.domain.entity;
 
 import static jakarta.persistence.EnumType.STRING;
+import static lombok.AccessLevel.PROTECTED;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
@@ -10,9 +11,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "camera")
+@NoArgsConstructor(access = PROTECTED)
 public class Camera {
 
     @Id
