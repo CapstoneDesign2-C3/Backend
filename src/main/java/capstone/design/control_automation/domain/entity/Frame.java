@@ -1,37 +1,36 @@
 package capstone.design.control_automation.domain.entity;
 
 import static jakarta.persistence.FetchType.LAZY;
-import static jakarta.persistence.GenerationType.*;
+import static jakarta.persistence.GenerationType.IDENTITY;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "video")
-public class Video {
+@Table(name = "frame")
+public class Frame {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "video_id")
+    @Column(name = "frame_id")
     private Long id;
 
-    @Column(name = "summary")
-    private String summary;
+    @Column(name = "img_url")
+    private String imgUrl;
 
-    @Column(name = "video_url")
-    private String videoUrl;
-
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    @Column(name = "time_in_video")
+    private Double timeInVideo;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "camera_id")
-    private Camera cameraId;
+    @JoinColumn(name = "video_id")
+    private Video video;
+
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "report_id")
+    private Report report;
 }

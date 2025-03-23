@@ -1,8 +1,11 @@
 package capstone.design.control_automation.domain.entity;
 
+import static jakarta.persistence.EnumType.STRING;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -30,5 +33,6 @@ public class Camera {
     private Boolean rotatable;
 
     @Column(name = "status")
+    @Enumerated(value = STRING)
     private CameraStatus status;
 }
