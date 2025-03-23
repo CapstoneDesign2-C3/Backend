@@ -2,8 +2,4 @@ spring:
   application:
     name: control-automation
   profiles:
-    active: elasticsearch
-
-logging:
-  level:
-    org.springframework: TRACE
+    active: elasticsearch, db
