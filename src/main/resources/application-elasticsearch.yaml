@@ -1,0 +1,6 @@
+spring:
+  data:
+    elasticsearch:
+      repositories:
+        enabled: true
+      uris: https://localhost:9200
