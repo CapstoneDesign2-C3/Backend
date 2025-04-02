@@ -52,6 +52,4 @@ jobs:
             docker stop my-app-container || true
             docker rm my-app-container || true
             docker image prune -f
-            docker run -d --name my-app-container -p 8080:8080 \
-              # 환경변수 추가 시 이렇게 하면 됨... -e DB_HOST=${{ secrets.DB_HOST }} \
-              ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_REPOSITORY_NAME }}:latest
+            docker run -d --name my-app-container -p 8080:8080 ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_REPOSITORY_NAME }}:latest
