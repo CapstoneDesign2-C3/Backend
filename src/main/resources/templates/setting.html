@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="layout/base :: common_title(~{::title}, ~{::link})">
     <title>환경 설정</title>
+    <link rel="stylesheet" th:href="@{/css/fragments/header.css}">
 </head>
 <body>
-<div th:replace="~{fragments/header.html}"></div>
+<div th:replace="~{fragments/header.html :: common_header}"></div>
 
 <main>
     <h1>환경 설정 페이지</h1>

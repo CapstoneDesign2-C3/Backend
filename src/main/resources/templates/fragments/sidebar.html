@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <link rel="stylesheet" href="/css/report/reports.css">
-</head>
-<body>
-<div class="sidebar">
+<link th:fragment="sidebar_css" rel="stylesheet" th:href="/css/fragments/sidebar.css">
+<div class="sidebar" th:fragment="date_sidebar(dates, report)">
     <ul>
         <li th:each="date : ${dates}">
             <a th:href="@{/reports/{date}(date=${date})}" th:text="${date}"
@@ -12,5 +7,3 @@
         </li>
     </ul>
 </div>
-</body>
-</html>
