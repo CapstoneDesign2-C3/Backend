@@ -1,0 +1,9 @@
+<link th:fragment="sidebar_css" rel="stylesheet" th:href="/css/fragments/sidebar.css">
+<div class="sidebar" th:fragment="sidebar(data, cur_datum, path)">
+    <ul>
+        <li th:each="datum : ${data}">
+            <a th:href="@{/{path}/{datum}(path=${path}, datum=${datum})}" th:text="${datum}"
+               th:classappend="${datum == cur_datum ? 'selected' : ''}"></a>
+        </li>
+    </ul>
+</div>
