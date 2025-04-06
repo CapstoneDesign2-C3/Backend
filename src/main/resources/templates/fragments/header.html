@@ -1,15 +1,4 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-  <link rel="stylesheet" href="/css/fragments/header.css">
-</head>
-<body>
-<header th:fragment="common_header">
-  <style>
-    :root {
-      --header-height: 60px; /* 기본값 */
-    }
-  </style>
+<header class="header" th:fragment="common_header">
   <nav>
     <ul>
       <li><a href="/home">홈</a></li>
@@ -18,12 +7,4 @@
       <li><a href="/setting">설정</a></li>
     </ul>
   </nav>
-  <script>
-    window.onload = function() {
-      const headerHeight = document.querySelector('header').offsetHeight;
-      document.documentElement.style.setProperty('--header-height', `${headerHeight}px`);
-    };
-  </script>
 </header>
-</body>
-</html>

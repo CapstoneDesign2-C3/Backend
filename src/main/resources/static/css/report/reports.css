@@ -1,6 +1,5 @@
 .main-content {
-  margin-left: 220px;  /* 사이드바 너비 만큼 왼쪽 여백을 설정 */
-  padding: 20px;
-  background-color: #fff;
-  margin-top: var(--header-height, 60px);
+  flex: 1;
+  padding: 32px;
+  background-color: white;
 }

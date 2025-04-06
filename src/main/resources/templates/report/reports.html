@@ -2,15 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="layout/base :: common_title(~{::title}, ~{::link})">
     <title>보고서</title>
+    <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
     <link rel="stylesheet" th:href="@{/css/fragments/header.css}">
     <link rel="stylesheet" th:href="@{/css/fragments/sidebar.css}">
+    <link rel="stylesheet" th:href="@{/css/fragments/container.css}">
+    <link rel="stylesheet" th:href="@{/css/report/reports.css}">
 </head>
 <body>
-<div th:replace="fragments/header :: common_header"></div>
+<header th:replace="fragments/header :: common_header"></header>
 
 <div class="container">
-    <div th:replace="fragments/sidebar:: date_sidebar(${dates}, ${report})"></div>
-
+    <div th:replace="fragments/sidebar:: sidebar(${dates}, ${report}, 'reports')"></div>
     <div class="main-content">
         <h1>보고서 날짜: <span th:text="${report}"></span></h1>
         <p>여기는 <span th:text="${report}"></span> 날짜에 대한 보고서 내용이 들어갑니다.</p>
