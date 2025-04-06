@@ -1,34 +1,28 @@
-header {
+.header {
   background-color: #333;
-  padding: 10px;
   color: white;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: fixed; /* 헤더를 화면 상단에 고정 */
-  top: 0; /* 화면 상단에 붙게 설정 */
-  left: 0; /* 화면 왼쪽에 붙게 설정 */
-  width: 100%; /* 전체 너비로 설정 */
-  z-index: 10;
+  padding: 16px 24px;
+  font-size: 24px;
 }
 
-nav ul {
-  list-style-type: none;
+.header nav {
+  margin-top: 12px;
+}
+
+.header nav ul {
   display: flex;
-  justify-content: space-around;
+  gap: 20px;
+  list-style: none;
   padding: 0;
+  margin: 0;
 }
 
-nav ul li {
-  margin: 0 15px;
-}
-
-nav ul li a {
+.header nav ul li a {
   color: white;
   text-decoration: none;
   font-size: 16px;
 }
 
-nav ul li a:hover {
+.header nav ul li a:hover {
   text-decoration: underline;
 }
