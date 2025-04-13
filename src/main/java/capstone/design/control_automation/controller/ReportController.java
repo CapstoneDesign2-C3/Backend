@@ -1,13 +1,18 @@
 package capstone.design.control_automation.controller;
 
+import capstone.design.control_automation.service.ReportService;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
+@RequiredArgsConstructor
 public class ReportController {
+
+    private final ReportService reportService;
 
     @GetMapping("/reports")
     public String reports(Model model) {
