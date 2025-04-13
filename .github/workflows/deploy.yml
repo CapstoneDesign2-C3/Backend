@@ -52,4 +52,8 @@ jobs:
             docker stop my-app-container || true
             docker rm my-app-container || true
             docker image prune -f
-            docker run -d --name my-app-container -p 8080:8080 ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_REPOSITORY_NAME }}:latest
+            docker run -d --name my-app-container -p 8080:8080 \
+            -e ELASTIC_SEARCH_URL=${{ secrets.ELASTIC_SEARCH_URL }} \
+            -e ELASTIC_SEARCH_USERNAME=${{ secrets.ELASTIC_SEARCH_USERNAME }} \
+            -e ELASTIC_SEARCH_PASSWORD=${{ secrets.ELASTIC_SEARCH_PASSWORD }} \
+            ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_REPOSITORY_NAME }}:latest
