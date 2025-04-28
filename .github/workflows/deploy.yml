@@ -56,4 +56,9 @@ jobs:
             -e ELASTIC_SEARCH_URL=${{ secrets.ELASTIC_SEARCH_URL }} \
             -e ELASTIC_SEARCH_USERNAME=${{ secrets.ELASTIC_SEARCH_USERNAME }} \
             -e ELASTIC_SEARCH_PASSWORD=${{ secrets.ELASTIC_SEARCH_PASSWORD }} \
+            -e POSTGRESQL_URL=${{ secrets.POSTGRESQL_URL }} \
+            -e POSTGRESQL_PORT=${{ secrets.POSTGRESQL_PORT }} \
+            -e POSTGRESQL_DATABASE=${{ secrets.POSTGRESQL_DATABASE }} \
+            -e POSTGRESQL_USERNAME=${{ secrets.POSTGRESQL_USERNAME }} \
+            -e POSTGRESQL_PASSWORD=${{ secrets.POSTGRESQL_PASSWORD }} \
             ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_REPOSITORY_NAME }}:latest
