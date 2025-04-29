@@ -12,11 +12,15 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "video")
 @NoArgsConstructor(access = PROTECTED)
+@Getter
 public class Video {
 
     @Id
@@ -35,5 +39,11 @@ public class Video {
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "camera_id")
-    private Camera cameraId;
+    private Camera camera;
+
+    public Video(String summary, String videoUrl, LocalDateTime createdAt){
+        this.summary = summary;
+        this.videoUrl = videoUrl;
+        this.createdAt = createdAt;
+    }
 }
