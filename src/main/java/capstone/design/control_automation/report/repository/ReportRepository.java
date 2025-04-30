@@ -1,11 +1,8 @@
 package capstone.design.control_automation.report.repository;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import capstone.design.control_automation.domain.entity.Report;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ReportRepository {
-
-    List<LocalDateTime> getReportDateTimes();
-
+public interface ReportRepository extends JpaRepository<Report, Long>, ReportCustomRepository {
 
 }

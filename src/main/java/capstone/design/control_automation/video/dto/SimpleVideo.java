@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 public class SimpleVideo {
+
     private Long videoId;
     private String thumbnailUrl;
     private String summary;

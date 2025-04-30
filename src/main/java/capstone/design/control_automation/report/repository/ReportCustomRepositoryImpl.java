@@ -2,10 +2,8 @@ package capstone.design.control_automation.report.repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import org.springframework.stereotype.Repository;
 
-@Repository
-public class MemoryReportRepository implements ReportRepository {
+public class ReportCustomRepositoryImpl implements ReportCustomRepository {
 
 
     @Override

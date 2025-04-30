@@ -1,7 +1,7 @@
 package capstone.design.control_automation.domain.entity;
 
 import static jakarta.persistence.FetchType.LAZY;
-import static jakarta.persistence.GenerationType.*;
+import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 import static lombok.AccessLevel.PUBLIC;
 
@@ -55,7 +55,7 @@ public class Video {
     @JoinColumn(name = "event_id")
     private Event event;
 
-    public Video(String summary, String videoUrl, LocalDateTime startTime, LocalDateTime endTime){
+    public Video(String summary, String videoUrl, LocalDateTime startTime, LocalDateTime endTime) {
         this.summary = summary;
         this.videoUrl = videoUrl;
         this.startTime = startTime;

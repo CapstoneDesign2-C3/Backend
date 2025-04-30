@@ -20,11 +20,12 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class VideoService {
+
     private final VideoElastic videoElastic;
     private final VideoRepository videoRepository;
 
     @Transactional
-    public void saveVideo(VideoRequest videoRequest){
+    public void saveVideo(VideoRequest videoRequest) {
         Video video = new Video(videoRequest.summary(), videoRequest.videoUrl(), LocalDateTime.now(), null);
 
         videoRepository.save(video);
@@ -34,13 +35,12 @@ public class VideoService {
     }
 
     @Transactional
-    public void deleteVideo(Long videoId){
+    public void deleteVideo(Long videoId) {
         videoRepository.deleteById(videoId);
         videoElastic.deleteById(videoId.toString());
     }
 
-    @Transactional(readOnly = true)
-    public List<VideoResponse> findVideos(String keyword){
+    public List<VideoResponse> findVideos(String keyword) {
         List<VideoDocument> videoDocuments = videoElastic.findBySummaryContaining(keyword);
 
         return videoDocuments.stream().map(VideoDocument::mapToResponse).toList();
