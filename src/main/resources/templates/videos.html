@@ -4,13 +4,70 @@
   <title>비디오</title>
   <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
   <link rel="stylesheet" th:href="@{/css/fragments/header.css}">
+  <link rel="stylesheet" th:href="@{/css/video/videos.css}">
 </head>
 <body>
 <div th:replace="~{fragments/header.html :: common_header}"></div>
 
 <main>
-  <h1>비디오 페이지</h1>
-  <p>여기는 비디오 페이지입니다.</p>
+  <div class="filters">
+    <input type="date" name="startDate" placeholder="시작 시간">
+    <input type="date" name="endDate" placeholder="종료 시간">
+
+    <select name="eventType">
+      <option value="">이벤트 종류</option>
+      <option value="fall">넘어짐</option>
+      <option value="intrusion">침입</option>
+      <option value="fire">화재</option>
+    </select>
+
+    <select name="cameraLocation">
+      <option value="">카메라 위치 전체</option>
+      <option value="entrance">출입구</option>
+      <option value="parking">주차장</option>
+      <option value="hallway">복도</option>
+    </select>
+
+    <select name="bookmark">
+      <option value="">북마크 전체</option>
+      <option value="bookmarked">북마크된 것만</option>
+      <option value="notBookmarked">북마크 안 된 것만</option>
+    </select>
+
+    <input type="text" name="searchKeyword" placeholder="검색어 입력">
+    <button type="submit">검색</button>
+  </div>
+
+  <!-- 비디오 리스트 -->
+  <table class="video-list">
+    <thead>
+    <tr>
+      <th>썸네일</th>
+      <th>요약</th>
+      <th>시작 시간</th>
+      <th>종료 시간</th>
+      <th>주소</th>
+      <th>촬영 각도</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="video : ${videos.content}">
+      <td><img th:src="@{${video.thumbnailUrl}}" alt="썸네일" width="100"></td>
+      <td th:text="${video.summary}">요약</td>
+      <td th:text="${video.startTime}">시작 시간</td>
+      <td th:text="${video.endTime}">종료 시간</td>
+      <td th:text="${video.address.getFullAddress()}">주소</td>
+      <td th:text="${video.angle}">촬영 각도</td>
+      <td><a th:href="@{'/videos/' + ${video.videoId}}">상세보기</a></td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div class="pagination">
+    <button th:if="${videos.hasPrevious()}" th:onclick="|location.href='?page=${videos.number - 1}'|">이전</button>
+    <span th:text="${videos.number + 1}"></span> / <span th:text="${videos.totalPages}"></span>
+    <button th:if="${videos.hasNext()}" th:onclick="|location.href='?page=${videos.number + 1}'|">다음</button>
+  </div>
 </main>
 </body>
 </html>
