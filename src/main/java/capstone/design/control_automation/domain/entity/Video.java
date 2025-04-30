@@ -7,7 +7,6 @@ import static lombok.AccessLevel.PUBLIC;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -17,7 +16,6 @@ import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name = "video")
@@ -51,9 +49,17 @@ public class Video {
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "camera_id")
-    private Camera cameraId;
+    private Camera camera;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "event_id")
-    private Event eventId;
+    private Event event;
+
+    public Video(String summary, String videoUrl, LocalDateTime startTime, LocalDateTime endTime){
+        this.summary = summary;
+        this.videoUrl = videoUrl;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+
 }

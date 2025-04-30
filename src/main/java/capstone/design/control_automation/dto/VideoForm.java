@@ -28,7 +28,7 @@ public class VideoForm {
     private List<String> detects;
 
     public static VideoForm of(Video video) {
-        Camera camera = video.getCameraId();
+        Camera camera = video.getCamera();
         return new VideoForm(
             video.getStartTime(),
             video.getEndTime(),
@@ -38,7 +38,7 @@ public class VideoForm {
             camera.getAngle(),
             camera.getLatitude(),
             camera.getLongitude(),
-            video.getEventId().getEmergencyStatus(),
+            video.getEvent().getEmergencyStatus(),
             List.of()
         );
     }

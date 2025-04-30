@@ -26,7 +26,7 @@ public class SimpleVideo {
     // private boolean bookmarked
 
     public static SimpleVideo of(Video video) {
-        Camera camera = video.getCameraId();
+        Camera camera = video.getCamera();
         return new SimpleVideo(
             video.getId(),
             video.getThumbnailUrl(),

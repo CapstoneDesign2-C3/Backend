@@ -11,10 +11,8 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Repository;
 
-@Repository
-public class MemoryVideoRepository implements VideoRepository {
+public class VideoCustomRepositoryImpl implements VideoCustomRepository {
 
     @Override
     public Video getVideoById(Long videoId) {

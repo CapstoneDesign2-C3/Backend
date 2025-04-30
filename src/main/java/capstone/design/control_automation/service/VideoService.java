@@ -1,9 +1,15 @@
 package capstone.design.control_automation.service;
 
+import capstone.design.control_automation.domain.document.VideoDocument;
 import capstone.design.control_automation.domain.entity.Video;
 import capstone.design.control_automation.dto.SimpleVideo;
 import capstone.design.control_automation.dto.VideoForm;
+import capstone.design.control_automation.dto.VideoRequest;
+import capstone.design.control_automation.dto.VideoResponse;
+import capstone.design.control_automation.repository.VideoElastic;
 import capstone.design.control_automation.repository.VideoRepository;
+import java.time.LocalDateTime;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,8 +20,31 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class VideoService {
-
+    private final VideoElastic videoElastic;
     private final VideoRepository videoRepository;
+
+    @Transactional
+    public void saveVideo(VideoRequest videoRequest){
+        Video video = new Video(videoRequest.summary(), videoRequest.videoUrl(), LocalDateTime.now(), null);
+
+        videoRepository.save(video);
+
+        VideoDocument videoDocument = new VideoDocument(video.getId().toString(), video.getSummary());
+        videoElastic.save(videoDocument);
+    }
+
+    @Transactional
+    public void deleteVideo(Long videoId){
+        videoRepository.deleteById(videoId);
+        videoElastic.deleteById(videoId.toString());
+    }
+
+    @Transactional(readOnly = true)
+    public List<VideoResponse> findVideos(String keyword){
+        List<VideoDocument> videoDocuments = videoElastic.findBySummaryContaining(keyword);
+
+        return videoDocuments.stream().map(VideoDocument::mapToResponse).toList();
+    }
 
     public VideoForm getVideoFormById(Long videoId) {
         Video video = videoRepository.getVideoById(videoId);
