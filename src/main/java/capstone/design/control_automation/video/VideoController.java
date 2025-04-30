@@ -1,8 +1,7 @@
-package capstone.design.control_automation.controller;
+package capstone.design.control_automation.video;
 
-import capstone.design.control_automation.dto.SimpleVideo;
-import capstone.design.control_automation.dto.VideoForm;
-import capstone.design.control_automation.service.VideoService;
+import capstone.design.control_automation.video.dto.SimpleVideo;
+import capstone.design.control_automation.video.dto.VideoForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

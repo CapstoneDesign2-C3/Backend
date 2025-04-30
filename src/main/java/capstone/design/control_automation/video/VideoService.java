@@ -1,13 +1,13 @@
-package capstone.design.control_automation.service;
+package capstone.design.control_automation.video;
 
 import capstone.design.control_automation.domain.document.VideoDocument;
 import capstone.design.control_automation.domain.entity.Video;
-import capstone.design.control_automation.dto.SimpleVideo;
-import capstone.design.control_automation.dto.VideoForm;
-import capstone.design.control_automation.dto.VideoRequest;
-import capstone.design.control_automation.dto.VideoResponse;
-import capstone.design.control_automation.repository.VideoElastic;
-import capstone.design.control_automation.repository.VideoRepository;
+import capstone.design.control_automation.video.dto.SimpleVideo;
+import capstone.design.control_automation.video.dto.VideoForm;
+import capstone.design.control_automation.video.dto.VideoRequest;
+import capstone.design.control_automation.video.dto.VideoResponse;
+import capstone.design.control_automation.video.repository.VideoElastic;
+import capstone.design.control_automation.video.repository.VideoRepository;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

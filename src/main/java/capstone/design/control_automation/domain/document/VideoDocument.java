@@ -1,6 +1,6 @@
 package capstone.design.control_automation.domain.document;
 
-import capstone.design.control_automation.dto.VideoResponse;
+import capstone.design.control_automation.video.dto.VideoResponse;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import org.springframework.data.elasticsearch.annotations.Document;

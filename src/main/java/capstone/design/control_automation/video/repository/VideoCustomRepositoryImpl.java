@@ -1,4 +1,4 @@
-package capstone.design.control_automation.repository;
+package capstone.design.control_automation.video.repository;
 
 import capstone.design.control_automation.domain.entity.Address;
 import capstone.design.control_automation.domain.entity.Camera;

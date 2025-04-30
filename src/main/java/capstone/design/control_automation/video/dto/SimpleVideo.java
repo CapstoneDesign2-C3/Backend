@@ -1,4 +1,4 @@
-package capstone.design.control_automation.dto;
+package capstone.design.control_automation.video.dto;
 
 import capstone.design.control_automation.domain.entity.Address;
 import capstone.design.control_automation.domain.entity.Camera;

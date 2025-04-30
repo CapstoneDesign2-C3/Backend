@@ -1,4 +1,4 @@
-package capstone.design.control_automation.dto;
+package capstone.design.control_automation.video.dto;
 
 import capstone.design.control_automation.domain.entity.Camera;
 import capstone.design.control_automation.domain.entity.EmergencyStatus;

@@ -1,8 +1,7 @@
-package capstone.design.control_automation.controller;
+package capstone.design.control_automation.video;
 
-import capstone.design.control_automation.dto.VideoRequest;
-import capstone.design.control_automation.dto.VideoResponse;
-import capstone.design.control_automation.service.VideoService;
+import capstone.design.control_automation.video.dto.VideoRequest;
+import capstone.design.control_automation.video.dto.VideoResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

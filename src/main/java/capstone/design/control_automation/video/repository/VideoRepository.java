@@ -1,4 +1,4 @@
-package capstone.design.control_automation.repository;
+package capstone.design.control_automation.video.repository;
 
 import capstone.design.control_automation.domain.entity.Video;
 import org.springframework.data.jpa.repository.JpaRepository;
