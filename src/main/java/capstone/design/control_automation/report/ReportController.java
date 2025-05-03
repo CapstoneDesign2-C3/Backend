@@ -1,6 +1,5 @@
-package capstone.design.control_automation.controller;
+package capstone.design.control_automation.report;
 
-import capstone.design.control_automation.service.ReportService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

@@ -8,6 +8,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 
 @Document(indexName = "frame")
 public class FrameDocument {
+
     @Id
     private String id;
 

@@ -2,6 +2,7 @@ package capstone.design.control_automation.domain.entity;
 
 import static jakarta.persistence.EnumType.STRING;
 import static lombok.AccessLevel.PROTECTED;
+import static lombok.AccessLevel.PUBLIC;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
@@ -11,11 +12,15 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "camera")
 @NoArgsConstructor(access = PROTECTED)
+@AllArgsConstructor(access = PUBLIC) // memoryVideoRepository 전용
+@Getter
 public class Camera {
 
     @Id
@@ -28,6 +33,9 @@ public class Camera {
 
     @Column(name = "longitude")
     private Double longitude;
+
+    @Column(name = "angle")
+    private String angle; // 카메라가 비추는 장면 ex) 강변 방향
 
     @Embedded
     private Address address;

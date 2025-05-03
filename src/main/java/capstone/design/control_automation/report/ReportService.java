@@ -1,6 +1,6 @@
-package capstone.design.control_automation.service;
+package capstone.design.control_automation.report;
 
-import capstone.design.control_automation.repository.ReportRepository;
+import capstone.design.control_automation.report.repository.ReportRepository;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
-// @Transactional(readOnly = true)
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class ReportService {
 
