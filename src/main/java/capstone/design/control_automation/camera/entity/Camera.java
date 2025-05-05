@@ -2,9 +2,8 @@ package capstone.design.control_automation.camera.entity;
 
 import static jakarta.persistence.EnumType.STRING;
 import static lombok.AccessLevel.PROTECTED;
-import static lombok.AccessLevel.PUBLIC;
 
-import capstone.design.control_automation.entity.Address;
+import capstone.design.control_automation.camera.dto.CameraResponse;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -13,7 +12,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -50,5 +48,9 @@ public class Camera {
         this.angle = angle;
         this.address = address;
         this.status = status;
+    }
+
+    public CameraResponse of(){
+        return new CameraResponse(latitude, longitude, angle, address.getAddress1(), address.getAddress2(), status);
     }
 }
