@@ -1,6 +1,6 @@
 package capstone.design.control_automation.video.dto;
 
-import capstone.design.control_automation.entity.Address;
+import capstone.design.control_automation.camera.entity.Address;
 import capstone.design.control_automation.camera.entity.Camera;
 import capstone.design.control_automation.video.entity.Video;
 import java.time.LocalDateTime;
