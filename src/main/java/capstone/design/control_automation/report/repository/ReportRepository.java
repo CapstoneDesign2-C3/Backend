@@ -1,6 +1,6 @@
 package capstone.design.control_automation.report.repository;
 
-import capstone.design.control_automation.domain.entity.Report;
+import capstone.design.control_automation.report.entity.Report;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;

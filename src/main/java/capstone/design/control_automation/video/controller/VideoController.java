@@ -1,5 +1,6 @@
-package capstone.design.control_automation.video;
+package capstone.design.control_automation.video.controller;
 
+import capstone.design.control_automation.video.service.VideoService;
 import capstone.design.control_automation.video.dto.SimpleVideo;
 import capstone.design.control_automation.video.dto.VideoForm;
 import lombok.RequiredArgsConstructor;

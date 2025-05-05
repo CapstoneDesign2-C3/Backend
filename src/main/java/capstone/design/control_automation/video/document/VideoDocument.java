@@ -1,4 +1,4 @@
-package capstone.design.control_automation.domain.document;
+package capstone.design.control_automation.video.document;
 
 import capstone.design.control_automation.video.dto.VideoResponse;
 import jakarta.persistence.Id;

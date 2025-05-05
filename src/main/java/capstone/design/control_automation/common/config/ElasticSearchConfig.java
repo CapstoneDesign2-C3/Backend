@@ -1,4 +1,4 @@
-package capstone.design.control_automation.config;
+package capstone.design.control_automation.common.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;

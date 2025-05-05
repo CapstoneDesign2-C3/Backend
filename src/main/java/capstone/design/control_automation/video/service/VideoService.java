@@ -1,7 +1,7 @@
-package capstone.design.control_automation.video;
+package capstone.design.control_automation.video.service;
 
-import capstone.design.control_automation.domain.document.VideoDocument;
-import capstone.design.control_automation.domain.entity.Video;
+import capstone.design.control_automation.video.document.VideoDocument;
+import capstone.design.control_automation.video.entity.Video;
 import capstone.design.control_automation.video.dto.SimpleVideo;
 import capstone.design.control_automation.video.dto.VideoForm;
 import capstone.design.control_automation.video.dto.VideoRequest;

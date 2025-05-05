@@ -1,4 +1,4 @@
-package capstone.design.control_automation.report;
+package capstone.design.control_automation.report.service;
 
 import capstone.design.control_automation.report.repository.ReportRepository;
 import java.time.LocalDateTime;

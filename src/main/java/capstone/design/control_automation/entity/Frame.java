@@ -1,9 +1,11 @@
-package capstone.design.control_automation.domain.entity;
+package capstone.design.control_automation.entity;
 
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
+import capstone.design.control_automation.report.entity.Report;
+import capstone.design.control_automation.video.entity.Video;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,36 +13,29 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.time.LocalDateTime;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "detected_object")
+@Table(name = "frame")
 @NoArgsConstructor(access = PROTECTED)
-public class DetectedObject {
+public class Frame {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "detected_object_id")
+    @Column(name = "frame_id")
     private Long id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "img_url")
+    private String imgUrl;
 
-    @Column(name = "feature")
-    private String feature;
-
-    @Column(name = "start_time")
-    private LocalDateTime startTime;
-
-    @Column(name = "end_time")
-    private LocalDateTime endTime;
+    @Column(name = "time_in_video")
+    private Double timeInVideo;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "frame_id")
-    private Frame frame;
+    @JoinColumn(name = "video_id")
+    private Video video;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "event_id")
-    private Event event;
+    @JoinColumn(name = "report_id")
+    private Report report;
 }

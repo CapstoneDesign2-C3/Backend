@@ -1,6 +1,6 @@
 package capstone.design.control_automation.video.repository;
 
-import capstone.design.control_automation.domain.document.VideoDocument;
+import capstone.design.control_automation.video.document.VideoDocument;
 import java.util.List;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 

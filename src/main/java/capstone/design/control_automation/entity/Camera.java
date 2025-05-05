@@ -1,4 +1,4 @@
-package capstone.design.control_automation.domain.entity;
+package capstone.design.control_automation.entity;
 
 import static jakarta.persistence.EnumType.STRING;
 import static lombok.AccessLevel.PROTECTED;

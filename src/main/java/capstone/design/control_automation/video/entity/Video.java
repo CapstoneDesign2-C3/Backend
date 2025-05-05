@@ -1,10 +1,12 @@
-package capstone.design.control_automation.domain.entity;
+package capstone.design.control_automation.video.entity;
 
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 import static lombok.AccessLevel.PUBLIC;
 
+import capstone.design.control_automation.entity.Camera;
+import capstone.design.control_automation.entity.Event;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -1,4 +1,4 @@
-package capstone.design.control_automation.domain.entity;
+package capstone.design.control_automation.entity;
 
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
@@ -11,29 +11,36 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import java.time.LocalDateTime;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "frame")
+@Table(name = "detected_object")
 @NoArgsConstructor(access = PROTECTED)
-public class Frame {
+public class DetectedObject {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "frame_id")
+    @Column(name = "detected_object_id")
     private Long id;
 
-    @Column(name = "img_url")
-    private String imgUrl;
+    @Column(name = "name")
+    private String name;
 
-    @Column(name = "time_in_video")
-    private Double timeInVideo;
+    @Column(name = "feature")
+    private String feature;
+
+    @Column(name = "start_time")
+    private LocalDateTime startTime;
+
+    @Column(name = "end_time")
+    private LocalDateTime endTime;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "video_id")
-    private Video video;
+    @JoinColumn(name = "frame_id")
+    private Frame frame;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "report_id")
-    private Report report;
+    @JoinColumn(name = "event_id")
+    private Event event;
 }

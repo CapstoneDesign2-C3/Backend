@@ -1,4 +1,4 @@
-package capstone.design.control_automation.controller;
+package capstone.design.control_automation.common.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

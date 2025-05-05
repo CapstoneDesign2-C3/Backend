@@ -1,4 +1,4 @@
-package capstone.design.control_automation.domain.entity;
+package capstone.design.control_automation.report.entity;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
