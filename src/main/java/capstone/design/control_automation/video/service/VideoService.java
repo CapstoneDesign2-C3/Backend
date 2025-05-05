@@ -1,5 +1,7 @@
 package capstone.design.control_automation.video.service;
 
+import capstone.design.control_automation.common.exception.ErrorCode;
+import capstone.design.control_automation.common.exception.NotFoundException;
 import capstone.design.control_automation.video.document.VideoDocument;
 import capstone.design.control_automation.video.entity.Video;
 import capstone.design.control_automation.video.dto.SimpleVideo;
@@ -18,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 public class VideoService {
 
     private final VideoElastic videoElastic;
@@ -40,17 +41,21 @@ public class VideoService {
         videoElastic.deleteById(videoId.toString());
     }
 
+    @Transactional(readOnly = true)
     public List<VideoResponse> findVideos(String keyword) {
         List<VideoDocument> videoDocuments = videoElastic.findBySummaryContaining(keyword);
 
         return videoDocuments.stream().map(VideoDocument::mapToResponse).toList();
     }
 
+    @Transactional(readOnly = true)
     public VideoForm getVideoFormById(Long videoId) {
-        Video video = videoRepository.findById(videoId).get();
+        Video video = videoRepository.findById(videoId).orElseThrow(() -> new NotFoundException(ErrorCode.VIDEO_NOT_FOUND));
+
         return VideoForm.of(video);
     }
 
+    @Transactional(readOnly = true)
     public Page<SimpleVideo> getAllVideos(Pageable pageable) {
         return videoRepository.findAll(pageable).map(SimpleVideo::of);
     }
