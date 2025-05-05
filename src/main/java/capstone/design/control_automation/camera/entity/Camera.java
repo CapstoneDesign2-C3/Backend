@@ -20,7 +20,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "camera")
 @NoArgsConstructor(access = PROTECTED)
-@AllArgsConstructor(access = PUBLIC) // memoryVideoRepository 전용
 @Getter
 public class Camera {
 
@@ -41,10 +40,15 @@ public class Camera {
     @Embedded
     private Address address;
 
-    @Column(name = "rotatable")
-    private Boolean rotatable;
-
     @Column(name = "status")
     @Enumerated(value = STRING)
     private CameraStatus status;
+
+    public Camera(Double latitude, Double longitude, String angle, Address address, CameraStatus status){
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.angle = angle;
+        this.address = address;
+        this.status = status;
+    }
 }
