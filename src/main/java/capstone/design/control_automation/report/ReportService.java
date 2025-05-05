@@ -17,6 +17,6 @@ public class ReportService {
     private final ReportRepository reportRepository;
 
     public List<LocalDateTime> getReportDateTimes() {
-        return reportRepository.getReportDateTimes();
+        return reportRepository.getReportDataTime();
     }
 }
