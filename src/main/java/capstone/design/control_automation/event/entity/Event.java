@@ -18,7 +18,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "event")
 @NoArgsConstructor(access = PROTECTED)
-@AllArgsConstructor(access = PUBLIC) // memoryVideoRepository 전용
 @Getter
 public class Event {
 
@@ -31,4 +30,7 @@ public class Event {
     @Enumerated(value = STRING)
     private EmergencyStatus emergencyStatus;
 
+    public Event(EmergencyStatus emergencyStatus){
+        this.emergencyStatus = emergencyStatus;
+    }
 }
