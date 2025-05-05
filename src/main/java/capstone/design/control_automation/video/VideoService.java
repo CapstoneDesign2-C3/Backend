@@ -47,12 +47,12 @@ public class VideoService {
     }
 
     public VideoForm getVideoFormById(Long videoId) {
-        Video video = videoRepository.getVideoById(videoId);
+        Video video = videoRepository.findById(videoId).get();
         return VideoForm.of(video);
     }
 
     public Page<SimpleVideo> getAllVideos(Pageable pageable) {
-        return videoRepository.getAllVideos(pageable).map(SimpleVideo::of);
+        return videoRepository.findAll(pageable).map(SimpleVideo::of);
     }
 
 }
