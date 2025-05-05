@@ -1,9 +1,10 @@
-package capstone.design.control_automation.entity;
+package capstone.design.control_automation.camera.entity;
 
 import static jakarta.persistence.EnumType.STRING;
 import static lombok.AccessLevel.PROTECTED;
 import static lombok.AccessLevel.PUBLIC;
 
+import capstone.design.control_automation.entity.Address;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;

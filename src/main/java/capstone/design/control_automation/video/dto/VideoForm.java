@@ -1,7 +1,7 @@
 package capstone.design.control_automation.video.dto;
 
-import capstone.design.control_automation.entity.Camera;
-import capstone.design.control_automation.entity.EmergencyStatus;
+import capstone.design.control_automation.camera.entity.Camera;
+import capstone.design.control_automation.event.entity.EmergencyStatus;
 import capstone.design.control_automation.video.entity.Video;
 import java.time.LocalDateTime;
 import java.util.List;

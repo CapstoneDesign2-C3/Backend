@@ -1,4 +1,4 @@
-package capstone.design.control_automation.entity;
+package capstone.design.control_automation.event.entity;
 
 import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.IDENTITY;

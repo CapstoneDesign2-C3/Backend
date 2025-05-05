@@ -5,8 +5,8 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 import static lombok.AccessLevel.PUBLIC;
 
-import capstone.design.control_automation.entity.Camera;
-import capstone.design.control_automation.entity.Event;
+import capstone.design.control_automation.camera.entity.Camera;
+import capstone.design.control_automation.event.entity.Event;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
