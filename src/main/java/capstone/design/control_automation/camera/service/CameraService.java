@@ -13,6 +13,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
+@Transactional(readOnly = true)
 public class CameraService {
     private final CameraRepository cameraRepository;
 
@@ -30,7 +31,6 @@ public class CameraService {
         cameraRepository.deleteById(id);
     }
 
-    @Transactional(readOnly = true)
     public List<CameraResponse> getAllCamera(){
         List<Camera> cameras = cameraRepository.findAll();
 
