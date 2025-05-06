@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/base :: common_title(~{::title}, ~{::link})">
+    <title>비디오 상세</title>
+    <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
+    <link rel="stylesheet" th:href="@{/css/fragments/header.css}">
+    <link rel="stylesheet" th:href="@{/css/video/video-details.css}">
+</head>
+<body>
+<div th:replace="~{fragments/header.html :: common_header}"></div>
+
+<main>
+    <div class="video-details-container">
+        <img src="..." alt="썸네일" class="video-thumbnail" th:src="@{${videoForm.thumbnailUrl}}">
+
+        <div class="video-detail-row">
+            <div class="video-detail-label">시작 시간</div>
+            <div class="video-detail-value" th:text="${#temporals.format(videoForm.startTime, 'yyyy-MM-dd HH:mm')}"></div>
+        </div>
+
+        <div class="video-detail-row">
+            <div class="video-detail-label">종료 시간</div>
+            <div class="video-detail-value" th:text="${#temporals.format(videoForm.endTime, 'yyyy-MM-dd HH:mm')}"></div>
+        </div>
+
+        <div class="video-detail-row">
+            <div class="video-detail-label">메모</div>
+            <div class="video-detail-value" th:text="${videoForm.memo}"></div>
+        </div>
+
+        <div class="video-detail-row">
+            <div class="video-detail-label">카메라 번호</div>
+            <div class="video-detail-value" th:text="${videoForm.cameraId}"></div>
+        </div>
+
+        <div class="video-detail-row">
+            <div class="video-detail-label">카메라 위치</div>
+            <div class="video-detail-value" th:text="${videoForm.cameraRegion}"></div>
+        </div>
+
+        <div class="video-detail-row">
+            <div class="video-detail-label">카메라 위도</div>
+            <div class="video-detail-value" th:text="${videoForm.cameraLatitude}"></div>
+        </div>
+
+        <div class="video-detail-row">
+            <div class="video-detail-label">카메라 경도</div>
+            <div class="video-detail-value" th:text="${videoForm.cameraLongitude}"></div>
+        </div>
+
+        <div class="video-detail-row">
+            <div class="video-detail-label">이벤트 상태</div>
+            <div class="video-detail-value" th:text="${videoForm.emergencyStatus}"></div>
+        </div>
+
+        <button class="button" onclick="location.href='/videos'" type="button">목록으로</button>
+    </div>
+</main>
+</body>
+</html>

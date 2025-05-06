@@ -1,8 +1,8 @@
 package capstone.design.control_automation.video.dto;
 
-import capstone.design.control_automation.domain.entity.Address;
-import capstone.design.control_automation.domain.entity.Camera;
-import capstone.design.control_automation.domain.entity.Video;
+import capstone.design.control_automation.camera.entity.Address;
+import capstone.design.control_automation.camera.entity.Camera;
+import capstone.design.control_automation.video.entity.Video;
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
