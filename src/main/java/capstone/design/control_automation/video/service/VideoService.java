@@ -1,7 +1,7 @@
 package capstone.design.control_automation.video.service;
 
 import capstone.design.control_automation.common.exception.ErrorCode;
-import capstone.design.control_automation.common.exception.NotFoundException;
+import capstone.design.control_automation.common.exception.ErrorException;
 import capstone.design.control_automation.video.document.VideoDocument;
 import capstone.design.control_automation.video.entity.Video;
 import capstone.design.control_automation.video.dto.SimpleVideo;
@@ -50,7 +50,7 @@ public class VideoService {
 
     @Transactional(readOnly = true)
     public VideoForm getVideoFormById(Long videoId) {
-        Video video = videoRepository.findById(videoId).orElseThrow(() -> new NotFoundException(ErrorCode.VIDEO_NOT_FOUND));
+        Video video = videoRepository.findById(videoId).orElseThrow(() -> new ErrorException(ErrorCode.VIDEO_NOT_FOUND));
 
         return VideoForm.of(video);
     }
