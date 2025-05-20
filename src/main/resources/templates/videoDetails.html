@@ -15,12 +15,12 @@
 
         <div class="video-detail-row">
             <div class="video-detail-label">시작 시간</div>
-            <div class="video-detail-value" th:text="${#temporals.format(videoForm.startTime, 'yyyy-MM-dd HH:mm')}"></div>
+            <div class="video-detail-value" th:text="${#temporals.format(videoForm.startTime, 'yyyy-MM-dd HH:mm:ss')}"></div>
         </div>
 
         <div class="video-detail-row">
             <div class="video-detail-label">종료 시간</div>
-            <div class="video-detail-value" th:text="${#temporals.format(videoForm.endTime, 'yyyy-MM-dd HH:mm')}"></div>
+            <div class="video-detail-value" th:text="${#temporals.format(videoForm.endTime, 'yyyy-MM-dd HH:mm:ss')}"></div>
         </div>
 
         <div class="video-detail-row">
