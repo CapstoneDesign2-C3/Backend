@@ -5,6 +5,5 @@ import java.util.List;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
 public interface VideoElastic extends ElasticsearchRepository<VideoDocument, String> {
-
     List<VideoDocument> findBySummaryContaining(String keyword);
 }

@@ -2,16 +2,22 @@ package capstone.design.control_automation.video.service;
 
 import capstone.design.control_automation.common.exception.ErrorCode;
 import capstone.design.control_automation.common.exception.ErrorException;
+import capstone.design.control_automation.event.entity.EmergencyStatus;
 import capstone.design.control_automation.video.document.VideoDocument;
+import capstone.design.control_automation.video.dto.*;
+import capstone.design.control_automation.video.entity.QVideo;
 import capstone.design.control_automation.video.entity.Video;
-import capstone.design.control_automation.video.dto.SimpleVideo;
-import capstone.design.control_automation.video.dto.VideoForm;
-import capstone.design.control_automation.video.dto.VideoRequest;
-import capstone.design.control_automation.video.dto.VideoResponse;
 import capstone.design.control_automation.video.repository.VideoElastic;
 import capstone.design.control_automation.video.repository.VideoRepository;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,13 +28,17 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class VideoService {
-
+    private final JPAQueryFactory queryFactory;
     private final VideoElastic videoElastic;
     private final VideoRepository videoRepository;
 
     @Transactional
     public void saveVideo(VideoRequest videoRequest) {
-        Video video = new Video(videoRequest.summary(), videoRequest.videoUrl(), LocalDateTime.now(), null);
+        Video video = new Video(videoRequest.summary(),
+                videoRequest.videoUrl(),
+                videoRequest.startTime(),
+                videoRequest.endTime(),
+                videoRequest.thumbnailUrl());
 
         videoRepository.save(video);
 
@@ -42,10 +52,23 @@ public class VideoService {
         videoElastic.deleteById(videoId.toString());
     }
 
-    public List<VideoResponse> findVideos(String keyword) {
-        List<VideoDocument> videoDocuments = videoElastic.findBySummaryContaining(keyword);
+    public Page<SimpleVideo> findVideo(Pageable pageable, VideoSearchRequest videoSearchRequest) {
+        List<Long> postgresVideoIds = findIdsByQueryFactory(videoSearchRequest);
+        List<Long> videoDocuments = (videoSearchRequest.keyword() == null)?
+                new ArrayList<>(): videoElastic.findBySummaryContaining(videoSearchRequest.keyword()).stream()
+                .map(video -> Long.valueOf(video.getId()))
+                .toList();
 
-        return videoDocuments.stream().map(VideoDocument::mapToResponse).toList();
+        Set<Long> finalIds;
+
+        if(videoSearchRequest.keyword() == null) finalIds = new HashSet<>(postgresVideoIds);
+        else{
+            finalIds = postgresVideoIds.stream()
+                    .filter(videoDocuments::contains)
+                    .collect(Collectors.toSet());
+        }
+
+        return videoRepository.findByIdIn(pageable, finalIds).map(SimpleVideo::of);
     }
 
     public VideoForm getVideoFormById(Long videoId) {
@@ -58,4 +81,17 @@ public class VideoService {
         return videoRepository.findAll(pageable).map(SimpleVideo::of);
     }
 
+    public List<Long> findIdsByQueryFactory(VideoSearchRequest videoSearchRequest){
+        QVideo video = QVideo.video;
+        return queryFactory
+                .select(video.id)
+                .from(video)
+                .where(
+                        videoSearchRequest.startDate() != null ? video.startTime.goe(videoSearchRequest.startDate().atStartOfDay()) : null,
+                        videoSearchRequest.endDate() != null ? video.endTime.loe(videoSearchRequest.endDate().atTime(LocalTime.MAX)) : null,
+                        videoSearchRequest.eventType() != null ? video.event.emergencyStatus.eq(EmergencyStatus.valueOf(videoSearchRequest.eventType())) : null,
+                        videoSearchRequest.cameraLocation() != null ? video.camera.address.address1.eq(videoSearchRequest.cameraLocation()) : null
+                )
+                .fetch();
+    }
 }

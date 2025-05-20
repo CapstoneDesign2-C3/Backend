@@ -5,6 +5,7 @@
   <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
   <link rel="stylesheet" th:href="@{/css/fragments/header.css}">
   <link rel="stylesheet" th:href="@{/css/video/videos.css}">
+  <script th:src="@{/js/search.js}"></script> <!-- 추가된 스크립트 파일 -->
 </head>
 <body>
 <div th:replace="~{fragments/header.html :: common_header}"></div>
@@ -34,8 +35,8 @@
       <option value="notBookmarked">북마크 안 된 것만</option>
     </select>
 
-    <input type="text" name="searchKeyword" placeholder="검색어 입력">
-    <button type="submit">검색</button>
+    <input type="text" name="keyword" placeholder="검색어 입력">
+    <button type="button" onclick="submitSearch()">검색</button>
   </div>
 
   <!-- 비디오 리스트 -->
@@ -48,26 +49,115 @@
       <th>종료 시간</th>
       <th>주소</th>
       <th>촬영 각도</th>
+      <th>상세보기</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="video : ${videos.content}">
-      <td><img th:src="@{${video.thumbnailUrl}}" alt="썸네일" width="100"></td>
-      <td th:text="${video.summary}">요약</td>
-      <td th:text="${video.startTime}">시작 시간</td>
-      <td th:text="${video.endTime}">종료 시간</td>
-      <td th:text="${video.address.getFullAddress()}">주소</td>
-      <td th:text="${video.angle}">촬영 각도</td>
-      <td><a th:href="@{'/videos/' + ${video.videoId}}">상세보기</a></td>
-    </tr>
+    <!-- 여기 JS로 채워집니다 -->
     </tbody>
   </table>
 
-  <div class="pagination">
-    <button th:if="${videos.hasPrevious()}" th:onclick="|location.href='?page=${videos.number - 1}'|">이전</button>
-    <span th:text="${videos.number + 1}"></span> / <span th:text="${videos.totalPages}"></span>
-    <button th:if="${videos.hasNext()}" th:onclick="|location.href='?page=${videos.number + 1}'|">다음</button>
+  <div class="pagination" id="pagination">
+    <!-- JS로 페이지 버튼 생성 -->
   </div>
 </main>
+
+<script>
+  let currentPage = 0;
+
+  function getValueOrNull(selector) {
+    const value = document.querySelector(selector).value.trim();
+    return value === "" ? null : value;
+  }
+
+  function submitSearch(page = 0) {
+    currentPage = page;
+
+    const formData = {
+      startDate: getValueOrNull('input[name="startDate"]'),
+      endDate: getValueOrNull('input[name="endDate"]'),
+      eventType: getValueOrNull('select[name="eventType"]'),
+      cameraLocation: getValueOrNull('select[name="cameraLocation"]'),
+      bookmark: getValueOrNull('select[name="bookmark"]'),
+      keyword: getValueOrNull('input[name="keyword"]')
+    };
+
+    fetch(`/api/v1/video-search/find?page=${page}&size=10`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData)
+    })
+      .then(response => response.json())
+      .then(data => {
+        renderTableRows(data.content);
+        renderPagination(data);
+      })
+      .catch(error => {
+        console.error("검색 실패:", error);
+      });
+  }
+
+  function formatDateTime(isoString) {
+    if (!isoString) return '';
+    const date = new Date(isoString);
+    const yyyy = date.getFullYear();
+    const MM = String(date.getMonth() + 1).padStart(2, '0');
+    const dd = String(date.getDate()).padStart(2, '0');
+    const HH = String(date.getHours()).padStart(2, '0');
+    const mm = String(date.getMinutes()).padStart(2, '0');
+    const ss = String(date.getSeconds()).padStart(2, '0');
+
+    return `${yyyy}-${MM}-${dd} ${HH}:${mm}:${ss}`;
+  }
+
+
+  function renderTableRows(videos) {
+    const tbody = document.querySelector(".video-list tbody");
+    tbody.innerHTML = "";
+
+    videos.forEach(video => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td><img src="${video.thumbnailUrl}" alt="썸네일" width="100"></td>
+        <td>${video.summary}</td>
+        <td>${formatDateTime(video.startTime)}</td>
+        <td>${formatDateTime(video.endTime)}</td>
+        <td>${video.address.fullAddress}</td>
+        <td>${video.angle}</td>
+        <td><a href="/videos/${video.videoId}">상세보기</a></td>
+      `;
+      tbody.appendChild(row);
+    });
+  }
+
+
+  function renderPagination(data) {
+    const pagination = document.getElementById("pagination");
+    pagination.innerHTML = "";
+
+    if (data.totalPages <= 1) return;
+
+    if (data.number > 0) {
+      const prev = document.createElement("button");
+      prev.innerText = "이전";
+      prev.onclick = () => submitSearch(data.number - 1);
+      pagination.appendChild(prev);
+    }
+
+    const pageInfo = document.createElement("span");
+    pageInfo.innerText = `${data.number + 1} / ${data.totalPages}`;
+    pagination.appendChild(pageInfo);
+
+    if (data.number + 1 < data.totalPages) {
+      const next = document.createElement("button");
+      next.innerText = "다음";
+      next.onclick = () => submitSearch(data.number + 1);
+      pagination.appendChild(next);
+    }
+  }
+
+  window.addEventListener("DOMContentLoaded", () => submitSearch());
+</script>
+
 </body>
 </html>

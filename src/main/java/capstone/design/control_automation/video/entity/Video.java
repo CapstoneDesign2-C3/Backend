@@ -57,11 +57,12 @@ public class Video {
     @JoinColumn(name = "event_id")
     private Event event;
 
-    public Video(String summary, String videoUrl, LocalDateTime startTime, LocalDateTime endTime) {
+    public Video(String summary, String videoUrl, LocalDateTime startTime, LocalDateTime endTime, String thumbnailUrl) {
         this.summary = summary;
         this.videoUrl = videoUrl;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.thumbnailUrl = thumbnailUrl;
     }
 
 }
