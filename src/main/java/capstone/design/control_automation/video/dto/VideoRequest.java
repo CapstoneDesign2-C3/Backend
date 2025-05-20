@@ -1,5 +1,7 @@
 package capstone.design.control_automation.video.dto;
 
-public record VideoRequest(String summary, String videoUrl) {
+import java.time.LocalDateTime;
+
+public record VideoRequest(String summary, String videoUrl, LocalDateTime startTime, LocalDateTime endTime, String thumbnailUrl) {
 
 }

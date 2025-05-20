@@ -1,10 +1,15 @@
 package capstone.design.control_automation.video.controller;
 
+import capstone.design.control_automation.video.dto.SimpleVideo;
+import capstone.design.control_automation.video.dto.VideoSearchRequest;
 import capstone.design.control_automation.video.service.VideoService;
 import capstone.design.control_automation.video.dto.VideoRequest;
 import capstone.design.control_automation.video.dto.VideoResponse;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,7 +39,7 @@ public class VideoSearchRestController {
     }
 
     @PostMapping("/find")
-    public ResponseEntity<List<VideoResponse>> findVideos(@RequestBody String keyword) {
-        return ResponseEntity.ok(videoService.findVideos(keyword));
+    public ResponseEntity<Page<SimpleVideo>> findVideos(@RequestBody VideoSearchRequest videoSearchRequest, @PageableDefault(size = 10) Pageable pageable) {
+        return ResponseEntity.ok(videoService.findVideo(pageable, videoSearchRequest));
     }
 }
