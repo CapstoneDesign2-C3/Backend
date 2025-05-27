@@ -6,3 +6,5 @@ spring:
       url: ${ELASTIC_SEARCH_URL}
       username: ${ELASTIC_SEARCH_USERNAME}
       password: ${ELASTIC_SEARCH_PASSWORD}
+      index:
+        auto-create: false
