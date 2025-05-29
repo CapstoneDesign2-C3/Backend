@@ -1,5 +1,7 @@
 package capstone.design.control_automation.video.service;
 
+import capstone.design.control_automation.camera.entity.Camera;
+import capstone.design.control_automation.camera.repository.CameraRepository;
 import capstone.design.control_automation.common.exception.ErrorCode;
 import capstone.design.control_automation.common.exception.ErrorException;
 import capstone.design.control_automation.event.entity.EmergencyStatus;
@@ -31,13 +33,16 @@ public class VideoService {
     private final JPAQueryFactory queryFactory;
     private final VideoElastic videoElastic;
     private final VideoRepository videoRepository;
+    private final CameraRepository cameraRepository;
 
     @Transactional
     public void saveVideo(VideoRequest videoRequest) {
-        Video video = new Video(videoRequest.summary(),
+        Camera camera = cameraRepository.findById(videoRequest.cameraId()).orElseThrow(() -> new ErrorException(ErrorCode.CAMERA_NOT_FOUND));
+
+        Video video = new Video(camera,
+                videoRequest.summary(),
                 videoRequest.videoUrl(),
                 videoRequest.startTime(),
-                videoRequest.endTime(),
                 videoRequest.thumbnailUrl());
 
         videoRepository.save(video);
