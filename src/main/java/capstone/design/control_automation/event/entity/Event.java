@@ -1,17 +1,14 @@
 package capstone.design.control_automation.event.entity;
 
-import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
-import static lombok.AccessLevel.PUBLIC;
 
+import capstone.design.control_automation.event.dto.EventResponse;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -26,11 +23,18 @@ public class Event {
     @Column(name = "event_id")
     private Long id;
 
-    @Column(name = "emergency_status")
-    @Enumerated(value = STRING)
-    private EmergencyStatus emergencyStatus;
+    @Column(name = "status")
+    private String status;
 
-    public Event(EmergencyStatus emergencyStatus){
-        this.emergencyStatus = emergencyStatus;
+    @Column(name = "keyword")
+    private String keyword;
+
+    public Event(String status, String keyword){
+        this.status = status;
+        this.keyword = keyword;
+    }
+
+    public EventResponse mapToResponse(){
+        return new EventResponse(this.status, this.keyword);
     }
 }

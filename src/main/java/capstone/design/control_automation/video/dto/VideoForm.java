@@ -1,7 +1,7 @@
 package capstone.design.control_automation.video.dto;
 
 import capstone.design.control_automation.camera.entity.Camera;
-import capstone.design.control_automation.event.entity.EmergencyStatus;
+import capstone.design.control_automation.event.entity.Event;
 import capstone.design.control_automation.video.entity.Video;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,7 +24,7 @@ public class VideoForm {
     private Double cameraLatitude;
     private Double cameraLongitude;
 
-    private EmergencyStatus emergencyStatus;
+    private String eventKeyword;
 
     private List<String> detects;
 
@@ -38,7 +38,7 @@ public class VideoForm {
             camera.getAngle(),
             camera.getLatitude(),
             camera.getLongitude(),
-            video.getEvent().getEmergencyStatus(),
+            video.getEvent().getKeyword(),
             List.of()
         );
     }
