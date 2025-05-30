@@ -78,3 +78,9 @@ div.form-container {
   font-weight: bold;
   cursor: pointer;
 }
+
+.camera-list {
+  width: 80%;
+  margin: 0 auto;
+  table-layout: fixed;
+}
