@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/base :: common_title(~{::title}, ~{::link})">
+  <title>비디오</title>
+  <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
+  <link rel="stylesheet" th:href="@{/css/fragments/header.css}">
+  <link rel="stylesheet" th:href="@{/css/camera/cameras.css}">
+  <script th:src="@{/js/search.js}"></script> <!-- 추가된 스크립트 파일 -->
+</head>
+<body>
+<div th:replace="~{fragments/header.html :: common_header}"></div>
+
+<main>
+  <button id="openModalBtn">카메라 추가</button>
+
+  <table class="camera-list">
+    <thead>
+    <tr>
+      <th>위도</th>
+      <th>경도</th>
+      <th>배경</th>
+      <th>주소1</th>
+      <th>주소2</th>
+      <th>상태</th>
+      <th>변경</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Thymeleaf 반복문을 사용하여 CameraResponse 목록을 테이블에 출력 -->
+    <tr th:each="camera : ${cameras}">
+      <td th:text="${camera.latitude}"></td>
+      <td th:text="${camera.longitude}"></td>
+      <td th:text="${camera.angle}"></td>
+      <td th:text="${camera.address1}"></td>
+      <td th:text="${camera.address2}"></td>
+      <td th:text="${camera.status}"></td>
+      <td>
+        <form th:action="@{/api/v1/camera/delete}" method="post" style="display:inline;">
+          <input type="hidden" name="id" th:value="${camera.id}"/>
+          <button type="submit" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</main>
+<!-- 모달 구조 -->
+<div id="cameraModal" class="modal">
+  <div class="modal-content">
+    <span class="close" id="closeModalBtn">&times;</span>
+    <h3>카메라 정보 추가</h3>
+    <form th:action="@{/api/v1/camera}" method="post">
+      <label>위도: <input type="text" name="latitude" required></label><br>
+      <label>경도: <input type="text" name="longitude" required></label><br>
+      <label>배경: <input type="text" name="angle"></label><br>
+      <label>주소1: <input type="text" name="address1"></label><br>
+      <label>주소2: <input type="text" name="address2"></label><br>
+      <label>상태:
+        <select name="status">
+          <option value="NORMAL">NORMAL</option>
+          <option value="BROKEN">BROKEN</option>
+        </select>
+      </label><br><br>
+      <button type="submit">저장</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  const modal = document.getElementById("cameraModal");
+  const openBtn = document.getElementById("openModalBtn");
+  const closeBtn = document.getElementById("closeModalBtn");
+
+  openBtn.onclick = () => modal.style.display = "block";
+  closeBtn.onclick = () => modal.style.display = "none";
+  window.onclick = (event) => {
+    if (event.target === modal) modal.style.display = "none";
+  };
+</script>
+</body>
+</html>
