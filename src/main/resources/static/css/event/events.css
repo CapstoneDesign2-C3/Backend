@@ -1,0 +1,86 @@
+button {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background-color: #000000;
+  color: #ffffff;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+button:active {
+  transform: scale(0.96);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+button:hover {
+  background-color: #4338ca;
+}
+
+select, option, table, th, td, input, textarea, button, div {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+}
+
+select, input, textarea {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+table th, table td {
+  padding: 0.75rem;
+  text-align: center;
+}
+
+table th {
+  background-color: #f5f5f5;
+}
+
+div.form-container {
+  margin-top: 2rem;
+  padding: 2rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 1rem;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.5);
+}
+.modal-content {
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+}
+.close {
+  float: right;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.event-list {
+  width: 80%;
+  margin: 0 auto;
+  table-layout: fixed;
+}
