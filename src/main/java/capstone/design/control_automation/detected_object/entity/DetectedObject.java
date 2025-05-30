@@ -16,6 +16,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "detected_object")
@@ -45,10 +47,12 @@ public class DetectedObject {
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "camera_id")
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private Camera camera;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "event_id")
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private Event event;
 
     public DetectedObject(String reId, String feature, int startFrame, int endFrame, String videoUrl, Camera camera, Event event){
