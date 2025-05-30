@@ -14,7 +14,10 @@ public enum ErrorCode {
     OK(HttpStatus.OK, "성공했습니다."),
 
     //Video
-    VIDEO_NOT_FOUND(HttpStatus.NOT_FOUND, "비디오를 찾을 수 없습니다.")
+    VIDEO_NOT_FOUND(HttpStatus.NOT_FOUND, "비디오를 찾을 수 없습니다."),
+    
+    //Camera
+    CAMERA_NOT_FOUND(HttpStatus.NOT_FOUND, "카메라를 찾을 수 없습니다.")
     ;
 
     private final HttpStatus httpStatus;

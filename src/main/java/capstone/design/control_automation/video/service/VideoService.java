@@ -1,15 +1,16 @@
 package capstone.design.control_automation.video.service;
 
+import capstone.design.control_automation.camera.entity.Camera;
+import capstone.design.control_automation.camera.repository.CameraRepository;
 import capstone.design.control_automation.common.exception.ErrorCode;
 import capstone.design.control_automation.common.exception.ErrorException;
-import capstone.design.control_automation.event.entity.EmergencyStatus;
 import capstone.design.control_automation.video.document.VideoDocument;
 import capstone.design.control_automation.video.dto.*;
 import capstone.design.control_automation.video.entity.QVideo;
 import capstone.design.control_automation.video.entity.Video;
 import capstone.design.control_automation.video.repository.VideoElastic;
 import capstone.design.control_automation.video.repository.VideoRepository;
-import java.time.LocalDateTime;
+
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -31,13 +32,16 @@ public class VideoService {
     private final JPAQueryFactory queryFactory;
     private final VideoElastic videoElastic;
     private final VideoRepository videoRepository;
+    private final CameraRepository cameraRepository;
 
     @Transactional
     public void saveVideo(VideoRequest videoRequest) {
-        Video video = new Video(videoRequest.summary(),
+        Camera camera = cameraRepository.findById(videoRequest.cameraId()).orElseThrow(() -> new ErrorException(ErrorCode.CAMERA_NOT_FOUND));
+
+        Video video = new Video(camera,
+                videoRequest.summary(),
                 videoRequest.videoUrl(),
                 videoRequest.startTime(),
-                videoRequest.endTime(),
                 videoRequest.thumbnailUrl());
 
         videoRepository.save(video);
@@ -89,7 +93,7 @@ public class VideoService {
                 .where(
                         videoSearchRequest.startDate() != null ? video.startTime.goe(videoSearchRequest.startDate().atStartOfDay()) : null,
                         videoSearchRequest.endDate() != null ? video.endTime.loe(videoSearchRequest.endDate().atTime(LocalTime.MAX)) : null,
-                        videoSearchRequest.eventType() != null ? video.event.emergencyStatus.eq(EmergencyStatus.valueOf(videoSearchRequest.eventType())) : null,
+                        videoSearchRequest.eventType() != null ? video.event.keyword.eq(videoSearchRequest.eventType()) : null,
                         videoSearchRequest.cameraLocation() != null ? video.camera.address.address1.eq(videoSearchRequest.cameraLocation()) : null
                 )
                 .fetch();
