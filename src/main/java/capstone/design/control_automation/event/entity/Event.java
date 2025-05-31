@@ -35,6 +35,6 @@ public class Event {
     }
 
     public EventResponse mapToResponse(){
-        return new EventResponse(this.status, this.keyword);
+        return new EventResponse(this.id, this.status, this.keyword);
     }
 }

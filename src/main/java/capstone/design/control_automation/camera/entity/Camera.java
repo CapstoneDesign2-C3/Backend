@@ -51,6 +51,6 @@ public class Camera {
     }
 
     public CameraResponse of(){
-        return new CameraResponse(latitude, longitude, angle, address.getAddress1(), address.getAddress2(), status);
+        return new CameraResponse(id, latitude, longitude, angle, address.getAddress1(), address.getAddress2(), status);
     }
 }
