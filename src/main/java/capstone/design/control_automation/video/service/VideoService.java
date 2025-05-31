@@ -65,7 +65,7 @@ public class VideoService {
 
         Set<Long> finalIds;
 
-        if(videoSearchRequest.keyword() == null) finalIds = new HashSet<>(postgresVideoIds);
+        if(videoDocuments.isEmpty()) finalIds = new HashSet<>(postgresVideoIds);
         else{
             finalIds = postgresVideoIds.stream()
                     .filter(videoDocuments::contains)
