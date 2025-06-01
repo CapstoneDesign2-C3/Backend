@@ -10,38 +10,40 @@
 <div th:replace="~{fragments/header.html :: common_header}"></div>
 
 <main>
-  <button id="openModalBtn">카메라 추가</button>
+  <div>
+    <button id="openModalBtn">카메라 추가</button>
 
-  <table class="camera-list">
-    <thead>
-    <tr>
-      <th>위도</th>
-      <th>경도</th>
-      <th>배경</th>
-      <th>주소1</th>
-      <th>주소2</th>
-      <th>상태</th>
-      <th>변경</th>
-    </tr>
-    </thead>
-    <tbody>
-    <!-- Thymeleaf 반복문을 사용하여 CameraResponse 목록을 테이블에 출력 -->
-    <tr th:each="camera : ${cameras}">
-      <td th:text="${camera.latitude}"></td>
-      <td th:text="${camera.longitude}"></td>
-      <td th:text="${camera.angle}"></td>
-      <td th:text="${camera.address1}"></td>
-      <td th:text="${camera.address2}"></td>
-      <td th:text="${camera.status}"></td>
-      <td>
-        <form th:action="@{/api/v1/camera/delete}" method="post" style="display:inline;">
-          <input type="hidden" name="id" th:value="${camera.id}"/>
-          <button type="submit" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</button>
-        </form>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+    <table class="camera-list">
+      <thead>
+      <tr>
+        <th>위도</th>
+        <th>경도</th>
+        <th>배경</th>
+        <th>주소1</th>
+        <th>주소2</th>
+        <th>상태</th>
+        <th>변경</th>
+      </tr>
+      </thead>
+      <tbody>
+      <!-- Thymeleaf 반복문을 사용하여 CameraResponse 목록을 테이블에 출력 -->
+      <tr th:each="camera : ${cameras}">
+        <td th:text="${camera.latitude}"></td>
+        <td th:text="${camera.longitude}"></td>
+        <td th:text="${camera.angle}"></td>
+        <td th:text="${camera.address1}"></td>
+        <td th:text="${camera.address2}"></td>
+        <td th:text="${camera.status}"></td>
+        <td>
+          <form th:action="@{/api/v1/camera/delete}" method="post" style="display:inline;">
+            <input type="hidden" name="id" th:value="${camera.id}"/>
+            <button type="submit" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</button>
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </main>
 <!-- 모달 구조 -->
 <div id="cameraModal" class="modal">

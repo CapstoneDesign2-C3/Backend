@@ -1,14 +1,12 @@
+div {
+  width: 80%;
+  margin: 0 auto;
+}
+
 button {
-  display: inline-block;
   padding: 0.75rem 1.5rem;
   background-color: #000000;
   color: #ffffff;
-  border: none;
-  border-radius: 0.5rem;
-  font-size: 1rem;
-  text-align: center;
-  cursor: pointer;
-  text-decoration: none;
 }
 
 button:active {
@@ -20,8 +18,7 @@ button:hover {
   background-color: #4338ca;
 }
 
-select, option, table, th, td, input, textarea, button, div {
-  font-family: 'Noto Sans KR', sans-serif;
+select, option, table, th, td, input, textarea, button {
   font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 0.5rem;
@@ -59,12 +56,11 @@ div.form-container {
 .modal {
   display: none;
   position: fixed;
-  z-index: 1000;
   left: 0; top: 0;
   width: 100%; height: 100%;
-  overflow: auto;
   background-color: rgba(0,0,0,0.5);
 }
+
 .modal-content {
   background-color: #fff;
   margin: 10% auto;
@@ -72,6 +68,7 @@ div.form-container {
   border-radius: 8px;
   width: 400px;
 }
+
 .close {
   float: right;
   font-size: 24px;
@@ -80,7 +77,6 @@ div.form-container {
 }
 
 .camera-list {
-  width: 80%;
   margin: 0 auto;
   table-layout: fixed;
 }
