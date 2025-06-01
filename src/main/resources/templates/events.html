@@ -10,30 +10,32 @@
 <div th:replace="~{fragments/header.html :: common_header}"></div>
 
 <main>
-  <button id="openModalBtn">이벤트 추가</button>
+  <div>
+    <button id="openModalBtn">이벤트 추가</button>
 
-  <table class="event-list">
-    <thead>
-    <tr>
-      <th>상태</th>
-      <th>키워드</th>
-      <th>변경</th>
-    </tr>
-    </thead>
-    <tbody>
-    <!-- Thymeleaf 반복문을 사용하여 CameraResponse 목록을 테이블에 출력 -->
-    <tr th:each="event : ${events}">
-      <td th:text="${event.status}"></td>
-      <td th:text="${event.keyword}"></td>
-      <td>
-        <form th:action="@{/api/v1/event/delete}" method="post" style="display:inline;">
-          <input type="hidden" name="id" th:value="${event.id}"/>
-          <button type="submit" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</button>
-        </form>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+    <table class="event-list">
+      <thead>
+      <tr>
+        <th>상태</th>
+        <th>키워드</th>
+        <th>변경</th>
+      </tr>
+      </thead>
+      <tbody>
+      <!-- Thymeleaf 반복문을 사용하여 CameraResponse 목록을 테이블에 출력 -->
+      <tr th:each="event : ${events}">
+        <td th:text="${event.status}"></td>
+        <td th:text="${event.keyword}"></td>
+        <td>
+          <form th:action="@{/api/v1/event/delete}" method="post" style="display:inline;">
+            <input type="hidden" name="id" th:value="${event.id}"/>
+            <button type="submit" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</button>
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </main>
 <!-- 모달 구조 -->
 <div id="cameraModal" class="modal">
