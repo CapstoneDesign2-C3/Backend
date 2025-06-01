@@ -7,7 +7,6 @@ import capstone.design.control_automation.common.exception.ErrorException;
 import capstone.design.control_automation.detected_object.document.DetectedObjectDocument;
 import capstone.design.control_automation.detected_object.dto.DetectedObjectRequest;
 import capstone.design.control_automation.detected_object.dto.DetectedObjectResponse;
-import capstone.design.control_automation.detected_object.dto.DetectedObjectSearchRequest;
 import capstone.design.control_automation.detected_object.entity.DetectedObject;
 import capstone.design.control_automation.detected_object.entity.QDetectedObject;
 import capstone.design.control_automation.detected_object.repository.DetectedObjectElastic;
@@ -31,6 +30,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class DetectedObjectService {
+
     private final DetectedObjectRepository detectedObjectRepository;
     private final EventRepository eventRepository;
     private final CameraRepository cameraRepository;
@@ -38,64 +38,69 @@ public class DetectedObjectService {
     private final DetectedObjectElastic detectedObjectElastic;
 
     @Transactional
-    public void createDetectedObject(DetectedObjectRequest detectedObjectRequest){
-        Event event = eventRepository.findById(detectedObjectRequest.eventId())
-                .orElseThrow(() -> new ErrorException(ErrorCode.CAMERA_NOT_FOUND));
-        Camera camera = cameraRepository.findById(detectedObjectRequest.cameraId())
-                .orElseThrow(() -> new ErrorException(ErrorCode.CAMERA_NOT_FOUND));
+    public void createDetectedObject(DetectedObjectRequest.Upsert upsert) {
+        Event event = eventRepository.findById(upsert.eventId())
+            .orElseThrow(() -> new ErrorException(ErrorCode.CAMERA_NOT_FOUND));
+        Camera camera = cameraRepository.findById(upsert.cameraId())
+            .orElseThrow(() -> new ErrorException(ErrorCode.CAMERA_NOT_FOUND));
 
-        DetectedObject detectedObject = new DetectedObject(detectedObjectRequest.reId(),
-                detectedObjectRequest.feature(),
-                detectedObjectRequest.startFrame(),
-                detectedObjectRequest.endFrame(),
-                detectedObjectRequest.videoUrl(),
-                camera,
-                event);
+        DetectedObject detectedObject = new DetectedObject(upsert.reId(),
+            upsert.feature(),
+            upsert.startFrame(),
+            upsert.endFrame(),
+            upsert.videoUrl(),
+            camera,
+            event);
 
         detectedObjectRepository.save(detectedObject);
 
-        DetectedObjectDocument detectedObjectDocument = new DetectedObjectDocument(detectedObject.getId().toString(), detectedObject.getFeature());
+        DetectedObjectDocument detectedObjectDocument = new DetectedObjectDocument(detectedObject.getId().toString(),
+            detectedObject.getFeature());
         detectedObjectElastic.save(detectedObjectDocument);
     }
 
     @Transactional
-    public void deleteDetectedObject(Long id){
+    public void deleteDetectedObject(Long id) {
         detectedObjectRepository.deleteById(id);
         detectedObjectElastic.deleteById(id.toString());
     }
 
-    public Page<DetectedObjectResponse> getDetectedObject(Pageable pageable){
+    public Page<DetectedObjectResponse> getDetectedObject(Pageable pageable) {
         return detectedObjectRepository.findAll(pageable).map(DetectedObject::mapToResponse);
     }
 
-    public Page<DetectedObjectResponse> findDetectedObject(Pageable pageable, DetectedObjectSearchRequest detectedObjectSearchRequest){
+    public Page<DetectedObjectResponse> findDetectedObject(Pageable pageable,
+        DetectedObjectRequest.Search detectedObjectSearchRequest) {
         List<Long> postgresIds = findIdsByQueryFactory(detectedObjectSearchRequest);
-        List<Long> documents = (detectedObjectSearchRequest.feature() == null)?
-                new ArrayList<>(): detectedObjectElastic.findByFeatureContaining(detectedObjectSearchRequest.feature()).stream()
-                .map(detectedObject -> Long.valueOf(detectedObject.getId()))
-                .toList();
+        List<Long> documents = (detectedObjectSearchRequest.feature() == null) ?
+            new ArrayList<>() : detectedObjectElastic.findByFeatureContaining(detectedObjectSearchRequest.feature()).stream()
+            .map(detectedObject -> Long.valueOf(detectedObject.getId()))
+            .toList();
 
         Set<Long> finalIds;
-        if(documents.isEmpty()) finalIds = new HashSet<>(postgresIds);
-        else{
+        if (documents.isEmpty()) {
+            finalIds = new HashSet<>(postgresIds);
+        } else {
             finalIds = postgresIds.stream()
-                    .filter(documents::contains)
-                    .collect(Collectors.toSet());
+                .filter(documents::contains)
+                .collect(Collectors.toSet());
         }
 
         return detectedObjectRepository.findByIdIn(pageable, finalIds).map(DetectedObject::mapToResponse);
     }
 
-    public List<Long> findIdsByQueryFactory(DetectedObjectSearchRequest detectedObjectSearchRequest){
+    public List<Long> findIdsByQueryFactory(DetectedObjectRequest.Search detectedObjectSearchRequest) {
         QDetectedObject detectedObject = QDetectedObject.detectedObject;
 
         return queryFactory
-                .select(detectedObject.id)
-                .from(detectedObject)
-                .where(
-                        detectedObjectSearchRequest.eventId() != null ? detectedObject.event.id.eq(detectedObjectSearchRequest.eventId()) : null,
-                        detectedObjectSearchRequest.cameraId() != null ? detectedObject.camera.id.eq(detectedObjectSearchRequest.cameraId()) : null,
-                        detectedObjectSearchRequest.reId() != null ? detectedObject.reId.eq(detectedObjectSearchRequest.reId()) : null
-                ).fetch();
+            .select(detectedObject.id)
+            .from(detectedObject)
+            .where(
+                detectedObjectSearchRequest.eventId() != null ? detectedObject.event.id.eq(detectedObjectSearchRequest.eventId())
+                    : null,
+                detectedObjectSearchRequest.cameraId() != null ? detectedObject.camera.id.eq(
+                    detectedObjectSearchRequest.cameraId()) : null,
+                detectedObjectSearchRequest.reId() != null ? detectedObject.reId.eq(detectedObjectSearchRequest.reId()) : null
+            ).fetch();
     }
 }
