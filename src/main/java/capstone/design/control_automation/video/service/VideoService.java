@@ -35,14 +35,14 @@ public class VideoService {
     private final CameraRepository cameraRepository;
 
     @Transactional
-    public void saveVideo(VideoRequest videoRequest) {
-        Camera camera = cameraRepository.findById(videoRequest.cameraId()).orElseThrow(() -> new ErrorException(ErrorCode.CAMERA_NOT_FOUND));
+    public void saveVideo(VideoRequest.Upsert upsert) {
+        Camera camera = cameraRepository.findById(upsert.cameraId()).orElseThrow(() -> new ErrorException(ErrorCode.CAMERA_NOT_FOUND));
 
         Video video = new Video(camera,
-                videoRequest.summary(),
-                videoRequest.videoUrl(),
-                videoRequest.startTime(),
-                videoRequest.thumbnailUrl());
+                upsert.summary(),
+                upsert.videoUrl(),
+                upsert.startTime(),
+                upsert.thumbnailUrl());
 
         videoRepository.save(video);
 
@@ -56,7 +56,7 @@ public class VideoService {
         videoElastic.deleteById(videoId.toString());
     }
 
-    public Page<SimpleVideo> findVideo(Pageable pageable, VideoSearchRequest videoSearchRequest) {
+    public Page<SimpleVideo> findVideo(Pageable pageable, VideoRequest.Search videoSearchRequest) {
         List<Long> postgresVideoIds = findIdsByQueryFactory(videoSearchRequest);
         List<Long> videoDocuments = (videoSearchRequest.keyword() == null)?
                 new ArrayList<>(): videoElastic.findBySummaryContaining(videoSearchRequest.keyword()).stream()
@@ -85,7 +85,7 @@ public class VideoService {
         return videoRepository.findAll(pageable).map(SimpleVideo::of);
     }
 
-    public List<Long> findIdsByQueryFactory(VideoSearchRequest videoSearchRequest){
+    public List<Long> findIdsByQueryFactory(VideoRequest.Search videoSearchRequest){
         QVideo video = QVideo.video;
         return queryFactory
                 .select(video.id)
