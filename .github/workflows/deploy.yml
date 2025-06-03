@@ -61,4 +61,6 @@ jobs:
             -e POSTGRESQL_DATABASE=${{ secrets.POSTGRESQL_DATABASE }} \
             -e POSTGRESQL_USERNAME=${{ secrets.POSTGRESQL_USERNAME }} \
             -e POSTGRESQL_PASSWORD=${{ secrets.POSTGRESQL_PASSWORD }} \
+            -e VIDEO_SRC_URL=${{ secrets.VIDEO_SRC_URL }} \
+            -e VIDEO_DEST_URL=${{ secrets.VIDEO_DEST_URL }} \
             ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_REPOSITORY_NAME }}:latest
