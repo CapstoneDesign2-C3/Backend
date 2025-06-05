@@ -15,24 +15,18 @@
     <input type="date" name="startDate" placeholder="시작 시간">
     <input type="date" name="endDate" placeholder="종료 시간">
 
-    <select name="eventType">
-      <option value="">이벤트 종류</option>
-      <option value="fall">넘어짐</option>
-      <option value="intrusion">침입</option>
-      <option value="fire">화재</option>
+    <select name="keyword">
+      <option value="">이벤트 전체</option>
+      <th:block th:each="eventType : ${keywords}">
+        <option th:value="${eventType}" th:text="${eventType}"></option>
+      </th:block>
     </select>
 
     <select name="cameraLocation">
       <option value="">카메라 위치 전체</option>
-      <option value="entrance">출입구</option>
-      <option value="parking">주차장</option>
-      <option value="hallway">복도</option>
-    </select>
-
-    <select name="bookmark">
-      <option value="">북마크 전체</option>
-      <option value="bookmarked">북마크된 것만</option>
-      <option value="notBookmarked">북마크 안 된 것만</option>
+      <th:block th:each="cameraLocation : ${cameraLocation}">
+        <option th:value="${cameraLocation}" th:text="${cameraLocation}"></option>
+      </th:block>
     </select>
 
     <input type="text" name="keyword" placeholder="검색어 입력">
@@ -47,6 +41,7 @@
       <th>요약</th>
       <th>시작 시간</th>
       <th>종료 시간</th>
+      <th>키워드</th>
       <th>주소</th>
       <th>촬영 각도</th>
       <th>상세보기</th>
@@ -122,6 +117,7 @@
         <td>${video.summary}</td>
         <td>${formatDateTime(video.startTime)}</td>
         <td>${formatDateTime(video.endTime)}</td>
+        <td>${video.keyword}</td>
         <td>${video.address.fullAddress}</td>
         <td>${video.angle}</td>
         <td><a href="/videos/${video.videoId}">상세보기</a></td>

@@ -36,4 +36,8 @@ public class CameraService {
 
         return cameras.stream().map(Camera::of).toList();
     }
+
+    public List<String> getAngles(){
+        return cameraRepository.findDistinctAngles();
+    }
 }

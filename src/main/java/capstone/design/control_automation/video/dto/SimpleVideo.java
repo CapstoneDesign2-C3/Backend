@@ -2,6 +2,7 @@ package capstone.design.control_automation.video.dto;
 
 import capstone.design.control_automation.camera.entity.Address;
 import capstone.design.control_automation.camera.entity.Camera;
+import capstone.design.control_automation.event.entity.Event;
 import capstone.design.control_automation.video.entity.Video;
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
@@ -19,21 +20,20 @@ public class SimpleVideo {
     private String summary;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-
+    private String keyword;
     private Address address;
     private String angle;
 
-    // private boolean checked
-    // private boolean bookmarked
-
     public static SimpleVideo of(Video video) {
         Camera camera = video.getCamera();
+        Event event = video.getEvent();
         return new SimpleVideo(
             video.getId(),
             video.getThumbnailUrl(),
             video.getSummary(),
             video.getStartTime(),
             video.getEndTime(),
+            event.getKeyword(),
             camera.getAddress(),
             camera.getAngle()
         );
