@@ -39,7 +39,7 @@ public class DetectedObjectService {
 
     @Transactional
     public void createDetectedObject(DetectedObjectRequest.Upsert upsert) {
-        Event event = eventRepository.findById(upsert.eventId())
+        Event event = eventRepository.findByKeyword(upsert.keyword())
             .orElseThrow(() -> new ErrorException(ErrorCode.CAMERA_NOT_FOUND));
         Camera camera = cameraRepository.findById(upsert.cameraId())
             .orElseThrow(() -> new ErrorException(ErrorCode.CAMERA_NOT_FOUND));
@@ -96,7 +96,7 @@ public class DetectedObjectService {
             .select(detectedObject.id)
             .from(detectedObject)
             .where(
-                detectedObjectSearchRequest.eventId() != null ? detectedObject.event.id.eq(detectedObjectSearchRequest.eventId())
+                detectedObjectSearchRequest.keyword() != null ? detectedObject.event.keyword.eq(detectedObjectSearchRequest.keyword())
                     : null,
                 detectedObjectSearchRequest.cameraId() != null ? detectedObject.camera.id.eq(
                     detectedObjectSearchRequest.cameraId()) : null,

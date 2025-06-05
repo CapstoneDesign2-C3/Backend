@@ -73,6 +73,6 @@ public class DetectedObject {
                 this.endFrame,
                 this.videoUrl,
                 this.camera.getId(),
-                this.event.getId());
+                this.event.getKeyword());
     }
 }

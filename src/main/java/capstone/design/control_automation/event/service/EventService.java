@@ -31,4 +31,8 @@ public class EventService {
     public void deleteEvent(Long id){
         eventRepository.deleteById(id);
     }
+
+    public List<String> getKeywords(){
+        return eventRepository.findDistinctKeywords();
+    }
 }
