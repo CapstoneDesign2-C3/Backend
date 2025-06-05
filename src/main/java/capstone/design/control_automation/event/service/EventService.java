@@ -18,7 +18,7 @@ public class EventService {
 
     @Transactional
     public void createEvent(EventRequest eventRequest){
-        Event event = new Event(eventRequest.status(), eventRequest.keyword());
+        Event event = new Event(eventRequest.status(), eventRequest.keyword(), eventRequest.isObject());
 
         eventRepository.save(event);
     }
