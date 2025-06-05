@@ -29,9 +29,13 @@ public class Event {
     @Column(name = "keyword")
     private String keyword;
 
-    public Event(String status, String keyword){
+    @Column(name = "is_object")
+    private boolean isObject;
+
+    public Event(String status, String keyword, boolean isObject){
         this.status = status;
         this.keyword = keyword;
+        this.isObject = isObject;
     }
 
     public EventResponse mapToResponse(){

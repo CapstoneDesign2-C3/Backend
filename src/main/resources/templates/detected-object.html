@@ -15,7 +15,12 @@
     <input type="text" name="reId" placeholder="reID 입력">
     <input type="text" name="feature" placeholder="특징 입력">
     <input type="text" name="cameraId" placeholder="카메라 id 입력">
-    <input type="text" name="eventId" placeholder="이벤트 id 입력">
+    <select name="keyword">
+      <option value="">이벤트 전체</option>
+      <th:block th:each="keyword : ${keywords}">
+        <option th:value="${keyword}" th:text="${keyword}"></option>
+      </th:block>
+    </select>
     <button type="button" onclick="submitSearch()">검색</button>
   </div>
 
@@ -28,7 +33,7 @@
       <th>종료 프레임</th>
       <th>영상 url</th>
       <th>카메라 id</th>
-      <th>이벤트 id</th>
+      <th>이벤트 키워드</th>
     </tr>
     </thead>
     <tbody>
@@ -56,7 +61,7 @@
       reId: getValueOrNull('input[name="reId"]'),
       feature: getValueOrNull('input[name="feature"]'),
       cameraId: getValueOrNull('input[name="cameraId"]'),
-      eventId: getValueOrNull('input[name="eventId"]'),
+      keyword: getValueOrNull('input[name="keyword"]'),
     };
 
     fetch(`/api/v1/detected-object/find?page=${page}&size=10`, {
@@ -88,7 +93,7 @@
         <td>${detectedObject.endFrame}</td>
         <td>${detectedObject.videoUrl}</td>
         <td>${detectedObject.cameraId}</td>
-        <td>${detectedObject.eventId}</td>
+        <td>${detectedObject.keyword}</td>
       `;
       tbody.appendChild(row);
     });

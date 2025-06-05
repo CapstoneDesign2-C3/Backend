@@ -7,13 +7,13 @@ public class DetectedObjectRequest {
                          int endFrame,
                          String videoUrl,
                          Long cameraId,
-                         Long eventId) {
+                         String keyword) {
     }
 
     public record Search(String reId,
                          String feature,
                          Long cameraId,
-                         Long eventId) {
+                         String keyword) {
     }
 
 }

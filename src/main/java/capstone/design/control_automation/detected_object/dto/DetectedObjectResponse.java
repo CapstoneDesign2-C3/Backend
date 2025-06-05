@@ -7,5 +7,5 @@ public record DetectedObjectResponse(Long id,
                                      int endFrame,
                                      String videoUrl,
                                      Long cameraId,
-                                     Long eventId) {
+                                     String keyword) {
 }
