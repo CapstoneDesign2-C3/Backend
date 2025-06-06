@@ -77,7 +77,7 @@
       keyword: getValueOrNull('input[name="keyword"]')
     };
 
-    fetch(`/api/v1/video-search/find?page=${page}&size=10`, {
+    fetch(`/api/v1/video/find?page=${page}&size=10`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData)

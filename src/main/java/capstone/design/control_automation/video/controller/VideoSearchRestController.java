@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("api/v1/video-search")
+@RequestMapping("api/v1/video")
 public class VideoSearchRestController {
 
     private final VideoService videoService;
