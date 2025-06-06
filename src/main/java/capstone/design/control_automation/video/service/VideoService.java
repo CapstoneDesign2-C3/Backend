@@ -41,7 +41,7 @@ public class VideoService {
     public void saveVideo(VideoRequest.Upsert upsert) {
         Camera camera = cameraRepository.findById(upsert.cameraId())
                 .orElseThrow(() -> new ErrorException(ErrorCode.CAMERA_NOT_FOUND));
-        Event event = eventRepository.findByKeyword(upsert.keyword())
+        Event event = eventRepository.findByStatus(upsert.status())
                 .orElseThrow(() -> new ErrorException((ErrorCode.CAMERA_NOT_FOUND)));
         Video video = new Video(camera,
                 upsert.summary(),

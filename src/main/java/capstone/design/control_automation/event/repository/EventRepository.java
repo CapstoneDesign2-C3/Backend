@@ -11,6 +11,7 @@ import java.util.Optional;
 @Repository
 public interface EventRepository extends JpaRepository<Event, Long> {
     Optional<Event> findByKeyword(String keyword);
+    Optional<Event> findByStatus(String status);
     @Query("SELECT DISTINCT e.keyword FROM Event e WHERE e.keyword IS NOT NULL")
     List<String> findDistinctKeywords();
 }

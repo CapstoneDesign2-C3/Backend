@@ -39,7 +39,7 @@ public class DetectedObjectService {
 
     @Transactional
     public void createDetectedObject(DetectedObjectRequest.Upsert upsert) {
-        Event event = eventRepository.findByKeyword(upsert.keyword())
+        Event event = eventRepository.findByStatus(upsert.status())
             .orElseThrow(() -> new ErrorException(ErrorCode.CAMERA_NOT_FOUND));
         Camera camera = cameraRepository.findById(upsert.cameraId())
             .orElseThrow(() -> new ErrorException(ErrorCode.CAMERA_NOT_FOUND));

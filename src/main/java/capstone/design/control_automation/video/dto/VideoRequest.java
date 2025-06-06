@@ -10,7 +10,7 @@ public class VideoRequest {
                          String videoUrl,
                          LocalDateTime startTime,
                          String thumbnailUrl,
-                         String keyword) {
+                         String status) {
 
     }
 
