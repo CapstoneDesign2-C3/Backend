@@ -61,7 +61,7 @@
       reId: getValueOrNull('input[name="reId"]'),
       feature: getValueOrNull('input[name="feature"]'),
       cameraId: getValueOrNull('input[name="cameraId"]'),
-      keyword: getValueOrNull('input[name="keyword"]'),
+      keyword: getValueOrNull('select[name="keyword"]')
     };
 
     fetch(`/api/v1/detected-object/find?page=${page}&size=10`, {
