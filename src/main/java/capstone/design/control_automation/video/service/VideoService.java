@@ -4,6 +4,8 @@ import capstone.design.control_automation.camera.entity.Camera;
 import capstone.design.control_automation.camera.repository.CameraRepository;
 import capstone.design.control_automation.common.exception.ErrorCode;
 import capstone.design.control_automation.common.exception.ErrorException;
+import capstone.design.control_automation.event.entity.Event;
+import capstone.design.control_automation.event.repository.EventRepository;
 import capstone.design.control_automation.video.document.VideoDocument;
 import capstone.design.control_automation.video.dto.*;
 import capstone.design.control_automation.video.entity.QVideo;
@@ -33,16 +35,20 @@ public class VideoService {
     private final VideoElastic videoElastic;
     private final VideoRepository videoRepository;
     private final CameraRepository cameraRepository;
+    private final EventRepository eventRepository;
 
     @Transactional
     public void saveVideo(VideoRequest.Upsert upsert) {
-        Camera camera = cameraRepository.findById(upsert.cameraId()).orElseThrow(() -> new ErrorException(ErrorCode.CAMERA_NOT_FOUND));
-
+        Camera camera = cameraRepository.findById(upsert.cameraId())
+                .orElseThrow(() -> new ErrorException(ErrorCode.CAMERA_NOT_FOUND));
+        Event event = eventRepository.findByKeyword(upsert.keyword())
+                .orElseThrow(() -> new ErrorException((ErrorCode.CAMERA_NOT_FOUND)));
         Video video = new Video(camera,
                 upsert.summary(),
                 upsert.videoUrl(),
                 upsert.startTime(),
-                upsert.thumbnailUrl());
+                upsert.thumbnailUrl(),
+                event);
 
         videoRepository.save(video);
 

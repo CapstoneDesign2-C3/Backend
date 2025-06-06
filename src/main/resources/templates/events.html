@@ -45,6 +45,7 @@
     <form th:action="@{/api/v1/event}" method="post">
       <label>상태: <input type="text" name="status" required></label><br>
       <label>키워드: <input type="text" name="keyword" required></label><br>
+      <input type="hidden" name="isObject" value="false">
       <label>객체 reID 분석 여부: <input type="checkbox" name="isObject" value="true"></label><br>
       <button type="submit">저장</button>
     </form>

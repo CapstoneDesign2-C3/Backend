@@ -9,8 +9,8 @@ public class VideoRequest {
                          String summary,
                          String videoUrl,
                          LocalDateTime startTime,
-                         LocalDateTime endTime,
-                         String thumbnailUrl) {
+                         String thumbnailUrl,
+                         String keyword) {
 
     }
 

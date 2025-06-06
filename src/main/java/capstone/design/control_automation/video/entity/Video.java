@@ -52,13 +52,14 @@ public class Video {
     @JoinColumn(name = "event_id")
     private Event event;
 
-    public Video(Camera camera, String summary, String videoUrl, LocalDateTime startTime, String thumbnailUrl) {
+    public Video(Camera camera, String summary, String videoUrl, LocalDateTime startTime, String thumbnailUrl ,Event event) {
         this.camera = camera;
         this.summary = summary;
         this.videoUrl = videoUrl;
         this.startTime = startTime;
         this.endTime = startTime.plusMinutes(5);
         this.thumbnailUrl = thumbnailUrl;
+        this.event = event;
     }
 
 }
