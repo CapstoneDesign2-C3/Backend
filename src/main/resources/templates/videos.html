@@ -24,7 +24,7 @@
 
     <select name="cameraLocation">
       <option value="">카메라 위치 전체</option>
-      <th:block th:each="cameraLocation : ${cameraLocation}">
+      <th:block th:each="cameraLocation : ${cameraLocations}">
         <option th:value="${cameraLocation}" th:text="${cameraLocation}"></option>
       </th:block>
     </select>
