@@ -100,7 +100,7 @@ public class VideoService {
                         videoSearchRequest.startDate() != null ? video.startTime.goe(videoSearchRequest.startDate().atStartOfDay()) : null,
                         videoSearchRequest.endDate() != null ? video.endTime.loe(videoSearchRequest.endDate().atTime(LocalTime.MAX)) : null,
                         videoSearchRequest.eventType() != null ? video.event.keyword.eq(videoSearchRequest.eventType()) : null,
-                        videoSearchRequest.cameraLocation() != null ? video.camera.address.address1.eq(videoSearchRequest.cameraLocation()) : null
+                        videoSearchRequest.cameraLocation() != null ? video.camera.angle.eq(videoSearchRequest.cameraLocation()) : null
                 )
                 .fetch();
     }
