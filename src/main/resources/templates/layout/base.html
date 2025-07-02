@@ -1,5 +1,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:fragment="common_title(title, links)">
+<head th:fragment="common_title(title, links, scripts)">
     <title th:replace="${title}">레이아웃 타이틀</title>
     <th:block th:replace="${links}"/>
+    <th:block th:replace="${scripts}"/>
 </head>

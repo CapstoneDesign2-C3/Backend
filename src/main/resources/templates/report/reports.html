@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout/base :: common_title(~{::title}, ~{::link})">
+<head th:replace="layout/base :: common_title(~{::title}, ~{::link}, ~{::scripts})">
     <title>보고서</title>
     <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
     <link rel="stylesheet" th:href="@{/css/fragments/header.css}">
     <link rel="stylesheet" th:href="@{/css/fragments/sidebar.css}">
     <link rel="stylesheet" th:href="@{/css/fragments/container.css}">
     <link rel="stylesheet" th:href="@{/css/report/reports.css}">
+    <th:block th:fragment="scripts">
+
+    </th:block>
 </head>
 <body>
 <header th:replace="fragments/header :: common_header"></header>

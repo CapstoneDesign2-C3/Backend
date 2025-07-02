@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout/base :: common_title(~{::title}, ~{::link})">
+<head th:replace="layout/base :: common_title(~{::title}, ~{::link}, ~{::scripts})">
   <title>탐지된 객체</title>
   <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
   <link rel="stylesheet" th:href="@{/css/fragments/header.css}">
   <link rel="stylesheet" th:href="@{/css/detected-object/detected-object.css}">
+  <th:block th:fragment="scripts">
+
+  </th:block>
   <script th:src="@{/js/search.js}"></script> <!-- 추가된 스크립트 파일 -->
 </head>
 <body>

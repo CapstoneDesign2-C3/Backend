@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout/base :: common_title(~{::title}, ~{::link})">
+<head th:replace="layout/base :: common_title(~{::title}, ~{::link}, ~{::scripts})">
   <title>비디오</title>
   <link rel="stylesheet" th:href="@{/css/fragments/common.css}">
   <link rel="stylesheet" th:href="@{/css/fragments/header.css}">
   <link rel="stylesheet" th:href="@{/css/video/videos.css}">
-  <script th:src="@{/js/search.js}"></script> <!-- 추가된 스크립트 파일 -->
+  <th:block th:fragment="scripts">
+  </th:block>
 </head>
 <body>
 <div th:replace="~{fragments/header.html :: common_header}"></div>
