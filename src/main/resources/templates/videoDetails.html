@@ -26,11 +26,6 @@
         </div>
 
         <div class="video-detail-row">
-            <div class="video-detail-label">메모</div>
-            <div class="video-detail-value" th:text="${videoForm.memo}"></div>
-        </div>
-
-        <div class="video-detail-row">
             <div class="video-detail-label">카메라 번호</div>
             <div class="video-detail-value" th:text="${videoForm.cameraId}"></div>
         </div>
@@ -51,8 +46,8 @@
         </div>
 
         <div class="video-detail-row">
-            <div class="video-detail-label">이벤트 상태</div>
-            <div class="video-detail-value" th:text="${videoForm.emergencyStatus}"></div>
+            <div class="video-detail-label">이벤트</div>
+            <div class="video-detail-value" th:text="${videoForm.eventKeyword}"></div>
         </div>
 
         <button class="button" onclick="location.href='/videos'" type="button">목록으로</button>
