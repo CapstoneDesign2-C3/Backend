@@ -21,6 +21,12 @@
         <input type="datetime-local" class="datetime-input" value="2025-07-02T23:59">
     </div>
     <div id="map"></div>
+    <div class="info-bar" >
+        <div id="object-info-content" class="info-content">
+        </div>
+        <div id="event-info-content" class="info-content" style="display: none;">
+        </div>
+    </div>
     <div class="map-sidebar">
         <div class="map-sidebar-menu">
             <div class="map-sidebar-menu-option" th:classappend="selected" data-target="object-content">객체</div>
@@ -37,10 +43,10 @@
                             </select>
                         </label>
                         <label>
-                            <input class="content-header-input">
+                            <input class="content-header-input" placeholder="객체 고유 ID 입력">
                         </label>
                         <label>
-                            <input class="content-header-input">
+                            <input class="content-header-input" placeholder="자연어 질의">
                         </label>
                         <button type="submit" class="content-header-btn">검색</button>
                     </form>
@@ -58,10 +64,10 @@
                             </select>
                         </label>
                         <label>
-                            <input class="content-header-input">
+                            <input class="content-header-input" placeholder="이벤트 고유 ID 입력">
                         </label>
                         <label>
-                            <input class="content-header-input">
+                            <input class="content-header-input" placeholder="자연어 질의">
                         </label>
                         <button type="submit" class="content-header-btn">검색</button>
                     </form>

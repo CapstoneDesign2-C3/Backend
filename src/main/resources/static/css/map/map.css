@@ -2,8 +2,8 @@
   position: fixed;
   top: 70px;
   left: 20px;
-  background-color: rgba(255, 255, 255); /* Ã«Â°ËœÃ­Ë†Â¬Ã«Âªâ€¦ Ã«Â°Â°ÃªÂ²Â½ */
-  z-index: 1000; /* map Ã¬Å“â€žÃ«Â¡Å“ Ã¬ËœÂ¬Ã«ÂÂ¼Ã¬ËœÂ¤ÃªÂ²Å’ */
+  background-color: rgba(255, 255, 255);
+  z-index: 100;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -40,6 +40,7 @@
 .map-sidebar {
   width: 400px;
   display: block;
+  z-index: 200;
 }
 
 .map-sidebar-menu {
@@ -85,4 +86,16 @@
   border: 1px solid #ccc;
   box-sizing: border-box;
   border-radius: 4px;
+}
+
+.info-bar {
+  position: fixed;
+  right: 420px;
+  top: 80px;
+  width: 360px;
+  height: 800px;
+  background-color: rgba(255, 255, 255);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
 }
