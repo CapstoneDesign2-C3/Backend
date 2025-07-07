@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 @Configuration
-@MapperScan
+@MapperScan(basePackages = "capstone.design.control_automation.mapper")
 public class MyBatisConfig {
 
     @Bean
@@ -18,7 +18,10 @@ public class MyBatisConfig {
         SqlSessionFactoryBean factory = new SqlSessionFactoryBean();
         factory.setDataSource(dataSource);
         factory.setMapperLocations(
-            new PathMatchingResourcePatternResolver().getResources("classpath:xml/mapper/*.xml")
+            new PathMatchingResourcePatternResolver().getResources("classpath:mapper/**/*.xml")
+        );
+        factory.setConfigLocation(
+            new PathMatchingResourcePatternResolver().getResource("classpath:mybatis-config.xml")
         );
 
         return factory.getObject();
