@@ -18,3 +18,9 @@ logging:
   level:
     org.hibernate.SQL: debug
     org.hibernate.type: trace
+    com.example.dbaccess.repository.mybatis: trace
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:xml/mapper/*.xml
