@@ -1,106 +1,76 @@
 package capstone.design.control_automation.detected_object.service;
 
-import capstone.design.control_automation.camera.entity.Camera;
-import capstone.design.control_automation.camera.repository.CameraRepository;
+import capstone.design.control_automation.category.entity.Category;
+import capstone.design.control_automation.category.repository.CategoryJpaRepository;
 import capstone.design.control_automation.common.exception.ErrorCode;
 import capstone.design.control_automation.common.exception.ErrorException;
-import capstone.design.control_automation.detected_object.document.DetectedObjectDocument;
-import capstone.design.control_automation.detected_object.dto.DetectedObjectRequest;
-import capstone.design.control_automation.detected_object.dto.DetectedObjectResponse;
+import capstone.design.control_automation.detected_object.controller.dto.DetectedObjectRequest.Create;
+import capstone.design.control_automation.detected_object.controller.dto.DetectedObjectRequest.FixedObjectFilter;
+import capstone.design.control_automation.detected_object.controller.dto.DetectedObjectResponse;
+import capstone.design.control_automation.detected_object.controller.dto.DetectedObjectResponse.FixedObject;
 import capstone.design.control_automation.detected_object.entity.DetectedObject;
-import capstone.design.control_automation.detected_object.entity.QDetectedObject;
-import capstone.design.control_automation.detected_object.repository.DetectedObjectElastic;
-import capstone.design.control_automation.detected_object.repository.DetectedObjectRepository;
-import capstone.design.control_automation.event.entity.Event;
-import capstone.design.control_automation.event.repository.EventRepository;
-import com.querydsl.jpa.impl.JPAQueryFactory;
+import capstone.design.control_automation.detected_object.entity.factory.DetectedObjectFactory;
+import capstone.design.control_automation.detected_object.repository.DetectedObjectJpaRepository;
+import capstone.design.control_automation.common.onHold.NaturalLangSearchModel;
+import capstone.design.control_automation.detected_object.repository.DetectedObjectReadRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class DetectedObjectService {
 
-    private final DetectedObjectRepository detectedObjectRepository;
-    private final EventRepository eventRepository;
-    private final CameraRepository cameraRepository;
-    private final JPAQueryFactory queryFactory;
-    private final DetectedObjectElastic detectedObjectElastic;
+    private final DetectedObjectJpaRepository detectedObjectJpaRepository;
+    private final DetectedObjectReadRepository detectedObjectReadRepository;
+    private final CategoryJpaRepository categoryJpaRepository;
+    private final NaturalLangSearchModel naturalLangSearchModel;
+//    private final DetectedObjectElastic detectedObjectElastic;
+
+    public Page<FixedObject> findFixedObjectByFilter(FixedObjectFilter fixedObjectFilter, Pageable pageable) {
+        List<Long> fixedObjectIdByFeature = naturalLangSearchModel.findFixedObjectByFeature(fixedObjectFilter.searchInput());
+
+        return detectedObjectReadRepository
+            .findFixedObjectsByFilterAndIds(fixedObjectFilter, fixedObjectIdByFeature, pageable)
+            .map(DetectedObjectResponse.FixedObject::from);
+    }
 
     @Transactional
-    public void createDetectedObject(DetectedObjectRequest.Upsert upsert) {
-        Event event = eventRepository.findByStatus(upsert.status())
-            .orElseThrow(() -> new ErrorException(ErrorCode.CAMERA_NOT_FOUND));
-        Camera camera = cameraRepository.findById(upsert.cameraId())
-            .orElseThrow(() -> new ErrorException(ErrorCode.CAMERA_NOT_FOUND));
+    public Long createDetectedObject(Create create) {
+        Category category = categoryJpaRepository.findById(create.categoryId())
+            .orElseThrow(() -> new ErrorException(ErrorCode.CATEGORY_NOT_FOUND));
 
-        DetectedObject detectedObject = new DetectedObject(upsert.reId(),
-            upsert.feature(),
-            upsert.startFrame(),
-            upsert.endFrame(),
-            upsert.videoUrl(),
-            camera,
-            event);
+        DetectedObject detectedObject = DetectedObjectFactory.createDetectedObjectWithCategory(
+            category.getIsMobile(),
+            create,
+            category
+        );
 
-        detectedObjectRepository.save(detectedObject);
+        detectedObjectJpaRepository.save(detectedObject);
 
-        DetectedObjectDocument detectedObjectDocument = new DetectedObjectDocument(detectedObject.getId().toString(),
-            detectedObject.getFeature());
-        detectedObjectElastic.save(detectedObjectDocument);
+//        DetectedObjectDocument detectedObjectDocument = new DetectedObjectDocument(detectedObject.getId().toString(),
+//            detectedObject.getFeature());
+//        detectedObjectElastic.save(detectedObjectDocument);
+
+        return detectedObject.getId();
     }
 
     @Transactional
     public void deleteDetectedObject(Long id) {
-        detectedObjectRepository.deleteById(id);
-        detectedObjectElastic.deleteById(id.toString());
+        detectedObjectJpaRepository.deleteById(id);
+//        detectedObjectElastic.deleteById(id.toString());
     }
 
-    public Page<DetectedObjectResponse> getDetectedObject(Pageable pageable) {
-        return detectedObjectRepository.findAll(pageable).map(DetectedObject::mapToResponse);
+    @Transactional
+    public void aliasDetectedObject(Long detectedObjectId, String alias) {
+        DetectedObject detectedObject = detectedObjectJpaRepository.findById(detectedObjectId)
+            .orElseThrow(() -> new ErrorException(ErrorCode.DETECTED_OBJECT_NOT_FOUND));
+
+        detectedObject.changeAlias();
     }
 
-    public Page<DetectedObjectResponse> findDetectedObject(Pageable pageable,
-        DetectedObjectRequest.Search detectedObjectSearchRequest) {
-        List<Long> postgresIds = findIdsByQueryFactory(detectedObjectSearchRequest);
-        List<Long> documents = (detectedObjectSearchRequest.feature() == null) ?
-            new ArrayList<>() : detectedObjectElastic.findByFeatureContaining(detectedObjectSearchRequest.feature()).stream()
-            .map(detectedObject -> Long.valueOf(detectedObject.getId()))
-            .toList();
-
-        Set<Long> finalIds;
-        if (documents.isEmpty()) {
-            finalIds = new HashSet<>(postgresIds);
-        } else {
-            finalIds = postgresIds.stream()
-                .filter(documents::contains)
-                .collect(Collectors.toSet());
-        }
-
-        return detectedObjectRepository.findByIdIn(pageable, finalIds).map(DetectedObject::mapToResponse);
-    }
-
-    public List<Long> findIdsByQueryFactory(DetectedObjectRequest.Search detectedObjectSearchRequest) {
-        QDetectedObject detectedObject = QDetectedObject.detectedObject;
-
-        return queryFactory
-            .select(detectedObject.id)
-            .from(detectedObject)
-            .where(
-                detectedObjectSearchRequest.keyword() != null ? detectedObject.event.keyword.eq(detectedObjectSearchRequest.keyword())
-                    : null,
-                detectedObjectSearchRequest.cameraId() != null ? detectedObject.camera.id.eq(
-                    detectedObjectSearchRequest.cameraId()) : null,
-                detectedObjectSearchRequest.reId() != null ? detectedObject.reId.eq(detectedObjectSearchRequest.reId()) : null
-            ).fetch();
-    }
 }

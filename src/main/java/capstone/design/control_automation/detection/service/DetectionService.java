@@ -1,0 +1,30 @@
+package capstone.design.control_automation.detection.service;
+
+import capstone.design.control_automation.detection.controller.dto.DetectionRequest.Filter;
+import capstone.design.control_automation.detection.controller.dto.DetectionResponse.Position;
+import capstone.design.control_automation.detection.controller.dto.DetectionResponse.Track;
+import capstone.design.control_automation.detection.repository.DetectionJpaRepository;
+import capstone.design.control_automation.detection.repository.DetectionRepository;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+public class DetectionService {
+
+    private final DetectionJpaRepository detectionJpaRepository;
+    private final DetectionRepository detectionRepository;
+
+    public Page<Track> getTracksByFilterCondition(Filter filter, Pageable pageable) {
+        return detectionRepository.getTracksByFilterCondition(filter, pageable)
+            .map(Track::from);
+    }
+
+    public List<Position> getPositionsByFilterCondition(Filter filter) {
+        return detectionRepository.getPositionsByFilterCondition(filter)
+            .stream().map(Position::from).toList();
+    }
+}

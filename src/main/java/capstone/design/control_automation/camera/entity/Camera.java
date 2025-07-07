@@ -1,13 +1,9 @@
 package capstone.design.control_automation.camera.entity;
 
-import static jakarta.persistence.EnumType.STRING;
 import static lombok.AccessLevel.PROTECTED;
 
-import capstone.design.control_automation.camera.dto.CameraResponse;
 import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -32,25 +28,18 @@ public class Camera {
     @Column(name = "longitude")
     private Double longitude;
 
-    @Column(name = "angle")
-    private String angle; // 카메라가 비추는 장면 ex) 강변 방향
+    @Column(name = "scenery")
+    private String scenery; // 카메라가 비추는 장면 ex) 강변 방향
 
-    @Embedded
-    private Address address;
-
-    @Column(name = "status")
-    @Enumerated(value = STRING)
-    private CameraStatus status;
-
-    public Camera(Double latitude, Double longitude, String angle, Address address, CameraStatus status){
+    public Camera(Double latitude, Double longitude, String scenery) {
         this.latitude = latitude;
         this.longitude = longitude;
-        this.angle = angle;
-        this.address = address;
-        this.status = status;
+        this.scenery = scenery;
     }
 
-    public CameraResponse of(){
-        return new CameraResponse(id, latitude, longitude, angle, address.getAddress1(), address.getAddress2(), status);
+    public void updateInfo(Double latitude, Double longitude, String scenery) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.scenery = scenery;
     }
 }

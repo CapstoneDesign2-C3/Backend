@@ -17,8 +17,11 @@ public enum ErrorCode {
     VIDEO_NOT_FOUND(HttpStatus.NOT_FOUND, "비디오를 찾을 수 없습니다."),
     
     //Camera
-    CAMERA_NOT_FOUND(HttpStatus.NOT_FOUND, "카메라를 찾을 수 없습니다.")
-    ;
+    CAMERA_NOT_FOUND(HttpStatus.NOT_FOUND, "카메라를 찾을 수 없습니다."),
+
+    //Category
+    CATEGORY_NOT_FOUND(HttpStatus.NOT_FOUND, "카테고리를 찾을 수 없습니다."),
+    DETECTED_OBJECT_NOT_FOUND(HttpStatus.NOT_FOUND, "탐지 객체를 찾을 수 없습니다.");
 
     private final HttpStatus httpStatus;
     private final String message;

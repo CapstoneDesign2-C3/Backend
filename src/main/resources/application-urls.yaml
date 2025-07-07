@@ -1,4 +1,0 @@
-video:
-  process:
-    src-url: ${VIDEO_SRC_URL}
-    dest-url: ${VIDEO_DEST_URL}

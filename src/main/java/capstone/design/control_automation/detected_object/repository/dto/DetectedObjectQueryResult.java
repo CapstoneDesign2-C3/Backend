@@ -1,0 +1,19 @@
+package capstone.design.control_automation.detected_object.repository.dto;
+
+import com.querydsl.core.annotations.QueryProjection;
+
+public class DetectedObjectQueryResult {
+
+    public record FixedObject(
+        Long detectedObjectId,
+        String categoryName,
+        String alias,
+        String cropImgUrl,
+        String summary
+    ) {
+        @QueryProjection
+        public FixedObject {
+
+        }
+    }
+}

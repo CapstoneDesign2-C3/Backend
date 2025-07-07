@@ -18,7 +18,7 @@ public class Report {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "report_id")
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "content")
