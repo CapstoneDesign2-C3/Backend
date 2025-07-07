@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-public class CameraReadRepositoryImpl implements CameraReadRepository {
+public class CameraQueryDSLRepository implements CameraRepository {
 
     private final JPAQueryFactory queryFactory;
 
