@@ -7,7 +7,6 @@ public class DetectedObjectResponse {
     public record FixedObject(
         Long detectedObjectId,
         String categoryName,
-        String cropImgUrl,
         String alias,
         String summary
     ) {
@@ -16,7 +15,6 @@ public class DetectedObjectResponse {
             return new FixedObject(
                 fixedObject.detectedObjectId(),
                 fixedObject.categoryName(),
-                fixedObject.cropImgUrl(),
                 fixedObject.alias(),
                 fixedObject.summary()
             );

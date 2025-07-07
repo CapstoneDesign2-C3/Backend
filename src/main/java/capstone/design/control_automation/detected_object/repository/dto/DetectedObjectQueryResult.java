@@ -8,7 +8,6 @@ public class DetectedObjectQueryResult {
         Long detectedObjectId,
         String categoryName,
         String alias,
-        String cropImgUrl,
         String summary
     ) {
         @QueryProjection

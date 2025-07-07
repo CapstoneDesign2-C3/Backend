@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-public class DetectedObjectReadRepositoryImpl implements DetectedObjectReadRepository {
+public class DetectedObjectQueryDSLRepository implements DetectedObjectRepository {
 
     private final JPAQueryFactory queryFactory;
 
@@ -39,7 +39,6 @@ public class DetectedObjectReadRepositoryImpl implements DetectedObjectReadRepos
                 QDetectedObject.detectedObject.id,
                 QDetectedObject.detectedObject.category.name,
                 QDetectedObject.detectedObject.alias,
-                QDetectedObject.detectedObject.cropImgUrl,
                 QDetection.detection.video.summary
             )).from(QDetectedObject.detectedObject)
             .innerJoin(QDetection.detection)

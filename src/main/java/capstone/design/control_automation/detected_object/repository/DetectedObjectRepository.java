@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-public interface DetectedObjectReadRepository {
+public interface DetectedObjectRepository {
 
     Page<FixedObject> findFixedObjectsByFilterAndIds(FixedObjectFilter fixedObjectFilter, List<Long> fixedObjectIdByFeature,
         Pageable pageable);
