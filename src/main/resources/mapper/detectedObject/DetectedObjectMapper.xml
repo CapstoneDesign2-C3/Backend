@@ -9,11 +9,12 @@
     FROM detected_object d
     INNER JOIN categories c on c.id = d.category_id
     <where>
+        d.dtype LIKE 'fixed'
       <if test="categoryName != null">
-        c.name LIKE #{categoryName}
+        AND c.name LIKE concat('%', #{categoryName}, '%')
       </if>
       <if test="alias != null">
-        AND d.alias LIKE #{alias}
+        AND d.alias LIKE concat('%', #{alias}, '%')
       </if>
       <if test="ids != null and ids.size > 0">
         AND d.id IN
@@ -31,11 +32,12 @@
     inner join detection d1 on d.id = d1.detected_object_id
     inner join video v on v.id = d1.video_id
     <where>
+        d.dtype LIKE 'fixed'
       <if test="categoryName != null">
-        c.name LIKE #{categoryName}
+        AND c.name LIKE concat('%', #{categoryName}, '%')
       </if>
       <if test="alias != null">
-        AND d.alias LIKE #{alias}
+        AND d.alias LIKE concat('%', #{alias}, '%')
       </if>
       <if test="ids != null and ids.size > 0">
         AND d.id IN
@@ -46,6 +48,52 @@
     </where>
     LIMIT #{pageSize}
     OFFSET #{offset}
-
   </select>
+
+  <select id="findMobileObjectCountByFilterAndIds" resultType="Long">
+    SELECT count(d.id)
+    FROM detected_object d
+    INNER JOIN categories c on c.id = d.category_id
+    <where>
+      d.dtype LIKE 'mobile'
+      <if test="categoryName != null">
+        AND c.name LIKE concat('%', #{categoryName}, '%')
+      </if>
+      <if test="alias != null">
+        AND d.alias LIKE concat('%', #{alias}, '%')
+      </if>
+      <if test="ids != null and ids.size > 0">
+        AND d.id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+          #{id}
+        </foreach>
+      </if>
+    </where>
+  </select>
+
+  <select id="findMobileObjectsByFilterAndIds" resultType="DetectedObjectMobile">
+    SELECT d.id, c.name, d.alias, v.summary
+    FROM detected_object d
+    inner join categories c on c.id = d.category_id
+    inner join detection d1 on d.id = d1.detected_object_id
+    inner join video v on v.id = d1.video_id
+    <where>
+      d.dtype LIKE 'mobile'
+      <if test="categoryName != null">
+        AND c.name LIKE concat('%', #{categoryName}, '%')
+      </if>
+      <if test="alias != null">
+        AND d.alias LIKE concat('%', #{alias}, '%')
+      </if>
+      <if test="ids != null and ids.size > 0">
+        AND d.id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+          #{id}
+        </foreach>
+      </if>
+    </where>
+    LIMIT #{pageSize}
+    OFFSET #{offset}
+  </select>
+
 </mapper>

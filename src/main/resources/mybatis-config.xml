@@ -9,5 +9,6 @@
     <typeAlias alias="DetectionTrack" type="capstone.design.control_automation.detection.repository.dto.DetectionQueryResult$Track"/>
     <typeAlias alias="DetectionPosition" type="capstone.design.control_automation.detection.repository.dto.DetectionQueryResult$Position"/>
     <typeAlias alias="DetectedObjectFixed" type="capstone.design.control_automation.detected_object.repository.dto.DetectedObjectQueryResult$FixedObject"/>
+    <typeAlias alias="DetectedObjectMobile" type="capstone.design.control_automation.detected_object.repository.dto.DetectedObjectQueryResult$MobileObject"/>
   </typeAliases>
 </configuration>
