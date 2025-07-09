@@ -1,4 +1,4 @@
-package capstone.design.control_automation.video.dto;
+package capstone.design.control_automation.video.controller.dto;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

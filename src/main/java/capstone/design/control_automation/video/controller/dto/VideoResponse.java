@@ -1,4 +1,4 @@
-package capstone.design.control_automation.video.dto;
+package capstone.design.control_automation.video.controller.dto;
 
 import capstone.design.control_automation.detected_object.controller.dto.DetectedObjectResponse;
 import capstone.design.control_automation.video.repository.dto.VideoQueryResult;

@@ -1,11 +1,9 @@
 package capstone.design.control_automation.video.service;
 
-import capstone.design.control_automation.detected_object.controller.dto.DetectedObjectResponse;
 import capstone.design.control_automation.detected_object.controller.dto.DetectedObjectResponse.Common;
-import capstone.design.control_automation.video.dto.VideoRequest.Upsert;
-import capstone.design.control_automation.video.dto.VideoResponse;
-import capstone.design.control_automation.video.dto.VideoResponse.SimpleWithFixedObject;
-import capstone.design.control_automation.video.dto.VideoResponse.SimpleWithMobileObject;
+import capstone.design.control_automation.video.controller.dto.VideoResponse;
+import capstone.design.control_automation.video.controller.dto.VideoResponse.SimpleWithFixedObject;
+import capstone.design.control_automation.video.controller.dto.VideoResponse.SimpleWithMobileObject;
 import capstone.design.control_automation.video.repository.VideoRepository;
 import capstone.design.control_automation.video.repository.dto.VideoQueryResult;
 import capstone.design.control_automation.video.repository.dto.VideoQueryResult.Detail;
