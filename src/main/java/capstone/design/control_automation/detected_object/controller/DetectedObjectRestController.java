@@ -12,6 +12,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -30,7 +31,7 @@ public class DetectedObjectRestController {
 
     @GetMapping
     public ResponseEntity<Page<MobileObject>> findMobileObjectByFilter(
-        @RequestParam MobileObjectFilter mobileObjectFilter,
+        @ModelAttribute MobileObjectFilter mobileObjectFilter,
         @PageableDefault Pageable pageable
     ) {
         Page<MobileObject> detectedObjects = detectedObjectService.findMobileObjectByFilter(

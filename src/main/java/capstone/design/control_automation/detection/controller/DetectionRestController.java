@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,7 +25,7 @@ public class DetectionRestController {
 
     @GetMapping("/tracks")
     public ResponseEntity<Page<Track>> getTracksByFilterCondition(
-        @RequestParam Filter filter,
+        @ModelAttribute Filter filter,
         @PageableDefault Pageable pageable
     ) {
         return ResponseEntity.ok(detectionService.getTracksByFilterCondition(filter, pageable));
@@ -32,7 +33,7 @@ public class DetectionRestController {
 
     @GetMapping("/positions")
     public ResponseEntity<List<Position>> getPositionsByFilterCondition(
-        @RequestParam Filter filter
+        @ModelAttribute Filter filter
     ) {
         return ResponseEntity.ok(detectionService.getPositionsByFilterCondition(filter));
     }
