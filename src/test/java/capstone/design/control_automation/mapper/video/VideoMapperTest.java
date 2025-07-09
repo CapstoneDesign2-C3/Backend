@@ -1,7 +1,5 @@
 package capstone.design.control_automation.mapper.video;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import capstone.design.control_automation.common.config.MyBatisConfig;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
