@@ -51,10 +51,4 @@ public class VideoService {
     public SimpleWithFixedObject getSimpleVideoByFixedObjectId(Long fixedObjectId) {
         return VideoResponse.SimpleWithFixedObject.of(videoRepository.findByFixedObjectId(fixedObjectId));
     }
-
-    public void saveVideo(Upsert upsert) {
-    }
-
-    public void deleteVideo(Long videoId) {
-    }
 }

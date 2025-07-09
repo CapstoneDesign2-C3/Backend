@@ -29,28 +29,15 @@ public class VideoRestController {
     }
 
     @GetMapping("/mobile-object")
-    public ResponseEntity<VideoResponse.SimpleWithMobileObject> getSimpleVideoByMobileObjectId(@RequestParam Long mobileObjectId) {
+    public ResponseEntity<VideoResponse.SimpleWithMobileObject> getSimpleVideoWithMobileObject(@RequestParam Long mobileObjectId) {
         VideoResponse.SimpleWithMobileObject simpleVideo = videoService.getSimpleVideoByMobileObjectId(mobileObjectId);
         return ResponseEntity.ok(simpleVideo);
     }
 
     @GetMapping("/fixed-object")
-    public ResponseEntity<VideoResponse.SimpleWithFixedObject> getSimpleVideoByFixedObjectId(@RequestParam Long fixedObjectId) {
+    public ResponseEntity<VideoResponse.SimpleWithFixedObject> getSimpleVideoWithFixedObject(@RequestParam Long fixedObjectId) {
         VideoResponse.SimpleWithFixedObject simpleVideo = videoService.getSimpleVideoByFixedObjectId(fixedObjectId);
         return ResponseEntity.ok(simpleVideo);
     }
 
-    @PostMapping()
-    public ResponseEntity<?> saveVideo(@RequestBody VideoRequest.Upsert upsert) {
-        videoService.saveVideo(upsert);
-
-        return ResponseEntity.ok("성공");
-    }
-
-    @DeleteMapping
-    public ResponseEntity<?> deleteVideo(@RequestBody Long videoId) {
-        videoService.deleteVideo(videoId);
-
-        return ResponseEntity.ok("성공");
-    }
 }
