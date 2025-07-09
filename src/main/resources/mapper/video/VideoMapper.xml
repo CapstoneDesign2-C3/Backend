@@ -5,7 +5,7 @@
 
 <mapper namespace="capstone.design.control_automation.mapper.video.VideoMapper">
   <select id="findById" resultType="DetailVideo">
-    SELECT v.video_url, c.scenery, c.latitude, c.longitude, v.summary, d.id, c2.name, o.crop_img_url, o.feature
+    SELECT v.id, v.video_url, c.scenery, c.latitude, c.longitude, v.summary, d.id, c2.name, o.crop_img_url, o.feature
     FROM video v
     INNER JOIN public.detection d on v.id = d.video_id
     INNER JOIN public.camera c on c.id = d.camera_id
@@ -21,6 +21,7 @@
     INNER JOIN public.detected_object o on o.id = d.detected_object_id
     INNER JOIN public.categories c on c.id = o.category_id
     WHERE o.id = #{mobileObjectId}
+    LIMIT 1
   </select>
 
   <select id="findByFixedObjectId" resultType="SimpleVideoWithFixedObject">
@@ -30,5 +31,6 @@
     INNER JOIN public.detected_object o on d.detected_object_id = o.id
     INNER JOIN public.categories c on c.id = o.category_id
     WHERE o.id = #{fixedObjectId}
+    LIMIT 1
   </select>
 </mapper>

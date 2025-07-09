@@ -9,10 +9,13 @@ spring:
     init:
       mode: always
 
+  jpa:
+    hibernate:
+      ddl-auto: none
   h2:
     console:
       enabled: true
-      
+
 mybatis:
   mapper-locations: classpath:mapper/**/*.xml
   configuration:

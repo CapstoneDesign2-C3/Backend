@@ -38,4 +38,13 @@ public class DetectionResponse {
             );
         }
     }
+
+    public record Fixed(
+        Long detectionId,
+        String categoryName,
+        String alias,
+        String summary
+    ) {
+
+    }
 }

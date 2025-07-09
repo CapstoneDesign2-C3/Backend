@@ -1,6 +1,10 @@
 package capstone.design.control_automation.mapper.video;
 
 import capstone.design.control_automation.common.config.MyBatisConfig;
+import capstone.design.control_automation.video.repository.dto.VideoQueryResult.Detail;
+import capstone.design.control_automation.video.repository.dto.VideoQueryResult.SimpleWithFixedObject;
+import capstone.design.control_automation.video.repository.dto.VideoQueryResult.SimpleWithMobileObject;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,16 +21,16 @@ class VideoMapperTest {
 
     @Test
     void findById() {
-        mapper.findById(1L);
+        List<Detail> byId = mapper.findById(1L);
     }
 
     @Test
     void findByMobileObjectId() {
-        mapper.findByMobileObjectId(1L);
+        SimpleWithMobileObject byMobileObjectId = mapper.findByMobileObjectId(1L);
     }
 
     @Test
     void findByFixedObjectId() {
-        mapper.findByFixedObjectId(1L);
+        SimpleWithFixedObject byFixedObjectId = mapper.findByFixedObjectId(1L);
     }
 }

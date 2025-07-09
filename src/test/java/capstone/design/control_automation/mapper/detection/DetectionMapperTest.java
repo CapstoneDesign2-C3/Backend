@@ -4,7 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 import capstone.design.control_automation.common.config.MyBatisConfig;
+import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult.Position;
+import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult.Track;
 import java.time.LocalDateTime;
+import java.util.List;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,16 +30,19 @@ class DetectionMapperTest {
     @Test
     @DisplayName("getTrackCountOfDetectedObject")
     void getTrackCountOfDetectedObject() {
-        detectionMapper.getTrackCountOfDetectedObject(1L, LocalDateTime.now().minusDays(1), LocalDateTime.now());
+        Long trackCountOfDetectedObject = detectionMapper.getTrackCountOfDetectedObject(1L, LocalDateTime.now().minusDays(1),
+            LocalDateTime.now());
     }
 
     @Test
     void getTracksOfDetectedObject() {
-        detectionMapper.getTracksOfDetectedObject(1L, LocalDateTime.now().minusDays(1), LocalDateTime.now(), 1, 1L);
+        List<Track> tracksOfDetectedObject = detectionMapper.getTracksOfDetectedObject(1L, LocalDateTime.now().minusDays(1),
+            LocalDateTime.now(), 1, 1L);
     }
 
     @Test
     void getPositionsOfDetectedObject() {
-        detectionMapper.getPositionsOfDetectedObject(1L, LocalDateTime.now().minusDays(1), LocalDateTime.now());
+        List<Position> positionsOfDetectedObject = detectionMapper.getPositionsOfDetectedObject(1L,
+            LocalDateTime.now().minusDays(1), LocalDateTime.now());
     }
 }

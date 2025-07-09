@@ -1,0 +1,83 @@
+INSERT INTO categories (name, eng_name, is_mobile) VALUES
+                                                  ('사람', 'person', true),
+                                                  ('차량', 'vehicle', true),
+                                                  ('오토바이', 'motorcycle', true),
+                                                  ('화재', 'fire', false),
+                                                  ('교통사고', 'accident', false);
+
+INSERT INTO detected_object (category_id, crop_img_url, dtype, feature) VALUES
+                                                                                      (1, 'https://example.com/crop1.jpg', 'mobile', '흰 셔츠를 입은 남성'),
+                                                                                      (1, 'https://example.com/crop2.jpg', 'mobile', '검은 가방을 맨 여성'),
+                                                                                      (2, 'https://example.com/crop3.jpg', 'mobile', '빨간색 SUV 차량'),
+                                                                                      (2, 'https://example.com/crop4.jpg', 'mobile', '파란색 트럭이 정차 중'),
+                                                                                      (3, 'https://example.com/crop5.jpg', 'mobile', '헬멧을 쓴 오토바이 운전자'),
+                                                                                      (3, 'https://example.com/crop6.jpg', 'mobile', '주차된 오토바이'),
+                                                                                      (4, 'https://example.com/crop7.jpg', 'fixed', '건물 창문에서 화염 발생'),
+                                                                                      (4, 'https://example.com/crop8.jpg', 'fixed', '도로 위 연기 감지'),
+                                                                                      (5, 'https://example.com/crop9.jpg', 'fixed', '차량 두 대가 충돌한 모습'),
+                                                                                      (5, 'https://example.com/crop10.jpg', 'fixed', '전복된 차량과 파손 흔적'),
+                                                                                      (1, 'https://example.com/crop11.jpg', 'mobile', '횡단보도 앞에 서 있는 사람'),
+                                                                                      (2, 'https://example.com/crop12.jpg', 'mobile', '주행 중인 택시');
+
+INSERT INTO camera (latitude, longitude, scenery) VALUES
+                                                              (37.5665, 126.9780, '광화문 교차로'),
+                                                              (37.5700, 126.9768, '세종문화회관 앞'),
+                                                              (37.5721, 126.9875, '북촌 한옥마을 입구'),
+                                                              (37.5511, 126.9882, '남산타워 주차장'),
+                                                              (37.5070, 127.0591, '강남역 11번 출구'),
+                                                              (37.4847, 126.8963, '구로디지털단지역'),
+                                                              (37.4774, 126.9816, '서울대입구역 사거리'),
+                                                              (37.3927, 126.9611, '안양천변 산책로'),
+                                                              (35.1796, 129.0756, '부산 해운대 해수욕장'),
+                                                              (35.1531, 129.1186, '광안대교 북단');
+
+INSERT INTO video (video_url, start_time, end_time, summary) VALUES
+                                                                           ('https://example.com/video1.mp4', '2025-07-09 08:00:00', '2025-07-09 08:05:00', '출근길 인파 포착'),
+                                                                           ('https://example.com/video2.mp4', '2025-07-09 08:10:00', '2025-07-09 08:15:00', '차량 정체 발생'),
+                                                                           ('https://example.com/video3.mp4', '2025-07-09 09:00:00', '2025-07-09 09:03:00', '화재로 인해 연기 발생'),
+                                                                           ('https://example.com/video4.mp4', '2025-07-09 09:05:00', '2025-07-09 09:10:00', '오토바이 운전자가 급정거'),
+                                                                           ('https://example.com/video5.mp4', '2025-07-09 10:00:00', '2025-07-09 10:05:00', '교통사고로 정체 발생'),
+                                                                           ('https://example.com/video6.mp4', '2025-07-09 10:15:00', '2025-07-09 10:20:00', '도보 이용자 증가'),
+                                                                           ('https://example.com/video7.mp4', '2025-07-09 10:30:00', '2025-07-09 10:35:00', '자전거 도로 상황'),
+                                                                           ('https://example.com/video8.mp4', '2025-07-09 11:00:00', '2025-07-09 11:03:00', '길거리 공연 장면'),
+                                                                           ('https://example.com/video9.mp4', '2025-07-09 11:30:00', '2025-07-09 11:35:00', '도로 정비 작업'),
+                                                                           ('https://example.com/video10.mp4', '2025-07-09 12:00:00', '2025-07-09 12:05:00', '비상 대피 안내 방송');
+
+
+INSERT INTO detection (camera_id, detected_object_id, thumbnail_url, appeared_time, discovered_time, video_id) VALUES
+                                                                                                                                 (1, 1, 'https://example.com/thumb1.jpg', '2025-07-09 08:00:10', '2025-07-09 08:00:12', 1),
+                                                                                                                                 (2, 2, 'https://example.com/thumb2.jpg', '2025-07-09 08:11:22', '2025-07-09 08:11:25', 2),
+                                                                                                                                 (3, 3, 'https://example.com/thumb3.jpg', '2025-07-09 09:00:30', '2025-07-09 09:00:35', 3),
+                                                                                                                                 (4, 4, 'https://example.com/thumb4.jpg', '2025-07-09 09:05:45', '2025-07-09 09:05:50', 4),
+                                                                                                                                 (5, 5, 'https://example.com/thumb5.jpg', '2025-07-09 10:00:20', '2025-07-09 10:00:25', 5),
+                                                                                                                                 (6, 6, 'https://example.com/thumb6.jpg', '2025-07-09 10:15:10', '2025-07-09 10:15:13', 6),
+                                                                                                                                 (7, 7, 'https://example.com/thumb7.jpg', '2025-07-09 10:30:05', '2025-07-09 10:30:08', 7),
+                                                                                                                                 (8, 8, 'https://example.com/thumb8.jpg', '2025-07-09 11:00:00', '2025-07-09 11:00:03', 8),
+                                                                                                                                 (9, 9, 'https://example.com/thumb9.jpg', '2025-07-09 11:30:20', '2025-07-09 11:30:23', 9),
+                                                                                                                                 (10, 10, 'https://example.com/thumb10.jpg', '2025-07-09 12:00:10', '2025-07-09 12:00:13', 10),
+                                                                                                                                 (1, 11, 'https://example.com/thumb11.jpg', '2025-07-09 08:04:20', '2025-07-09 08:04:23', 1),
+                                                                                                                                 (2, 12, 'https://example.com/thumb12.jpg', '2025-07-09 08:14:00', '2025-07-09 08:14:03', 2),
+                                                                                                                                 (3, 1, 'https://example.com/thumb13.jpg', '2025-07-09 08:10:30', '2025-07-09 08:10:35', 3),
+                                                                                                                                 (4, 2, 'https://example.com/thumb14.jpg', '2025-07-09 08:12:00', '2025-07-09 08:12:05', 3),
+                                                                                                                                 (5, 3, 'https://example.com/thumb15.jpg', '2025-07-09 08:13:40', '2025-07-09 08:13:43', 4),
+                                                                                                                                 (6, 4, 'https://example.com/thumb16.jpg', '2025-07-09 08:20:20', '2025-07-09 08:20:23', 4),
+                                                                                                                                 (7, 5, 'https://example.com/thumb17.jpg', '2025-07-09 09:02:30', '2025-07-09 09:02:35', 5),
+                                                                                                                                 (8, 6, 'https://example.com/thumb18.jpg', '2025-07-09 09:03:40', '2025-07-09 09:03:45', 5),
+                                                                                                                                 (9, 7, 'https://example.com/thumb19.jpg', '2025-07-09 09:10:00', '2025-07-09 09:10:03', 6),
+                                                                                                                                 (10, 8, 'https://example.com/thumb20.jpg', '2025-07-09 09:15:00', '2025-07-09 09:15:03', 6),
+                                                                                                                                 (1, 9, 'https://example.com/thumb21.jpg', '2025-07-09 09:20:00', '2025-07-09 09:20:03', 7),
+                                                                                                                                 (2, 10, 'https://example.com/thumb22.jpg', '2025-07-09 09:25:00', '2025-07-09 09:25:03', 7),
+                                                                                                                                 (3, 11, 'https://example.com/thumb23.jpg', '2025-07-09 09:30:00', '2025-07-09 09:30:03', 8),
+                                                                                                                                 (4, 12, 'https://example.com/thumb24.jpg', '2025-07-09 09:35:00', '2025-07-09 09:35:03', 8),
+                                                                                                                                 (5, 1, 'https://example.com/thumb25.jpg', '2025-07-09 09:40:00', '2025-07-09 09:40:03', 9),
+                                                                                                                                 (6, 2, 'https://example.com/thumb26.jpg', '2025-07-09 09:45:00', '2025-07-09 09:45:03', 9),
+                                                                                                                                 (7, 3, 'https://example.com/thumb27.jpg', '2025-07-09 09:50:00', '2025-07-09 09:50:03', 10),
+                                                                                                                                 (8, 4, 'https://example.com/thumb28.jpg', '2025-07-09 09:55:00', '2025-07-09 09:55:03', 10),
+                                                                                                                                 (9, 5, 'https://example.com/thumb29.jpg', '2025-07-09 10:00:00', '2025-07-09 10:00:03', 10),
+                                                                                                                                 (10, 6, 'https://example.com/thumb30.jpg', '2025-07-09 10:05:00', '2025-07-09 10:05:03', 10),
+                                                                                                                                 (1, 7, 'https://example.com/thumb31.jpg', '2025-07-09 10:10:00', '2025-07-09 10:10:03', 1),
+                                                                                                                                 (2, 8, 'https://example.com/thumb32.jpg', '2025-07-09 10:15:00', '2025-07-09 10:15:03', 2),
+                                                                                                                                 (3, 9, 'https://example.com/thumb33.jpg', '2025-07-09 10:20:00', '2025-07-09 10:20:03', 3),
+                                                                                                                                 (4, 10, 'https://example.com/thumb34.jpg', '2025-07-09 10:25:00', '2025-07-09 10:25:03', 4),
+                                                                                                                                 (5, 11, 'https://example.com/thumb35.jpg', '2025-07-09 10:30:00', '2025-07-09 10:30:03', 5),
+                                                                                                                                 (6, 12, 'https://example.com/thumb36.jpg', '2025-07-09 10:35:00', '2025-07-09 10:35:03', 6);

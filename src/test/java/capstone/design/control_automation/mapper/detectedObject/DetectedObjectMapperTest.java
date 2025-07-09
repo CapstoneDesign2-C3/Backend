@@ -1,6 +1,8 @@
 package capstone.design.control_automation.mapper.detectedObject;
 
 import capstone.design.control_automation.common.config.MyBatisConfig;
+import capstone.design.control_automation.detected_object.repository.dto.DetectedObjectQueryResult.FixedObject;
+import capstone.design.control_automation.detected_object.repository.dto.DetectedObjectQueryResult.MobileObject;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
@@ -18,22 +20,26 @@ class DetectedObjectMapperTest {
 
     @Test
     void findFixedObjectCountByFilterAndIds() {
-        detectedObjectMapper.findFixedObjectCountByFilterAndIds("category", "alias", List.of(1L, 2L, 3L, 4L));
+        Long fixedObjectCountByFilterAndIds = detectedObjectMapper.findFixedObjectCountByFilterAndIds("category", "alias",
+            List.of(1L, 2L, 3L, 4L));
     }
 
     @Test
     void findFixedObjectsByFilterAndIds() {
-        detectedObjectMapper.findFixedObjectsByFilterAndIds("category", "alias", List.of(1L, 2L), 1, 1L);
+        List<FixedObject> fixedObjects = detectedObjectMapper.findFixedObjectsByFilterAndIds("category", "alias", List.of(1L, 2L),
+            1, 1L);
     }
 
     @Test
     void findMobileObjectCountByFilterAndIds() {
-        detectedObjectMapper.findMobileObjectCountByFilterAndIds("category", "alias", List.of(1L, 2L, 3L, 4L));
+        Long mobileObjectCountByFilterAndIds = detectedObjectMapper.findMobileObjectCountByFilterAndIds("category", "alias",
+            List.of(1L, 2L, 3L, 4L));
     }
 
     @Test
     void findMobileObjectsByFilterAndIds() {
-        detectedObjectMapper.findMobileObjectsByFilterAndIds("category", "alias", List.of(1L, 2L), 1, 1L);
+        List<MobileObject> mobileObjectsByFilterAndIds = detectedObjectMapper.findMobileObjectsByFilterAndIds("category", "alias",
+            List.of(1L, 2L), 1, 1L);
     }
 
 }
