@@ -17,4 +17,12 @@
       </if>
     </where>
   </select>
+
+  <select id="findWithVideosById" resultType="CameraInfo">
+    SELECT DISTINCT c.id, c.scenery, c.latitude, c.longitude, v.id, v.video_url, v.start_time, v.end_time
+    FROM camera c
+    LEFT JOIN public.detection d on c.id = d.camera_id
+    LEFT JOIN public.video v on d.video_id = v.id
+    WHERE c.id = #{cameraId}
+  </select>
 </mapper>

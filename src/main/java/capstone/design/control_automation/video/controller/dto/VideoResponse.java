@@ -1,5 +1,7 @@
 package capstone.design.control_automation.video.controller.dto;
 
+import capstone.design.control_automation.camera.repository.dto.CameraQueryResult;
+import capstone.design.control_automation.camera.repository.dto.CameraQueryResult.Info;
 import capstone.design.control_automation.detected_object.controller.dto.DetectedObjectResponse;
 import capstone.design.control_automation.video.repository.dto.VideoQueryResult;
 import capstone.design.control_automation.video.repository.dto.VideoQueryResult.SimpleWithFixedObject;
@@ -63,5 +65,22 @@ public class VideoResponse {
         List<DetectedObjectResponse.Common> detectedObjects
     ) {
 
+    }
+
+    public record Simple(
+        Long videoId,
+        String videoUrl,
+        LocalDateTime startTime,
+        LocalDateTime endTime
+    ) {
+
+        public static Simple from(CameraQueryResult.Info info) {
+            return new Simple(
+                info.videoId(),
+                info.videoUrl(),
+                info.startTime(),
+                info.endTime()
+            );
+        }
     }
 }
