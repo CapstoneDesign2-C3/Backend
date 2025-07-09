@@ -27,10 +27,12 @@ public class Video {
     @Column(name = "video_url", nullable = false)
     private String videoUrl;
 
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    @Column(name = "start_time")
+    private LocalDateTime startTime;
 
-    @Lob
+    @Column(name = "end_time")
+    private LocalDateTime endTime;
+
     @Column(name = "summary", nullable = false)
     private String summary;
 

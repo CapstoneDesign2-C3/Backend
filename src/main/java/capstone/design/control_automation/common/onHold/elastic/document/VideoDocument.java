@@ -1,6 +1,6 @@
 package capstone.design.control_automation.common.onHold.elastic.document;
 
-import capstone.design.control_automation.video.dto.OldVideoResponse;
+import capstone.design.control_automation.video.controller.dto.OldVideoResponse;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import org.springframework.data.elasticsearch.annotations.Document;

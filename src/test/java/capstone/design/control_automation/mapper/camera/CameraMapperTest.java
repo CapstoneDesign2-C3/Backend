@@ -19,4 +19,9 @@ class CameraMapperTest {
     void findAllByFilterCondition() {
         cameraMapper.findAllByFilterCondition(30.0, 0.0, 10.0, 100.0);
     }
+
+    @Test
+    void findWithVideosById() {
+        cameraMapper.findWithVideosById(1L);
+    }
 }

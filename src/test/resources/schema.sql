@@ -31,9 +31,10 @@ CREATE TABLE report (
 
 CREATE TABLE video (
                        id BIGINT AUTO_INCREMENT PRIMARY KEY,
-                       created_at TIMESTAMP,
+                       start_time TIMESTAMP,
+                       end_time TIMESTAMP,
                        video_url VARCHAR(255) NOT NULL,
-                       summary BLOB NOT NULL -- oid 대신 BLOB 사용
+                       summary VARCHAR(255) NOT NULL -- oid 대신 BLOB 사용
 );
 
 CREATE TABLE detection (

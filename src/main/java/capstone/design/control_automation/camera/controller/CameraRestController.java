@@ -2,6 +2,7 @@ package capstone.design.control_automation.camera.controller;
 
 import capstone.design.control_automation.camera.controller.dto.CameraRequest;
 import capstone.design.control_automation.camera.controller.dto.CameraRequest.Filter;
+import capstone.design.control_automation.camera.controller.dto.CameraResponse;
 import capstone.design.control_automation.camera.controller.dto.CameraResponse.Position;
 import capstone.design.control_automation.camera.service.CameraService;
 import java.net.URI;
@@ -30,6 +31,11 @@ public class CameraRestController {
         @RequestParam Filter filter
     ) {
         return ResponseEntity.ok(cameraService.getCameraPositionByFilterCondition(filter));
+    }
+
+    @GetMapping("/{cameraId}")
+    public ResponseEntity<CameraResponse.Info> getCameraInfo(@PathVariable Long cameraId) {
+        return ResponseEntity.ok(cameraService.getCameraInfo(cameraId));
     }
 
     @PostMapping

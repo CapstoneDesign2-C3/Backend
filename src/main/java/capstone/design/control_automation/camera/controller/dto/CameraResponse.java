@@ -1,6 +1,8 @@
 package capstone.design.control_automation.camera.controller.dto;
 
 import capstone.design.control_automation.camera.repository.dto.CameraQueryResult;
+import capstone.design.control_automation.video.controller.dto.VideoResponse;
+import java.util.List;
 
 public class CameraResponse {
 
@@ -13,6 +15,15 @@ public class CameraResponse {
                 cameraPosition.longitude()
             );
         }
+    }
+
+    public record Info(
+        String cameraScenery,
+        Double cameraLatitude,
+        Double cameraLongitude,
+        List<VideoResponse.Simple> videos
+    ) {
+
     }
 
 }
