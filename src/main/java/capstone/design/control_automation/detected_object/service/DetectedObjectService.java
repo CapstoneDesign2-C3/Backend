@@ -6,8 +6,10 @@ import capstone.design.control_automation.common.exception.ErrorCode;
 import capstone.design.control_automation.common.exception.ErrorException;
 import capstone.design.control_automation.detected_object.controller.dto.DetectedObjectRequest.Create;
 import capstone.design.control_automation.detected_object.controller.dto.DetectedObjectRequest.FixedObjectFilter;
+import capstone.design.control_automation.detected_object.controller.dto.DetectedObjectRequest.MobileObjectFilter;
 import capstone.design.control_automation.detected_object.controller.dto.DetectedObjectResponse;
 import capstone.design.control_automation.detected_object.controller.dto.DetectedObjectResponse.FixedObject;
+import capstone.design.control_automation.detected_object.controller.dto.DetectedObjectResponse.MobileObject;
 import capstone.design.control_automation.detected_object.entity.DetectedObject;
 import capstone.design.control_automation.detected_object.entity.factory.DetectedObjectFactory;
 import capstone.design.control_automation.detected_object.repository.DetectedObjectJpaRepository;
@@ -31,12 +33,12 @@ public class DetectedObjectService {
     private final NaturalLangSearchModel naturalLangSearchModel;
 //    private final DetectedObjectElastic detectedObjectElastic;
 
-    public Page<FixedObject> findFixedObjectByFilter(FixedObjectFilter fixedObjectFilter, Pageable pageable) {
-        List<Long> fixedObjectIdByFeature = naturalLangSearchModel.findFixedObjectByFeature(fixedObjectFilter.searchInput());
+    public Page<MobileObject> findMobileObjectByFilter(MobileObjectFilter mobileObjectFilter, Pageable pageable) {
+        List<Long> mobileObjectIdByFeature = naturalLangSearchModel.findMobileObjectByFeature(mobileObjectFilter.searchInput());
 
         return detectedObjectRepository
-            .findFixedObjectsByFilterAndIds(fixedObjectFilter, fixedObjectIdByFeature, pageable)
-            .map(DetectedObjectResponse.FixedObject::from);
+            .findMobileObjectsByFilterAndIds(mobileObjectFilter, mobileObjectIdByFeature, pageable)
+            .map(DetectedObjectResponse.MobileObject::from);
     }
 
     @Transactional

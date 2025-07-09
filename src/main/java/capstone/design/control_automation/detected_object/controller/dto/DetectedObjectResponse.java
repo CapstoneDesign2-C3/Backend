@@ -1,6 +1,7 @@
 package capstone.design.control_automation.detected_object.controller.dto;
 
 import capstone.design.control_automation.detected_object.repository.dto.DetectedObjectQueryResult;
+import capstone.design.control_automation.detected_object.repository.dto.DetectedObjectQueryResult.MobileObject;
 import capstone.design.control_automation.video.repository.dto.VideoQueryResult.Detail;
 
 public class DetectedObjectResponse {
@@ -12,15 +13,6 @@ public class DetectedObjectResponse {
         String alias,
         String summary
     ) {
-
-        public static FixedObject from(DetectedObjectQueryResult.FixedObject fixedObject) {
-            return new FixedObject(
-                fixedObject.detectedObjectId(),
-                fixedObject.categoryName(),
-                fixedObject.alias(),
-                fixedObject.summary()
-            );
-        }
     }
 
     public record Common(
@@ -48,5 +40,14 @@ public class DetectedObjectResponse {
         String feature
     ) {
 
+        public static MobileObject from(DetectedObjectQueryResult.MobileObject mobileObject) {
+            return new MobileObject(
+                mobileObject.detectedObjectId(),
+                mobileObject.categoryName(),
+                mobileObject.cropImgUrl(),
+                mobileObject.alias(),
+                mobileObject.feature()
+            );
+        }
     }
 }

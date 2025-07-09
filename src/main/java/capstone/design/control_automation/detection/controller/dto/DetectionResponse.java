@@ -40,7 +40,7 @@ public class DetectionResponse {
     }
 
     public record Fixed(
-        Long detectionId,
+        Long videoId,
         String categoryName,
         String alias,
         String summary

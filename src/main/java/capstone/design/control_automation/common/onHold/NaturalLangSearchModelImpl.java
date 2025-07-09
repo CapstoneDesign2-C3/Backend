@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 public class NaturalLangSearchModelImpl implements NaturalLangSearchModel {
 
     @Override
-    public List<Long> findFixedObjectByFeature(String feature) {
+    public List<Long> findMobileObjectByFeature(String feature) {
         return List.of();
     }
 }

@@ -1,8 +1,8 @@
 package capstone.design.control_automation.detected_object.controller;
 
 import capstone.design.control_automation.detected_object.controller.dto.DetectedObjectRequest.Create;
-import capstone.design.control_automation.detected_object.controller.dto.DetectedObjectRequest.FixedObjectFilter;
-import capstone.design.control_automation.detected_object.controller.dto.DetectedObjectResponse.FixedObject;
+import capstone.design.control_automation.detected_object.controller.dto.DetectedObjectRequest.MobileObjectFilter;
+import capstone.design.control_automation.detected_object.controller.dto.DetectedObjectResponse.MobileObject;
 import capstone.design.control_automation.detected_object.service.DetectedObjectService;
 import java.net.URI;
 import lombok.RequiredArgsConstructor;
@@ -29,12 +29,12 @@ public class DetectedObjectRestController {
     private final DetectedObjectService detectedObjectService;
 
     @GetMapping
-    public ResponseEntity<Page<FixedObject>> findFixedObjectByFilter(
-        @RequestParam FixedObjectFilter fixedObjectFilter,
+    public ResponseEntity<Page<MobileObject>> findMobileObjectByFilter(
+        @RequestParam MobileObjectFilter mobileObjectFilter,
         @PageableDefault Pageable pageable
     ) {
-        Page<FixedObject> detectedObjects = detectedObjectService.findFixedObjectByFilter(
-            fixedObjectFilter, pageable);
+        Page<MobileObject> detectedObjects = detectedObjectService.findMobileObjectByFilter(
+            mobileObjectFilter, pageable);
 
         return ResponseEntity.ok(detectedObjects);
     }

@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface NaturalLangSearchModel {
 
-    List<Long> findFixedObjectByFeature(String feature);
+    List<Long> findMobileObjectByFeature(String feature);
 }
