@@ -1,13 +1,16 @@
-package capstone.design.control_automation.video.repository;
+package capstone.design.control_automation.mapper.video;
 
 import capstone.design.control_automation.video.repository.dto.VideoQueryResult;
 import capstone.design.control_automation.video.repository.dto.VideoQueryResult.Detail;
 import java.util.List;
+import org.apache.ibatis.annotations.Mapper;
 
-public interface VideoRepository {
+@Mapper
+public interface VideoMapper {
+
     List<Detail> findById(Long id);
 
     VideoQueryResult.SimpleWithMobileObject findByMobileObjectId(Long mobileObjectId);
 
-    VideoQueryResult.SimpleWithFixedObject findByFixedObjectId(Long id);
+    VideoQueryResult.SimpleWithFixedObject findByFixedObjectId(Long fixedObjectId);
 }

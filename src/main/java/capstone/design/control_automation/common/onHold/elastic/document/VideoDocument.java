@@ -1,6 +1,6 @@
 package capstone.design.control_automation.common.onHold.elastic.document;
 
-import capstone.design.control_automation.video.dto.VideoResponse;
+import capstone.design.control_automation.video.dto.OldVideoResponse;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -19,7 +19,7 @@ public class VideoDocument {
         this.summary = summary;
     }
 
-    public VideoResponse mapToResponse() {
-        return new VideoResponse(id, summary);
+    public OldVideoResponse mapToResponse() {
+        return new OldVideoResponse(id, summary);
     }
 }
