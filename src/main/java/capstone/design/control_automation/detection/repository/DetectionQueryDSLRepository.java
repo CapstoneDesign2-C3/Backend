@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-public class DetectionRepositoryImpl implements DetectionRepository {
+public class DetectionQueryDSLRepository implements DetectionRepository {
 
     private final JPAQueryFactory queryFactory;
 
@@ -27,8 +27,11 @@ public class DetectionRepositoryImpl implements DetectionRepository {
             )
             .from(QDetection.detection)
             .where(QDetection.detection.detectedObject.id.eq(filter.detectedObjectId())
-                .and(QDetection.detection.appearedTime.between(filter.startTime(), filter.endTime()))
-                .and(QDetection.detection.discoveredTime.between(filter.startTime(), filter.endTime())))
+                .and(QDetection.detection.appearedTime.between(filter.startTime(), filter.endTime())
+                    .or(QDetection.detection.discoveredTime.between(filter.startTime(), filter.endTime())
+                    )
+                )
+            )
             .fetchOne();
 
         if (count == 0L) {
@@ -44,8 +47,11 @@ public class DetectionRepositoryImpl implements DetectionRepository {
             ))
             .from(QDetection.detection)
             .where(QDetection.detection.detectedObject.id.eq(filter.detectedObjectId())
-                .and(QDetection.detection.appearedTime.between(filter.startTime(), filter.endTime()))
-                .and(QDetection.detection.discoveredTime.between(filter.startTime(), filter.endTime())))
+                .and(QDetection.detection.appearedTime.between(filter.startTime(), filter.endTime())
+                    .or(QDetection.detection.discoveredTime.between(filter.startTime(), filter.endTime())
+                    )
+                )
+            )
             .orderBy(QDetection.detection.appearedTime.asc())
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
@@ -62,8 +68,11 @@ public class DetectionRepositoryImpl implements DetectionRepository {
                 QDetection.detection.camera.longitude
             ))
             .where(QDetection.detection.detectedObject.id.eq(filter.detectedObjectId())
-                .and(QDetection.detection.appearedTime.between(filter.startTime(), filter.endTime()))
-                .and(QDetection.detection.discoveredTime.between(filter.startTime(), filter.endTime())))
+                .and(QDetection.detection.appearedTime.between(filter.startTime(), filter.endTime())
+                    .or(QDetection.detection.discoveredTime.between(filter.startTime(), filter.endTime())
+                    )
+                )
+            )
             .orderBy(QDetection.detection.appearedTime.asc())
             .fetch();
     }

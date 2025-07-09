@@ -8,7 +8,7 @@ spring:
   jpa:
     database: postgresql
     hibernate:
-      ddl-auto: none
+      ddl-auto: create
     properties:
       hibernate:
         format_sql: true
@@ -18,3 +18,8 @@ logging:
   level:
     org.hibernate.SQL: debug
     org.hibernate.type: trace
+    com.example.dbaccess.repository.mybatis: trace
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true

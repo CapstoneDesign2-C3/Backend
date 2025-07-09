@@ -6,7 +6,6 @@ import capstone.design.control_automation.detection.repository.dto.DetectionQuer
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Repository;
 
 public interface DetectionRepository {
 

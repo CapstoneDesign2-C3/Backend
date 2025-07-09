@@ -1,5 +1,7 @@
 package capstone.design.control_automation.camera.controller.dto;
 
+import lombok.Getter;
+
 public class CameraRequest {
     public record Upsert(
         Double latitude,

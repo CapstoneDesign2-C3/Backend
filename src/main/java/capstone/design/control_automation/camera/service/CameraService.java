@@ -5,11 +5,10 @@ import capstone.design.control_automation.camera.controller.dto.CameraRequest.Fi
 import capstone.design.control_automation.camera.controller.dto.CameraResponse;
 import capstone.design.control_automation.camera.entity.Camera;
 import capstone.design.control_automation.camera.repository.CameraJpaRepository;
-import capstone.design.control_automation.camera.repository.CameraReadRepository;
+import capstone.design.control_automation.camera.repository.CameraRepository;
 import capstone.design.control_automation.common.exception.ErrorCode;
 import capstone.design.control_automation.common.exception.ErrorException;
 import java.util.List;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class CameraService {
 
     private final CameraJpaRepository cameraJpaRepository;
-    private final CameraReadRepository cameraReadRepository;
+    private final CameraRepository cameraRepository;
 
     @Transactional
     public Long createCamera(CameraRequest.Upsert upsert) {
@@ -49,7 +48,7 @@ public class CameraService {
     }
 
     public List<CameraResponse.Position> getCameraPositionByFilterCondition(Filter filter) {
-        return cameraReadRepository.findAllByFilterCondition(filter)
+        return cameraRepository.findAllByFilterCondition(filter)
             .stream().map(CameraResponse.Position::from).toList();
     }
 

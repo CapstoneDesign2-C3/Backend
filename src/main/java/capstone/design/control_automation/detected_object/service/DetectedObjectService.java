@@ -12,7 +12,7 @@ import capstone.design.control_automation.detected_object.entity.DetectedObject;
 import capstone.design.control_automation.detected_object.entity.factory.DetectedObjectFactory;
 import capstone.design.control_automation.detected_object.repository.DetectedObjectJpaRepository;
 import capstone.design.control_automation.common.onHold.NaturalLangSearchModel;
-import capstone.design.control_automation.detected_object.repository.DetectedObjectReadRepository;
+import capstone.design.control_automation.detected_object.repository.DetectedObjectRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -26,7 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class DetectedObjectService {
 
     private final DetectedObjectJpaRepository detectedObjectJpaRepository;
-    private final DetectedObjectReadRepository detectedObjectReadRepository;
+    private final DetectedObjectRepository detectedObjectRepository;
     private final CategoryJpaRepository categoryJpaRepository;
     private final NaturalLangSearchModel naturalLangSearchModel;
 //    private final DetectedObjectElastic detectedObjectElastic;
@@ -34,7 +34,7 @@ public class DetectedObjectService {
     public Page<FixedObject> findFixedObjectByFilter(FixedObjectFilter fixedObjectFilter, Pageable pageable) {
         List<Long> fixedObjectIdByFeature = naturalLangSearchModel.findFixedObjectByFeature(fixedObjectFilter.searchInput());
 
-        return detectedObjectReadRepository
+        return detectedObjectRepository
             .findFixedObjectsByFilterAndIds(fixedObjectFilter, fixedObjectIdByFeature, pageable)
             .map(DetectedObjectResponse.FixedObject::from);
     }

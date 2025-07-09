@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+  <typeAliases>
+    <typeAlias alias="CameraPosition" type="capstone.design.control_automation.camera.repository.dto.CameraQueryResult$Position"/>
+    <typeAlias alias="DetectionTrack" type="capstone.design.control_automation.detection.repository.dto.DetectionQueryResult$Track"/>
+    <typeAlias alias="DetectionPosition" type="capstone.design.control_automation.detection.repository.dto.DetectionQueryResult$Position"/>
+    <typeAlias alias="DetectedObjectFixed" type="capstone.design.control_automation.detected_object.repository.dto.DetectedObjectQueryResult$FixedObject"/>
+    <typeAlias alias="DetectedObjectMobile" type="capstone.design.control_automation.detected_object.repository.dto.DetectedObjectQueryResult$MobileObject"/>
+    <typeAlias alias="SimpleVideoWithFixedObject" type="capstone.design.control_automation.video.repository.dto.VideoQueryResult$SimpleWithFixedObject"/>
+    <typeAlias alias="SimpleVideoWithMobileObject" type="capstone.design.control_automation.video.repository.dto.VideoQueryResult$SimpleWithMobileObject"/>
+    <typeAlias alias="DetailVideo" type="capstone.design.control_automation.video.repository.dto.VideoQueryResult$Detail"/>
+  </typeAliases>
+</configuration>

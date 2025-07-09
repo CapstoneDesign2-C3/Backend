@@ -1,8 +1,10 @@
 package capstone.design.control_automation.detected_object.repository;
 
 import capstone.design.control_automation.detected_object.controller.dto.DetectedObjectRequest.FixedObjectFilter;
+import capstone.design.control_automation.detected_object.controller.dto.DetectedObjectRequest.MobileObjectFilter;
 import capstone.design.control_automation.detected_object.entity.QDetectedObject;
 import capstone.design.control_automation.detected_object.repository.dto.DetectedObjectQueryResult.FixedObject;
+import capstone.design.control_automation.detected_object.repository.dto.DetectedObjectQueryResult.MobileObject;
 import capstone.design.control_automation.detected_object.repository.dto.QDetectedObjectQueryResult_FixedObject;
 import capstone.design.control_automation.detection.entity.QDetection;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -15,7 +17,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-public class DetectedObjectReadRepositoryImpl implements DetectedObjectReadRepository {
+public class DetectedObjectQueryDSLRepository implements DetectedObjectRepository {
 
     private final JPAQueryFactory queryFactory;
 
@@ -39,7 +41,6 @@ public class DetectedObjectReadRepositoryImpl implements DetectedObjectReadRepos
                 QDetectedObject.detectedObject.id,
                 QDetectedObject.detectedObject.category.name,
                 QDetectedObject.detectedObject.alias,
-                QDetectedObject.detectedObject.cropImgUrl,
                 QDetection.detection.video.summary
             )).from(QDetectedObject.detectedObject)
             .innerJoin(QDetection.detection)
@@ -51,5 +52,12 @@ public class DetectedObjectReadRepositoryImpl implements DetectedObjectReadRepos
             .fetch();
 
         return new PageImpl<>(fixedObjects, pageable, fixedObjects.size());
+    }
+
+    @Override
+    public Page<MobileObject> findMobileObjectsByFilterAndIds(MobileObjectFilter mobileObjectFilter,
+        List<Long> mobileObjectIdByFeature, Pageable pageable) {
+        // 미구현
+        return null;
     }
 }

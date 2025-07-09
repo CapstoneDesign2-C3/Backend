@@ -19,7 +19,6 @@ public class Camera {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "camera_id")
     private Long id;
 
     @Column(name = "latitude")
