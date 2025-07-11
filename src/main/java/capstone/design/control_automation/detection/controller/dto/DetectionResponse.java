@@ -7,14 +7,14 @@ import java.time.LocalDateTime;
 public class DetectionResponse {
 
     public record Position(
-        Long videoId,
+        Long detectionId,
         double latitudeY,
         double longitudeX
     ) {
 
         public static Position from(DetectionQueryResult.Position position) {
             return new Position(
-                position.videoId(),
+                position.detectionId(),
                 position.latitudeY(),
                 position.longitudeX()
             );

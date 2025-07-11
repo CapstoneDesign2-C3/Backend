@@ -64,8 +64,8 @@ class DetectionMapperTest {
     void getPositionsOfDetectedObject() {
         List<Position> expected = List.of(
             new Position(1L, 37.5665, 126.9780),
-            new Position(3L, 37.5721, 126.9875),
-            new Position(9L, 35.1796, 129.0756)
+            new Position(13L, 37.5721, 126.9875),
+            new Position(25L, 35.1796, 129.0756)
         );
 
         List<Position> actual = detectionMapper.getPositionsOfDetectedObject(1L,

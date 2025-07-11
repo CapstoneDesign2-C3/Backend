@@ -18,7 +18,7 @@ public class DetectionQueryResult {
     }
 
     public record Position(
-        Long videoId,
+        Long detectionId,
         double latitudeY,
         double longitudeX
     ) {

@@ -41,7 +41,7 @@
   </select>
 
   <select id="getPositionsOfDetectedObject" resultType="DetectionPosition">
-    SELECT v.id, c.latitude, c.longitude
+    SELECT d.id, c.latitude, c.longitude
     FROM detection d
     INNER JOIN video v on v.id = d.video_id
     INNER JOIN camera c on c.id = v.camera_id
