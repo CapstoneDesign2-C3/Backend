@@ -5,7 +5,7 @@
 
 <mapper namespace="capstone.design.control_automation.mapper.video.VideoMapper">
   <select id="findById" resultType="DetailVideo">
-    SELECT v.id, v.video_url, c.scenery, c.latitude, c.longitude, v.summary, d.detected_object_id, c2.name, o.crop_img_url, o.feature
+    SELECT v.id, v.video_url, c.scenery, c.latitude, c.longitude, d.detected_object_id, c2.name, o.crop_img_url, o.feature
     FROM video v
     INNER JOIN public.detection d on v.id = d.video_id
     INNER JOIN public.camera c on c.id = v.camera_id

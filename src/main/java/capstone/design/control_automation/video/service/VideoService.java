@@ -37,7 +37,6 @@ public class VideoService {
             base.cameraScenery(),
             base.latitude(),
             base.longitude(),
-            base.summary(),
             detectedObjects
         );
     }

@@ -34,9 +34,9 @@ class VideoMapperTest {
     @Test
     void findById() {
         List <Detail> expected = List.of(
-            new Detail(1L, "https://example.com/video1.mp4", "광화문 교차로", 37.5665, 126.9780, "출근길 인파 포착", 1L, "사람", "https://example.com/crop1.jpg", "흰 셔츠를 입은 남성"),
-            new Detail(1L, "https://example.com/video1.mp4", "광화문 교차로", 37.5665, 126.9780, "출근길 인파 포착", 11L, "사람", "https://example.com/crop11.jpg", "횡단보도 앞에 서 있는 사람"),
-            new Detail(1L, "https://example.com/video1.mp4", "광화문 교차로", 37.5665, 126.9780, "출근길 인파 포착", 7L, "화재", "https://example.com/crop7.jpg", "건물 창문에서 화염 발생")
+            new Detail(1L, "https://example.com/video1.mp4", "광화문 교차로", 37.5665, 126.9780, 1L, "사람", "https://example.com/crop1.jpg", "흰 셔츠를 입은 남성"),
+            new Detail(1L, "https://example.com/video1.mp4", "광화문 교차로", 37.5665, 126.9780, 11L, "사람", "https://example.com/crop11.jpg", "횡단보도 앞에 서 있는 사람"),
+            new Detail(1L, "https://example.com/video1.mp4", "광화문 교차로", 37.5665, 126.9780, 7L, "화재", "https://example.com/crop7.jpg", "건물 창문에서 화염 발생")
         );
 
         List<Detail> actual = mapper.findById(1L);

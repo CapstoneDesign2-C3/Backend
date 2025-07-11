@@ -58,7 +58,6 @@ public class VideoResponse {
         String cameraScenery,
         Double latitude,
         Double longitude,
-        String summary,
         List<DetectedObjectResponse.Common> detectedObjects
     ) {
 

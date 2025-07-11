@@ -34,7 +34,6 @@ public class VideoQueryResult {
         String cameraScenery,
         Double latitude,
         Double longitude,
-        String summary,
         Long detectedObjectId,
         String categoryName,
         String cropImgUrl,
