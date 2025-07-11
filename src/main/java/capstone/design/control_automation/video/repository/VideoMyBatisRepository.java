@@ -1,7 +1,6 @@
 package capstone.design.control_automation.video.repository;
 
 import capstone.design.control_automation.mapper.video.VideoMapper;
-import capstone.design.control_automation.video.repository.dto.VideoQueryResult;
 import capstone.design.control_automation.video.repository.dto.VideoQueryResult.Detail;
 import capstone.design.control_automation.video.repository.dto.VideoQueryResult.SimpleWithFixedObject;
 import capstone.design.control_automation.video.repository.dto.VideoQueryResult.SimpleWithMobileObject;

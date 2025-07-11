@@ -1,11 +1,10 @@
 package capstone.design.control_automation.common.exception;
 
+import java.util.Optional;
+import java.util.function.Predicate;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-
-import java.util.Optional;
-import java.util.function.Predicate;
 
 @Getter
 @RequiredArgsConstructor
@@ -15,7 +14,7 @@ public enum ErrorCode {
 
     //Video
     VIDEO_NOT_FOUND(HttpStatus.NOT_FOUND, "비디오를 찾을 수 없습니다."),
-    
+
     //Camera
     CAMERA_NOT_FOUND(HttpStatus.NOT_FOUND, "카메라를 찾을 수 없습니다."),
 
@@ -32,7 +31,7 @@ public enum ErrorCode {
 
     public String getMessage(String message) {
         return Optional.ofNullable(message)
-                .filter(Predicate.not(String::isBlank))
-                .orElse(this.getMessage());
+            .filter(Predicate.not(String::isBlank))
+            .orElse(this.getMessage());
     }
 }

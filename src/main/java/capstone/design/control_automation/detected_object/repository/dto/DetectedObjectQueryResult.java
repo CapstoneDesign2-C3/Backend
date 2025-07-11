@@ -11,6 +11,7 @@ public class DetectedObjectQueryResult {
         String alias,
         String summary
     ) {
+
         @QueryProjection
         public FixedObject {
 
@@ -24,6 +25,7 @@ public class DetectedObjectQueryResult {
         String alias,
         String feature
     ) {
+
         @QueryProjection
         public MobileObject {
 

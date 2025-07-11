@@ -7,5 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface VideoElastic extends ElasticsearchRepository<VideoDocument, String> {
+
     List<VideoDocument> findBySummaryContaining(String keyword);
 }

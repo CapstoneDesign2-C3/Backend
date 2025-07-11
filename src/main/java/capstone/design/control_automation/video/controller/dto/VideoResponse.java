@@ -1,11 +1,8 @@
 package capstone.design.control_automation.video.controller.dto;
 
 import capstone.design.control_automation.camera.repository.dto.CameraQueryResult;
-import capstone.design.control_automation.camera.repository.dto.CameraQueryResult.Info;
 import capstone.design.control_automation.detected_object.controller.dto.DetectedObjectResponse;
 import capstone.design.control_automation.video.repository.dto.VideoQueryResult;
-import capstone.design.control_automation.video.repository.dto.VideoQueryResult.SimpleWithFixedObject;
-import capstone.design.control_automation.video.repository.dto.VideoQueryResult.SimpleWithMobileObject;
 import java.time.LocalDateTime;
 import java.util.List;
 

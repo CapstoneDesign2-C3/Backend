@@ -4,6 +4,7 @@ import com.querydsl.core.annotations.QueryProjection;
 import java.time.LocalDateTime;
 
 public class DetectionQueryResult {
+
     public record Track(
         Long detectionId,
         String cameraScenery,
@@ -11,6 +12,7 @@ public class DetectionQueryResult {
         LocalDateTime appearedTime,
         LocalDateTime exitTime
     ) {
+
         @QueryProjection
         public Track {
 

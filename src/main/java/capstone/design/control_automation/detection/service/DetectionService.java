@@ -3,7 +3,6 @@ package capstone.design.control_automation.detection.service;
 import capstone.design.control_automation.common.onHold.NaturalLangSearchModel;
 import capstone.design.control_automation.detected_object.controller.dto.DetectedObjectRequest.FixedObjectFilter;
 import capstone.design.control_automation.detection.controller.dto.DetectionRequest.Filter;
-import capstone.design.control_automation.detection.controller.dto.DetectionResponse;
 import capstone.design.control_automation.detection.controller.dto.DetectionResponse.Fixed;
 import capstone.design.control_automation.detection.controller.dto.DetectionResponse.Position;
 import capstone.design.control_automation.detection.controller.dto.DetectionResponse.Track;

@@ -1,8 +1,6 @@
 package capstone.design.control_automation.detected_object.repository;
 
-import capstone.design.control_automation.detected_object.controller.dto.DetectedObjectRequest.FixedObjectFilter;
 import capstone.design.control_automation.detected_object.controller.dto.DetectedObjectRequest.MobileObjectFilter;
-import capstone.design.control_automation.detected_object.repository.dto.DetectedObjectQueryResult.FixedObject;
 import capstone.design.control_automation.detected_object.repository.dto.DetectedObjectQueryResult.MobileObject;
 import capstone.design.control_automation.mapper.detectedObject.DetectedObjectMapper;
 import java.util.List;

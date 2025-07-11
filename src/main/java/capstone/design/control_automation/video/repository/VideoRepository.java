@@ -5,6 +5,7 @@ import capstone.design.control_automation.video.repository.dto.VideoQueryResult.
 import java.util.List;
 
 public interface VideoRepository {
+
     List<Detail> findById(Long id);
 
     VideoQueryResult.SimpleWithMobileObject findByMobileDetectionId(Long mobileObjectId);

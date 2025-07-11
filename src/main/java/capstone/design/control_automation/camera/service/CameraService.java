@@ -10,7 +10,6 @@ import capstone.design.control_automation.camera.repository.CameraRepository;
 import capstone.design.control_automation.camera.repository.dto.CameraQueryResult;
 import capstone.design.control_automation.common.exception.ErrorCode;
 import capstone.design.control_automation.common.exception.ErrorException;
-import capstone.design.control_automation.video.controller.dto.VideoResponse;
 import capstone.design.control_automation.video.controller.dto.VideoResponse.Simple;
 import java.util.List;
 import java.util.Map;

@@ -1,7 +1,6 @@
 package capstone.design.control_automation.detected_object.controller.dto;
 
 import capstone.design.control_automation.detected_object.repository.dto.DetectedObjectQueryResult;
-import capstone.design.control_automation.detected_object.repository.dto.DetectedObjectQueryResult.MobileObject;
 import capstone.design.control_automation.video.repository.dto.VideoQueryResult.Detail;
 
 public class DetectedObjectResponse {

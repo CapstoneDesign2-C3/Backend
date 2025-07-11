@@ -15,10 +15,11 @@ public class VideoRequest {
     }
 
     public record Search(LocalDate startDate,
-                                     LocalDate endDate,
-                                     String eventType,
-                                     String cameraLocation,
-                                     String keyword) {
+                         LocalDate endDate,
+                         String eventType,
+                         String cameraLocation,
+                         String keyword) {
+
     }
 
 }

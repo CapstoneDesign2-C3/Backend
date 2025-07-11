@@ -1,7 +1,6 @@
 package capstone.design.control_automation.category.controller;
 
 import capstone.design.control_automation.category.controller.dto.CategoryRequest;
-import capstone.design.control_automation.category.controller.dto.CategoryResponse;
 import capstone.design.control_automation.category.controller.dto.CategoryResponse.Info;
 import capstone.design.control_automation.category.service.CategoryService;
 import java.net.URI;

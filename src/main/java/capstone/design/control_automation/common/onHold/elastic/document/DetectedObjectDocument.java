@@ -10,6 +10,7 @@ import org.springframework.data.elasticsearch.annotations.Document;
 @Getter
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 public class DetectedObjectDocument {
+
     @Id
     private String id;
     private String feature;
