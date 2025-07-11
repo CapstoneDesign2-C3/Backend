@@ -51,7 +51,6 @@ class CameraMapperTest {
                 37.5665,
                 126.9780,
                 1L,
-                "https://example.com/video1.mp4",
                 "https://example.com/thumbnail1.mp4",
                 LocalDateTime.parse("2025-07-09 08:00:00", formatter),
                 LocalDateTime.parse("2025-07-09 08:05:00", formatter)

@@ -65,7 +65,7 @@ public class VideoResponse {
 
     public record Simple(
         Long videoId,
-        String videoUrl,
+        String thumbnailUrl,
         LocalDateTime startTime,
         LocalDateTime endTime
     ) {
@@ -73,7 +73,7 @@ public class VideoResponse {
         public static Simple from(CameraQueryResult.Info info) {
             return new Simple(
                 info.videoId(),
-                info.videoUrl(),
+                info.videoThumbnailUrl(),
                 info.startTime(),
                 info.endTime()
             );
