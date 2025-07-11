@@ -10,12 +10,12 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface DetectionMapper {
 
-    Long getTrackCountOfDetectedObject(Long detectedObjectId, LocalDateTime startTime, LocalDateTime endTime);
+    Long getTrackCountOfMobileObject(Long mobileObjectId, LocalDateTime startTime, LocalDateTime endTime);
 
-    List<Track> getTracksOfDetectedObject(Long detectedObjectId, LocalDateTime startTime, LocalDateTime endTime, Integer pageSize,
+    List<Track> getTracksOfMobileObject(Long mobileObjectId, LocalDateTime startTime, LocalDateTime endTime, Integer pageSize,
         Long offset);
 
-    List<Position> getPositionsOfDetectedObject(Long detectedObjectId, LocalDateTime startTime, LocalDateTime endTime);
+    List<Position> getPositionsOfMobileObject(Long mobileObjectId, LocalDateTime startTime, LocalDateTime endTime);
 
     Long getFixedDetectionCountByFilterAndIds(String categoryName, String alias, List<Long> ids);
 

@@ -22,18 +22,16 @@ public class DetectionResponse {
     }
 
     public record Track(
-        Long videoId,
+        Long detectionId,
         String thumbnailUrl,
-        String summary,
         LocalDateTime appearedTime,
         LocalDateTime exitTime
     ) {
 
         public static Track from(DetectionQueryResult.Track track) {
             return new Track(
-                track.videoId(),
+                track.detectionId(),
                 track.thumbnailUrl(),
-                track.summary(),
                 track.appearedTime(),
                 track.exitTime()
             );

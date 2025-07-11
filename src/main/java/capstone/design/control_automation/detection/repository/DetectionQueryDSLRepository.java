@@ -39,9 +39,8 @@ public abstract class DetectionQueryDSLRepository implements DetectionRepository
         }
 
         List<Track> tracks = queryFactory.select(new QDetectionQueryResult_Track(
-                QDetection.detection.video.id,
+                QDetection.detection.id,
                 QDetection.detection.thumbnailUrl,
-                QDetection.detection.video.summary,
                 QDetection.detection.appearedTime,
                 QDetection.detection.exitTime
             ))
@@ -63,7 +62,7 @@ public abstract class DetectionQueryDSLRepository implements DetectionRepository
     @Override
     public List<Position> getPositionsByFilterCondition(Filter filter) {
         return queryFactory.select(new QDetectionQueryResult_Position(
-                QDetection.detection.video.id,
+                QDetection.detection.id,
                 QDetection.detection.camera.latitude,
                 QDetection.detection.camera.longitude
             ))

@@ -3,7 +3,6 @@ package capstone.design.control_automation.detection.repository;
 import capstone.design.control_automation.detected_object.controller.dto.DetectedObjectRequest.FixedObjectFilter;
 import capstone.design.control_automation.detected_object.repository.dto.DetectedObjectQueryResult;
 import capstone.design.control_automation.detection.controller.dto.DetectionRequest.Filter;
-import capstone.design.control_automation.detection.controller.dto.DetectionResponse.Fixed;
 import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult.Position;
 import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult.Track;
 import capstone.design.control_automation.mapper.detection.DetectionMapper;
@@ -24,14 +23,14 @@ public class DetectionMyBatisRepository implements DetectionRepository {
 
     @Override
     public Page<Track> getTracksByFilterCondition(Filter filter, Pageable pageable) {
-        Long count = detectionMapper.getTrackCountOfDetectedObject(filter.detectedObjectId(), filter.startTime(),
+        Long count = detectionMapper.getTrackCountOfMobileObject(filter.detectedObjectId(), filter.startTime(),
             filter.endTime());
 
         if (count == 0L) {
             return Page.empty();
         }
 
-        List<Track> tracks = detectionMapper.getTracksOfDetectedObject(
+        List<Track> tracks = detectionMapper.getTracksOfMobileObject(
             filter.detectedObjectId(),
             filter.startTime(),
             filter.endTime(),
@@ -44,7 +43,7 @@ public class DetectionMyBatisRepository implements DetectionRepository {
 
     @Override
     public List<Position> getPositionsByFilterCondition(Filter filter) {
-        return detectionMapper.getPositionsOfDetectedObject(
+        return detectionMapper.getPositionsOfMobileObject(
             filter.detectedObjectId(),
             filter.startTime(),
             filter.endTime()

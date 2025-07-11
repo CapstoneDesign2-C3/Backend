@@ -5,9 +5,8 @@ import java.time.LocalDateTime;
 
 public class DetectionQueryResult {
     public record Track(
-        Long videoId,
+        Long detectionId,
         String thumbnailUrl,
-        String summary,
         LocalDateTime appearedTime,
         LocalDateTime exitTime
     ) {

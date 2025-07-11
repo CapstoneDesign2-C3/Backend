@@ -4,12 +4,12 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="capstone.design.control_automation.mapper.detection.DetectionMapper">
-  <select id="getTrackCountOfDetectedObject" resultType="Long">
+  <select id="getTrackCountOfMobileObject" resultType="Long">
     SELECT count(id)
     FROM detection as d
     <where>
-      <if test="detectedObjectId != null">
-        d.detected_object_id = #{detectedObjectId}
+      <if test="mobileObjectId != null">
+        d.detected_object_id = #{mobileObjectId}
       </if>
       <if test="startTime != null and endTime != null">
         AND (
@@ -20,13 +20,13 @@
     </where>
   </select>
 
-  <select id="getTracksOfDetectedObject" resultType="DetectionTrack">
-    SELECT v.id, v.thumbnail_url, v.summary, d.appeared_time, d.exit_time
+  <select id="getTracksOfMobileObject" resultType="DetectionTrack">
+    SELECT d.id, v.thumbnail_url, d.appeared_time, d.exit_time
     FROM detection d
     INNER JOIN video v on d.video_id = v.id
     <where>
-      <if test="detectedObjectId != null">
-        d.detected_object_id = #{detectedObjectId}
+      <if test="mobileObjectId != null">
+        d.detected_object_id = #{mobileObjectId}
       </if>
       <if test="startTime != null and endTime != null">
         AND (
@@ -40,14 +40,14 @@
     OFFSET #{offset}
   </select>
 
-  <select id="getPositionsOfDetectedObject" resultType="DetectionPosition">
+  <select id="getPositionsOfMobileObject" resultType="DetectionPosition">
     SELECT d.id, c.latitude, c.longitude
     FROM detection d
     INNER JOIN video v on v.id = d.video_id
     INNER JOIN camera c on c.id = v.camera_id
     <where>
-      <if test="detectedObjectId != null">
-        d.detected_object_id = #{detectedObjectId}
+      <if test="mobileObjectId != null">
+        d.detected_object_id = #{mobileObjectId}
       </if>
       <if test="startTime != null and endTime != null">
         AND (

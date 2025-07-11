@@ -1,10 +1,8 @@
 package capstone.design.control_automation.mapper.detection;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import capstone.design.control_automation.common.config.MyBatisConfig;
-import capstone.design.control_automation.detected_object.controller.dto.DetectedObjectRequest.FixedObjectFilter;
 import capstone.design.control_automation.detected_object.repository.dto.DetectedObjectQueryResult.FixedObject;
 import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult.Position;
 import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult.Track;
@@ -12,16 +10,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.jdbc.Sql;
 
 @MybatisTest
 @Import(MyBatisConfig.class)
@@ -39,36 +32,36 @@ class DetectionMapperTest {
     }
 
     @Test
-    void getTrackCountOfDetectedObject() {
+    void getTrackCountOfMobileObject() {
         Long expected = 1L;
-        Long actual = detectionMapper.getTrackCountOfDetectedObject(1L, LocalDateTime.parse("2025-07-09 08:00:00", formatter),
+        Long actual = detectionMapper.getTrackCountOfMobileObject(1L, LocalDateTime.parse("2025-07-09 08:00:00", formatter),
             LocalDateTime.parse("2025-07-09 08:00:15", formatter));
 
         assertThat(actual).isEqualTo(expected);
     }
 
     @Test
-    void getTracksOfDetectedObject() {
+    void getTracksOfMobileObject() {
         List<Track> expected = List.of(
-            new Track(1L, "https://example.com/thumbnail1.mp4", "출근길 인파 포착", LocalDateTime.parse("2025-07-09 08:00:10", formatter), LocalDateTime.parse("2025-07-09 08:00:12", formatter)),
-            new Track(3L, "https://example.com/thumbnail3.mp4", "화재로 인해 연기 발생", LocalDateTime.parse("2025-07-09 08:10:30", formatter), LocalDateTime.parse("2025-07-09 08:10:35", formatter)),
-            new Track(9L, "https://example.com/thumbnail9.mp4", "도로 정비 작업", LocalDateTime.parse("2025-07-09 09:40:00", formatter), LocalDateTime.parse("2025-07-09 09:40:03", formatter))
+            new Track(1L, "https://example.com/thumbnail1.mp4", LocalDateTime.parse("2025-07-09 08:00:10", formatter), LocalDateTime.parse("2025-07-09 08:00:12", formatter)),
+            new Track(13L, "https://example.com/thumbnail3.mp4", LocalDateTime.parse("2025-07-09 08:10:30", formatter), LocalDateTime.parse("2025-07-09 08:10:35", formatter)),
+            new Track(25L, "https://example.com/thumbnail9.mp4", LocalDateTime.parse("2025-07-09 09:40:00", formatter), LocalDateTime.parse("2025-07-09 09:40:03", formatter))
         );
-        List<Track> actual = detectionMapper.getTracksOfDetectedObject(1L, LocalDateTime.parse("2025-07-09 08:00:00", formatter),
+        List<Track> actual = detectionMapper.getTracksOfMobileObject(1L, LocalDateTime.parse("2025-07-09 08:00:00", formatter),
             LocalDateTime.parse("2025-07-09 10:00:15", formatter), 5, 0L);
 
         assertThat(actual).hasSameElementsAs(expected);
     }
 
     @Test
-    void getPositionsOfDetectedObject() {
+    void getPositionsOfMobileObject() {
         List<Position> expected = List.of(
             new Position(1L, 37.5665, 126.9780),
             new Position(13L, 37.5721, 126.9875),
             new Position(25L, 35.1796, 129.0756)
         );
 
-        List<Position> actual = detectionMapper.getPositionsOfDetectedObject(1L,
+        List<Position> actual = detectionMapper.getPositionsOfMobileObject(1L,
             LocalDateTime.parse("2025-07-09 08:00:00", formatter),
             LocalDateTime.parse("2025-07-09 10:00:15", formatter));
 
