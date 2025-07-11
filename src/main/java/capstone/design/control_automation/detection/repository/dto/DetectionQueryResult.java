@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 public class DetectionQueryResult {
     public record Track(
         Long detectionId,
+        String cameraScenery,
         String thumbnailUrl,
         LocalDateTime appearedTime,
         LocalDateTime exitTime

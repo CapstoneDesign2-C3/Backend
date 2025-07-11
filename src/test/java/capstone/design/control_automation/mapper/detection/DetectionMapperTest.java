@@ -43,9 +43,9 @@ class DetectionMapperTest {
     @Test
     void getTracksOfMobileObject() {
         List<Track> expected = List.of(
-            new Track(1L, "https://example.com/thumbnail1.mp4", LocalDateTime.parse("2025-07-09 08:00:10", formatter), LocalDateTime.parse("2025-07-09 08:00:12", formatter)),
-            new Track(13L, "https://example.com/thumbnail3.mp4", LocalDateTime.parse("2025-07-09 08:10:30", formatter), LocalDateTime.parse("2025-07-09 08:10:35", formatter)),
-            new Track(25L, "https://example.com/thumbnail9.mp4", LocalDateTime.parse("2025-07-09 09:40:00", formatter), LocalDateTime.parse("2025-07-09 09:40:03", formatter))
+            new Track(1L, "광화문 교차로", "https://example.com/thumbnail1.mp4", LocalDateTime.parse("2025-07-09 08:00:10", formatter), LocalDateTime.parse("2025-07-09 08:00:12", formatter)),
+            new Track(13L, "북촌 한옥마을 입구", "https://example.com/thumbnail3.mp4", LocalDateTime.parse("2025-07-09 08:10:30", formatter), LocalDateTime.parse("2025-07-09 08:10:35", formatter)),
+            new Track(25L, "부산 해운대 해수욕장", "https://example.com/thumbnail9.mp4", LocalDateTime.parse("2025-07-09 09:40:00", formatter), LocalDateTime.parse("2025-07-09 09:40:03", formatter))
         );
         List<Track> actual = detectionMapper.getTracksOfMobileObject(1L, LocalDateTime.parse("2025-07-09 08:00:00", formatter),
             LocalDateTime.parse("2025-07-09 10:00:15", formatter), 5, 0L);

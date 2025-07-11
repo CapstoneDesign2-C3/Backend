@@ -23,6 +23,7 @@ public class DetectionResponse {
 
     public record Track(
         Long detectionId,
+        String cameraScenery,
         String thumbnailUrl,
         LocalDateTime appearedTime,
         LocalDateTime exitTime
@@ -31,6 +32,7 @@ public class DetectionResponse {
         public static Track from(DetectionQueryResult.Track track) {
             return new Track(
                 track.detectionId(),
+                track.cameraScenery(),
                 track.thumbnailUrl(),
                 track.appearedTime(),
                 track.exitTime()
