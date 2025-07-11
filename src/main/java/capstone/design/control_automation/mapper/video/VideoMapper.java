@@ -10,7 +10,7 @@ public interface VideoMapper {
 
     List<Detail> findById(Long id);
 
-    VideoQueryResult.SimpleWithMobileObject findByMobileObjectId(Long mobileObjectId);
+    VideoQueryResult.SimpleWithMobileObject findByMobileDetectionId(Long detectionId);
 
     VideoQueryResult.SimpleWithFixedObject findByFixedObjectId(Long fixedObjectId);
 }

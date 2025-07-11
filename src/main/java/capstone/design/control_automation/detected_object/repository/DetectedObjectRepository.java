@@ -10,9 +10,6 @@ import org.springframework.data.domain.Pageable;
 
 public interface DetectedObjectRepository {
 
-    Page<FixedObject> findFixedObjectsByFilterAndIds(FixedObjectFilter fixedObjectFilter, List<Long> fixedObjectIdByFeature,
-        Pageable pageable);
-
     Page<MobileObject> findMobileObjectsByFilterAndIds(MobileObjectFilter mobileObjectFilter, List<Long> mobileObjectIdByFeature,
         Pageable pageable);
 }

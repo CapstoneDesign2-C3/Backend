@@ -34,18 +34,18 @@ CREATE TABLE video (
                        start_time TIMESTAMP,
                        end_time TIMESTAMP,
                        video_url VARCHAR(255) NOT NULL,
-                       summary VARCHAR(255) NOT NULL -- oid 대신 BLOB 사용
+                       summary VARCHAR(255) NOT NULL, -- oid 대신 BLOB 사용
+                       thumbnail_url VARCHAR(255),
+                       camera_id BIGINT NOT NULL,
+                       FOREIGN KEY (camera_id) REFERENCES camera(id)
 );
 
 CREATE TABLE detection (
                            id BIGINT AUTO_INCREMENT PRIMARY KEY,
                            appeared_time TIMESTAMP NOT NULL,
-                           discovered_time TIMESTAMP NOT NULL,
-                           camera_id BIGINT NOT NULL,
+                           exit_time TIMESTAMP NOT NULL,
                            detected_object_id BIGINT NOT NULL,
                            video_id BIGINT NOT NULL,
-                           thumbnail_url VARCHAR(255),
-                           FOREIGN KEY (camera_id) REFERENCES camera(id),
                            FOREIGN KEY (detected_object_id) REFERENCES detected_object(id),
                            FOREIGN KEY (video_id) REFERENCES video(id)
 );

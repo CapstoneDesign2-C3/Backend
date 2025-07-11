@@ -24,9 +24,9 @@ public class VideoRestController {
         return ResponseEntity.ok(videoDetail);
     }
 
-    @GetMapping("/mobile-object")
-    public ResponseEntity<VideoResponse.SimpleWithMobileObject> getSimpleVideoWithMobileObject(@RequestParam Long mobileObjectId) {
-        VideoResponse.SimpleWithMobileObject simpleVideo = videoService.getSimpleVideoByMobileObjectId(mobileObjectId);
+    @GetMapping("/mobile-detection")
+    public ResponseEntity<VideoResponse.SimpleWithMobileObject> getSimpleVideoWithMobileObject(@RequestParam Long mobileDetectionId) {
+        VideoResponse.SimpleWithMobileObject simpleVideo = videoService.getSimpleVideoByMobileObjectId(mobileDetectionId);
         return ResponseEntity.ok(simpleVideo);
     }
 

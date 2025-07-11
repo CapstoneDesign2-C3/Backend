@@ -10,7 +10,7 @@ public class VideoQueryResult {
         String detectedObjectAlias,
         String detectedObjectCropUrl,
         LocalDateTime appearedTime,
-        LocalDateTime discoveredTime,
+        LocalDateTime exitTime,
         String categoryName,
         String feature
     ) {
@@ -22,7 +22,7 @@ public class VideoQueryResult {
         String summary,
         String detectedObjectAlias,
         LocalDateTime appearedTime,
-        LocalDateTime discoveredTime,
+        LocalDateTime exitTime,
         String categoryName
     ) {
 

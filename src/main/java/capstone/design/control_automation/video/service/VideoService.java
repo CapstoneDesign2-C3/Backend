@@ -42,8 +42,8 @@ public class VideoService {
         );
     }
 
-    public SimpleWithMobileObject getSimpleVideoByMobileObjectId(Long mobileObjectId) {
-        return VideoResponse.SimpleWithMobileObject.of(videoRepository.findByMobileObjectId(mobileObjectId));
+    public SimpleWithMobileObject getSimpleVideoByMobileObjectId(Long mobileDetectionId) {
+        return VideoResponse.SimpleWithMobileObject.of(videoRepository.findByMobileDetectionId(mobileDetectionId));
     }
 
     public SimpleWithFixedObject getSimpleVideoByFixedObjectId(Long fixedObjectId) {

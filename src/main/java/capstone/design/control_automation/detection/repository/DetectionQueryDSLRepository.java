@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-public class DetectionQueryDSLRepository implements DetectionRepository {
+public abstract class DetectionQueryDSLRepository implements DetectionRepository {
 
     private final JPAQueryFactory queryFactory;
 
@@ -28,7 +28,7 @@ public class DetectionQueryDSLRepository implements DetectionRepository {
             .from(QDetection.detection)
             .where(QDetection.detection.detectedObject.id.eq(filter.detectedObjectId())
                 .and(QDetection.detection.appearedTime.between(filter.startTime(), filter.endTime())
-                    .or(QDetection.detection.discoveredTime.between(filter.startTime(), filter.endTime())
+                    .or(QDetection.detection.exitTime.between(filter.startTime(), filter.endTime())
                     )
                 )
             )
@@ -43,12 +43,12 @@ public class DetectionQueryDSLRepository implements DetectionRepository {
                 QDetection.detection.thumbnailUrl,
                 QDetection.detection.video.summary,
                 QDetection.detection.appearedTime,
-                QDetection.detection.discoveredTime
+                QDetection.detection.exitTime
             ))
             .from(QDetection.detection)
             .where(QDetection.detection.detectedObject.id.eq(filter.detectedObjectId())
                 .and(QDetection.detection.appearedTime.between(filter.startTime(), filter.endTime())
-                    .or(QDetection.detection.discoveredTime.between(filter.startTime(), filter.endTime())
+                    .or(QDetection.detection.exitTime.between(filter.startTime(), filter.endTime())
                     )
                 )
             )
@@ -69,7 +69,7 @@ public class DetectionQueryDSLRepository implements DetectionRepository {
             ))
             .where(QDetection.detection.detectedObject.id.eq(filter.detectedObjectId())
                 .and(QDetection.detection.appearedTime.between(filter.startTime(), filter.endTime())
-                    .or(QDetection.detection.discoveredTime.between(filter.startTime(), filter.endTime())
+                    .or(QDetection.detection.exitTime.between(filter.startTime(), filter.endTime())
                     )
                 )
             )

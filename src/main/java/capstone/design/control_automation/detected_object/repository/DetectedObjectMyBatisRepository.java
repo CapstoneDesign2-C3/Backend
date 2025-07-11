@@ -21,36 +21,12 @@ public class DetectedObjectMyBatisRepository implements DetectedObjectRepository
     private final DetectedObjectMapper detectedObjectMapper;
 
     @Override
-    public Page<FixedObject> findFixedObjectsByFilterAndIds(FixedObjectFilter filter,
-        List<Long> fixedObjectIdByFeature, Pageable pageable) {
-        Long count = detectedObjectMapper.findFixedObjectCountByFilterAndIds(
-            filter.categoryName(),
-            filter.alias(),
-            fixedObjectIdByFeature
-        );
-
-        if (count == 0) {
-            return Page.empty();
-        }
-
-        List<FixedObject> fixedObjects = detectedObjectMapper.findFixedObjectsByFilterAndIds(
-            filter.categoryName(),
-            filter.alias(),
-            fixedObjectIdByFeature,
-            pageable.getPageSize(),
-            pageable.getOffset()
-        );
-
-        return new PageImpl<>(fixedObjects, pageable, fixedObjects.size());
-    }
-
-    @Override
     public Page<MobileObject> findMobileObjectsByFilterAndIds(MobileObjectFilter filter,
-        List<Long> mobileObjectIdBySummary, Pageable pageable) {
+        List<Long> mobileObjectIds, Pageable pageable) {
         Long count = detectedObjectMapper.findMobileObjectCountByFilterAndIds(
             filter.categoryName(),
             filter.alias(),
-            mobileObjectIdBySummary
+            mobileObjectIds
         );
 
         if (count == 0) {
@@ -60,7 +36,7 @@ public class DetectedObjectMyBatisRepository implements DetectedObjectRepository
         List<MobileObject> mobileObjects = detectedObjectMapper.findMobileObjectsByFilterAndIds(
             filter.categoryName(),
             filter.alias(),
-            mobileObjectIdBySummary,
+            mobileObjectIds,
             pageable.getPageSize(),
             pageable.getOffset()
         );

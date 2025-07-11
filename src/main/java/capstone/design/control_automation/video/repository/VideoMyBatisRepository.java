@@ -23,8 +23,8 @@ public class VideoMyBatisRepository implements VideoRepository {
     }
 
     @Override
-    public SimpleWithMobileObject findByMobileObjectId(Long mobileObjectId) {
-        return videoMapper.findByMobileObjectId(mobileObjectId);
+    public SimpleWithMobileObject findByMobileDetectionId(Long mobileDetectionId) {
+        return videoMapper.findByMobileDetectionId(mobileDetectionId);
     }
 
     @Override

@@ -13,16 +13,15 @@
           and bottomRightLatitude != null
           and bottomRightLongitude != null">
         c.latitude BETWEEN #{bottomRightLatitude} AND #{topLeftLatitude}
-        AND c.longitude BETWEEN #{topLeftLongitude} AND #{bottomRightLatitude}
+        AND c.longitude BETWEEN #{topLeftLongitude} AND #{bottomRightLongitude}
       </if>
     </where>
   </select>
 
   <select id="findWithVideosById" resultType="CameraInfo">
-    SELECT DISTINCT c.id, c.scenery, c.latitude, c.longitude, v.id, v.video_url, v.start_time, v.end_time
+    SELECT DISTINCT c.id, c.scenery, c.latitude, c.longitude, v.id, v.video_url, v.thumbnail_url, v.start_time, v.end_time
     FROM camera c
-    LEFT JOIN public.detection d on c.id = d.camera_id
-    LEFT JOIN public.video v on d.video_id = v.id
+    LEFT JOIN public.video v on c.id = v.camera_id
     WHERE c.id = #{cameraId}
   </select>
 </mapper>

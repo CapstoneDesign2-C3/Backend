@@ -9,7 +9,7 @@ public class DetectionQueryResult {
         String thumbnailUrl,
         String summary,
         LocalDateTime appearedTime,
-        LocalDateTime discoveredTime
+        LocalDateTime exitTime
     ) {
         @QueryProjection
         public Track {

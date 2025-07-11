@@ -23,6 +23,7 @@ public class CameraQueryResult {
         Double longitude,
         Long videoId,
         String videoUrl,
+        String videoThumbnailUrl,
         LocalDateTime startTime,
         LocalDateTime endTime
     ) {

@@ -1,5 +1,6 @@
 package capstone.design.control_automation.detection.controller.dto;
 
+import capstone.design.control_automation.detected_object.repository.dto.DetectedObjectQueryResult;
 import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult;
 import java.time.LocalDateTime;
 
@@ -25,7 +26,7 @@ public class DetectionResponse {
         String thumbnailUrl,
         String summary,
         LocalDateTime appearedTime,
-        LocalDateTime discoveredTime
+        LocalDateTime exitTime
     ) {
 
         public static Track from(DetectionQueryResult.Track track) {
@@ -34,7 +35,7 @@ public class DetectionResponse {
                 track.thumbnailUrl(),
                 track.summary(),
                 track.appearedTime(),
-                track.discoveredTime()
+                track.exitTime()
             );
         }
     }
@@ -46,5 +47,13 @@ public class DetectionResponse {
         String summary
     ) {
 
+        public static Fixed from(DetectedObjectQueryResult.FixedObject fixedObject) {
+            return new Fixed(
+                fixedObject.videoId(),
+                fixedObject.categoryName(),
+                fixedObject.alias(),
+                fixedObject.summary()
+            );
+        }
     }
 }

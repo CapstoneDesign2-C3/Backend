@@ -27,8 +27,8 @@ public class Detection {
     @Column(name = "appeared_time", nullable = false)
     private LocalDateTime appearedTime;
 
-    @Column(name = "discovered_time", nullable = false)
-    private LocalDateTime discoveredTime;
+    @Column(name = "exit_time", nullable = false)
+    private LocalDateTime exitTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "camera_id", nullable = false)
@@ -42,11 +42,11 @@ public class Detection {
     @JoinColumn(name = "detected_object_id", nullable = false)
     private DetectedObject detectedObject;
 
-    public Detection(String thumbnailUrl, LocalDateTime appearedTime, LocalDateTime discoveredTime, Camera camera, Video video,
+    public Detection(String thumbnailUrl, LocalDateTime appearedTime, LocalDateTime exitTime, Camera camera, Video video,
         DetectedObject detectedObject) {
         this.thumbnailUrl = thumbnailUrl;
         this.appearedTime = appearedTime;
-        this.discoveredTime = discoveredTime;
+        this.exitTime = exitTime;
         this.camera = camera;
         this.video = video;
         this.detectedObject = detectedObject;

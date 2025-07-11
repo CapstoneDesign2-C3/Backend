@@ -7,7 +7,7 @@ import java.util.List;
 public interface VideoRepository {
     List<Detail> findById(Long id);
 
-    VideoQueryResult.SimpleWithMobileObject findByMobileObjectId(Long mobileObjectId);
+    VideoQueryResult.SimpleWithMobileObject findByMobileDetectionId(Long mobileObjectId);
 
     VideoQueryResult.SimpleWithFixedObject findByFixedObjectId(Long id);
 }

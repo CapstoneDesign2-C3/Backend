@@ -14,14 +14,14 @@
       <if test="startTime != null and endTime != null">
         AND (
         d.appeared_time BETWEEN #{startTime} AND #{endTime}
-        OR d.discovered_time BETWEEN #{startTime} AND #{endTime}
+        OR d.exit_time BETWEEN #{startTime} AND #{endTime}
         )
       </if>
     </where>
   </select>
 
   <select id="getTracksOfDetectedObject" resultType="DetectionTrack">
-    SELECT v.id, d.thumbnail_url, v.summary, d.appeared_time, d.discovered_time
+    SELECT v.id, v.thumbnail_url, v.summary, d.appeared_time, d.exit_time
     FROM detection d
     INNER JOIN video v on d.video_id = v.id
     <where>
@@ -31,7 +31,7 @@
       <if test="startTime != null and endTime != null">
         AND (
         d.appeared_time BETWEEN #{startTime} AND #{endTime}
-        OR d.discovered_time BETWEEN #{startTime} AND #{endTime}
+        OR d.exit_time BETWEEN #{startTime} AND #{endTime}
         )
       </if>
     </where>
@@ -43,8 +43,8 @@
   <select id="getPositionsOfDetectedObject" resultType="DetectionPosition">
     SELECT v.id, c.latitude, c.longitude
     FROM detection d
-    INNER JOIN camera c on c.id = d.camera_id
     INNER JOIN video v on v.id = d.video_id
+    INNER JOIN camera c on c.id = v.camera_id
     <where>
       <if test="detectedObjectId != null">
         d.detected_object_id = #{detectedObjectId}
@@ -52,10 +52,59 @@
       <if test="startTime != null and endTime != null">
         AND (
         d.appeared_time BETWEEN #{startTime} AND #{endTime}
-        OR d.discovered_time BETWEEN #{startTime} AND #{endTime}
+        OR d.exit_time BETWEEN #{startTime} AND #{endTime}
         )
       </if>
     </where>
     ORDER BY d.appeared_time ASC
   </select>
+
+  <select id="getFixedDetectionCountByFilterAndIds" resultType="Long">
+    SELECT count(d.id)
+    FROM detection d
+    INNER JOIN public.detected_object o on o.id = d.detected_object_id
+    INNER JOIN public.categories c on c.id = o.category_id
+    <where>
+        o.dtype LIKE 'fixed'
+      <if test="categoryName != null">
+        AND c.name LIKE concat('%', #{categoryName},'%')
+      </if>
+      <if test="alias != null">
+        AND o.alias LIKE concat('%', #{alias}, '%')
+      </if>
+      <if test="ids != null and ids.size > 0">
+        AND d.id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+          #{id}
+        </foreach>
+      </if>
+    </where>
+  </select>
+
+  <select id="getFixedDetectionsByFilterAndIds" resultType="DetectedObjectFixed">
+    SELECT v.id, v.video_url, c.name, o.alias, v.summary
+    FROM detection d
+    INNER JOIN public.detected_object o on o.id = d.detected_object_id
+    INNER JOIN public.categories c on c.id = o.category_id
+    INNER JOIN public.video v on d.video_id = v.id
+    <where>
+      o.dtype LIKE 'fixed'
+      <if test="categoryName != null">
+        AND c.name LIKE concat('%', #{categoryName},'%')
+      </if>
+      <if test="alias != null">
+        AND o.alias LIKE concat('%', #{alias}, '%')
+      </if>
+      <if test="ids != null and ids.size > 0">
+        AND d.id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+          #{id}
+        </foreach>
+      </if>
+    </where>
+    ORDER BY d.appeared_time ASC
+    LIMIT #{pageSize}
+    OFFSET #{offset}
+  </select>
+
 </mapper>

@@ -17,7 +17,7 @@ public class VideoResponse {
         String detectedObjectAlias,
         String detectedObjectCropUrl,
         LocalDateTime appearedTime,
-        LocalDateTime discoveredTime,
+        LocalDateTime exitTime,
         String categoryName,
         String feature
     ) {
@@ -29,7 +29,7 @@ public class VideoResponse {
                 simpleVideo.detectedObjectAlias(),
                 simpleVideo.detectedObjectCropUrl(),
                 simpleVideo.appearedTime(),
-                simpleVideo.discoveredTime(),
+                simpleVideo.exitTime(),
                 simpleVideo.categoryName(),
                 simpleVideo.feature()
             );
@@ -41,7 +41,7 @@ public class VideoResponse {
         String summary,
         String detectedObjectAlias,
         LocalDateTime appearedTime,
-        LocalDateTime discoveredTime
+        LocalDateTime exitTime
     ) {
 
         public static SimpleWithFixedObject of(VideoQueryResult.SimpleWithFixedObject simpleVideo
@@ -51,7 +51,7 @@ public class VideoResponse {
                 simpleVideo.summary(),
                 simpleVideo.detectedObjectAlias(),
                 simpleVideo.appearedTime(),
-                simpleVideo.discoveredTime()
+                simpleVideo.exitTime()
             );
         }
     }

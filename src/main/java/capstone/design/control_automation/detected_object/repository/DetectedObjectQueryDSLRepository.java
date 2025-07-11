@@ -17,47 +17,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-public class DetectedObjectQueryDSLRepository implements DetectedObjectRepository {
+public abstract class DetectedObjectQueryDSLRepository implements DetectedObjectRepository {
 
     private final JPAQueryFactory queryFactory;
 
-    @Override
-    public Page<FixedObject> findFixedObjectsByFilterAndIds(FixedObjectFilter fixedObjectFilter,
-        List<Long> fixedObjectIdByFeature, Pageable pageable) {
-        Long count = queryFactory.select(
-                QDetectedObject.detectedObject.id.count()
-            )
-            .from(QDetectedObject.detectedObject)
-            .where(QDetectedObject.detectedObject.category.name.eq(fixedObjectFilter.categoryName())
-                .and(QDetectedObject.detectedObject.alias.eq(fixedObjectFilter.alias()))
-                .and(QDetectedObject.detectedObject.id.in(fixedObjectIdByFeature)))
-            .fetchOne();
-
-        if (count == 0) {
-            return Page.empty();
-        }
-
-        List<FixedObject> fixedObjects = queryFactory.select(new QDetectedObjectQueryResult_FixedObject(
-                QDetectedObject.detectedObject.id,
-                QDetectedObject.detectedObject.category.name,
-                QDetectedObject.detectedObject.alias,
-                QDetection.detection.video.summary
-            )).from(QDetectedObject.detectedObject)
-            .innerJoin(QDetection.detection)
-            .where(QDetectedObject.detectedObject.category.name.eq(fixedObjectFilter.categoryName())
-                .and(QDetectedObject.detectedObject.alias.eq(fixedObjectFilter.alias()))
-                .and(QDetectedObject.detectedObject.id.in(fixedObjectIdByFeature)))
-            .limit(pageable.getPageSize())
-            .offset(pageable.getOffset())
-            .fetch();
-
-        return new PageImpl<>(fixedObjects, pageable, fixedObjects.size());
-    }
-
-    @Override
-    public Page<MobileObject> findMobileObjectsByFilterAndIds(MobileObjectFilter mobileObjectFilter,
-        List<Long> mobileObjectIdByFeature, Pageable pageable) {
-        // 미구현
-        return null;
-    }
 }
