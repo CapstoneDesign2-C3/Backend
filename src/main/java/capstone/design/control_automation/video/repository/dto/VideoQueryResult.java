@@ -6,7 +6,7 @@ public class VideoQueryResult {
 
     public record SimpleWithMobileObject(
         String videoUrl,
-        String summary,
+        String detectedObjectUUID,
         String detectedObjectAlias,
         String detectedObjectCropUrl,
         LocalDateTime appearedTime,

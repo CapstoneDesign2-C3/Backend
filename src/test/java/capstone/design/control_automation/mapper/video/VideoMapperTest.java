@@ -46,7 +46,7 @@ class VideoMapperTest {
 
     @Test
     void findByMobileObjectId() {
-        SimpleWithMobileObject expected = new SimpleWithMobileObject("https://example.com/video1.mp4", "출근길 인파 포착", null, "https://example.com/crop1.jpg", LocalDateTime.parse("2025-07-09 08:00:10", formatter), LocalDateTime.parse("2025-07-09 08:00:12", formatter), "사람", "흰 셔츠를 입은 남성");
+        SimpleWithMobileObject expected = new SimpleWithMobileObject("https://example.com/video1.mp4", "b3f8b7d9-17c7-4af2-b262-2db13ae7e40c", null, "https://example.com/crop1.jpg", LocalDateTime.parse("2025-07-09 08:00:10", formatter), LocalDateTime.parse("2025-07-09 08:00:12", formatter), "사람", "흰 셔츠를 입은 남성");
 
         SimpleWithMobileObject actual = mapper.findByMobileDetectionId(1L);
 

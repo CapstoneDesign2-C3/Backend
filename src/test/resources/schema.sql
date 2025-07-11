@@ -19,6 +19,7 @@ CREATE TABLE detected_object (
                                  alias VARCHAR(255),
                                  crop_img_url VARCHAR(255) NOT NULL,
                                  feature VARCHAR(255),
+                                 uuid VARCHAR(255),
                                  FOREIGN KEY (category_id) REFERENCES categories(id)
 );
 

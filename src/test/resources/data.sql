@@ -5,19 +5,19 @@ INSERT INTO categories (name, eng_name, is_mobile) VALUES
                                                   ('화재', 'fire', false),
                                                   ('교통사고', 'accident', false);
 
-INSERT INTO detected_object (category_id, crop_img_url, dtype, feature) VALUES
-                                                                                      (1, 'https://example.com/crop1.jpg', 'mobile', '흰 셔츠를 입은 남성'),
-                                                                                      (1, 'https://example.com/crop2.jpg', 'mobile', '검은 가방을 맨 여성'),
-                                                                                      (2, 'https://example.com/crop3.jpg', 'mobile', '빨간색 SUV 차량'),
-                                                                                      (2, 'https://example.com/crop4.jpg', 'mobile', '파란색 트럭이 정차 중'),
-                                                                                      (3, 'https://example.com/crop5.jpg', 'mobile', '헬멧을 쓴 오토바이 운전자'),
-                                                                                      (3, 'https://example.com/crop6.jpg', 'mobile', '주차된 오토바이'),
-                                                                                      (4, 'https://example.com/crop7.jpg', 'fixed', '건물 창문에서 화염 발생'),
-                                                                                      (4, 'https://example.com/crop8.jpg', 'fixed', '도로 위 연기 감지'),
-                                                                                      (5, 'https://example.com/crop9.jpg', 'fixed', '차량 두 대가 충돌한 모습'),
-                                                                                      (5, 'https://example.com/crop10.jpg', 'fixed', '전복된 차량과 파손 흔적'),
-                                                                                      (1, 'https://example.com/crop11.jpg', 'mobile', '횡단보도 앞에 서 있는 사람'),
-                                                                                      (2, 'https://example.com/crop12.jpg', 'mobile', '주행 중인 택시');
+INSERT INTO detected_object (category_id, crop_img_url, dtype, feature, uuid) VALUES
+                                                                                  (1, 'https://example.com/crop1.jpg', 'mobile', '흰 셔츠를 입은 남성', 'b3f8b7d9-17c7-4af2-b262-2db13ae7e40c'),
+                                                                                  (1, 'https://example.com/crop2.jpg', 'mobile', '검은 가방을 맨 여성', 'c5e4d9f2-7e71-4d47-b913-8a69f5c7f06a'),
+                                                                                  (2, 'https://example.com/crop3.jpg', 'mobile', '빨간색 SUV 차량', 'a9d2d5f4-57e2-46a4-ae2a-27ddc46bd2b1'),
+                                                                                  (2, 'https://example.com/crop4.jpg', 'mobile', '파란색 트럭이 정차 중', '6b8fdd2b-5e3a-4080-a68d-dab9629f70d0'),
+                                                                                  (3, 'https://example.com/crop5.jpg', 'mobile', '헬멧을 쓴 오토바이 운전자', '38bb54be-4ad4-4474-85ff-d17b8992b1d3'),
+                                                                                  (3, 'https://example.com/crop6.jpg', 'mobile', '주차된 오토바이', '9c6f7c27-2f52-4c37-9463-8898d98ff9c8'),
+                                                                                  (4, 'https://example.com/crop7.jpg', 'fixed', '건물 창문에서 화염 발생', '5cb6dc7d-c690-439e-b1b1-60de47ce27e6'),
+                                                                                  (4, 'https://example.com/crop8.jpg', 'fixed', '도로 위 연기 감지', '1d2d9745-f775-48b6-b391-25ff96ad6a4f'),
+                                                                                  (5, 'https://example.com/crop9.jpg', 'fixed', '차량 두 대가 충돌한 모습', 'e1e9e5a9-7c33-48b7-951e-6b7c07c0d7e4'),
+                                                                                  (5, 'https://example.com/crop10.jpg', 'fixed', '전복된 차량과 파손 흔적', 'a1b9e0e0-dadc-45f2-bd6c-6f9ea7f9c1e8'),
+                                                                                  (1, 'https://example.com/crop11.jpg', 'mobile', '횡단보도 앞에 서 있는 사람', '0b4a6e5f-c580-42c1-843a-1476d19c303a'),
+                                                                                  (2, 'https://example.com/crop12.jpg', 'mobile', '주행 중인 택시', '9f1e9731-abc1-4d5d-9709-bbc7a9d2683c');
 
 INSERT INTO camera (latitude, longitude, scenery) VALUES
                                                               (37.5665, 126.9780, '광화문 교차로'),

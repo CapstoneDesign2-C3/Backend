@@ -13,7 +13,7 @@ public class VideoResponse {
 
     public record SimpleWithMobileObject(
         String videoUrl,
-        String summary,
+        String detectedObjectUUID,
         String detectedObjectAlias,
         String detectedObjectCropUrl,
         LocalDateTime appearedTime,
@@ -25,7 +25,7 @@ public class VideoResponse {
         public static SimpleWithMobileObject of(VideoQueryResult.SimpleWithMobileObject simpleVideo) {
             return new SimpleWithMobileObject(
                 simpleVideo.videoUrl(),
-                simpleVideo.summary(),
+                simpleVideo.detectedObjectUUID(),
                 simpleVideo.detectedObjectAlias(),
                 simpleVideo.detectedObjectCropUrl(),
                 simpleVideo.appearedTime(),
