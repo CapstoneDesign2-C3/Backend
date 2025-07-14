@@ -72,11 +72,9 @@
   </select>
 
   <select id="findMobileObjectsByFilterAndIds" resultType="DetectedObjectMobile">
-    SELECT d.id, c.name, d.alias, v.summary
+    SELECT d.id, c.name, d.crop_img_url, d.alias, d.feature
     FROM detected_object d
     inner join categories c on c.id = d.category_id
-    inner join detection d1 on d.id = d1.detected_object_id
-    inner join video v on v.id = d1.video_id
     <where>
       d.dtype LIKE 'mobile'
       <if test="categoryName != null">

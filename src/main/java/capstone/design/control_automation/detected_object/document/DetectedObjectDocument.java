@@ -1,4 +1,4 @@
-package capstone.design.control_automation.common.onHold.elastic.document;
+package capstone.design.control_automation.detected_object.document;
 
 import jakarta.persistence.Id;
 import lombok.AccessLevel;

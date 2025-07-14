@@ -34,8 +34,10 @@ class DetectedObjectMapperTest {
             new MobileObject(5L, "오토바이", "https://example.com/crop5.jpg", null, "헬멧을 쓴 오토바이 운전자"),
             new MobileObject(6L, "오토바이", "https://example.com/crop6.jpg", null, "주차된 오토바이")
         );
-        List<MobileObject> actual = detectedObjectMapper.findMobileObjectsByFilterAndIds("오토바이", "",
-            List.of(1L, 2L, 3L, 4L, 5L, 6L), 5, 1L);
+        List<MobileObject> actual = detectedObjectMapper.findMobileObjectsByFilterAndIds("오토바이", null,
+            List.of(1L, 2L, 3L, 4L, 5L, 6L), 5, 0L);
+
+        assertThat(actual).hasSameElementsAs(expected);
     }
 
 }
