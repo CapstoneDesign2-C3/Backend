@@ -6,10 +6,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Base64;
 import kr.dogfoot.hwplib.object.HWPFile;
 import kr.dogfoot.hwplib.object.bodytext.Section;
-import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.CtrlHeader;
 import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.CtrlHeaderGso;
 import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.gso.GsoHeaderProperty;
 import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.gso.HeightCriterion;
@@ -21,9 +19,7 @@ import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.gso.TextHorzArrange;
 import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.gso.VertRelTo;
 import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.gso.WidthCriterion;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.ControlRectangle;
-import kr.dogfoot.hwplib.object.bodytext.control.gso.GsoControl;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.GsoControlType;
-import kr.dogfoot.hwplib.object.bodytext.control.gso.shapecomponent.ShapeComponent;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.shapecomponent.ShapeComponentNormal;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.shapecomponent.lineinfo.LineArrowShape;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.shapecomponent.lineinfo.LineArrowSize;
@@ -38,10 +34,8 @@ import kr.dogfoot.hwplib.object.bodytext.paragraph.Paragraph;
 import kr.dogfoot.hwplib.object.bodytext.paragraph.charshape.CharPositionShapeIdPair;
 import kr.dogfoot.hwplib.object.bodytext.paragraph.charshape.ParaCharShape;
 import kr.dogfoot.hwplib.object.bodytext.paragraph.lineseg.LineSegItem;
-import kr.dogfoot.hwplib.object.bodytext.paragraph.lineseg.ParaLineSeg;
 import kr.dogfoot.hwplib.object.docinfo.BinData;
 import kr.dogfoot.hwplib.object.docinfo.CharShape;
-import kr.dogfoot.hwplib.object.docinfo.DocInfo;
 import kr.dogfoot.hwplib.object.docinfo.ParaShape;
 import kr.dogfoot.hwplib.object.docinfo.bindata.BinDataCompress;
 import kr.dogfoot.hwplib.object.docinfo.bindata.BinDataState;
@@ -49,8 +43,6 @@ import kr.dogfoot.hwplib.object.docinfo.bindata.BinDataType;
 import kr.dogfoot.hwplib.object.docinfo.borderfill.fillinfo.FillInfo;
 import kr.dogfoot.hwplib.object.docinfo.borderfill.fillinfo.ImageFill;
 import kr.dogfoot.hwplib.object.docinfo.borderfill.fillinfo.ImageFillType;
-import kr.dogfoot.hwplib.object.docinfo.borderfill.fillinfo.PatternFill;
-import kr.dogfoot.hwplib.object.docinfo.borderfill.fillinfo.PatternType;
 import kr.dogfoot.hwplib.object.docinfo.borderfill.fillinfo.PictureEffect;
 import kr.dogfoot.hwplib.object.docinfo.parashape.Alignment;
 import kr.dogfoot.hwplib.tool.blankfilemaker.BlankFileMaker;
@@ -157,10 +149,8 @@ class ReportCreateTest {
         bd.setExtensionForEmbedding("jpg");
         hwpFile.getDocInfo().getBinDataList().add(bd);
 
-
-
         Rectangle shapePosition = new Rectangle(0, 0, 150, 100);
-        
+
         paragraph.getText().addExtendCharForGSO();
         ControlRectangle controlRectangle = (ControlRectangle) paragraph.addNewGsoControl(GsoControlType.Rectangle);
 
@@ -190,8 +180,9 @@ class ReportCreateTest {
             ios.read(buffer);
         } finally {
             try {
-                if (ios != null)
+                if (ios != null) {
                     ios.close();
+                }
             } catch (IOException e) {
             }
         }
