@@ -35,8 +35,7 @@ dependencies {
 	runtimeOnly 'com.h2database:h2'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	implementation 'org.postgresql:postgresql'
-
-
+	implementation 'kr.dogfoot:hwplib:1.0.4'
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
 	testImplementation "org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3"
 
