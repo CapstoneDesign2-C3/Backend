@@ -39,6 +39,6 @@ public class DetectedObjectMyBatisRepository implements DetectedObjectRepository
             pageable.getOffset()
         );
 
-        return new PageImpl<>(mobileObjects, pageable, mobileObjects.size());
+        return new PageImpl<>(mobileObjects, pageable, count);
     }
 }
