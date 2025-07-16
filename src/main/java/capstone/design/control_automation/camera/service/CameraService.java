@@ -64,7 +64,7 @@ public class CameraService {
         List<Simple> videos = cameraInfos.values().stream()
             .map(infos -> infos.stream().map(Simple::from).toList()).findAny().get();
 
-        CameraQueryResult.Info baseCamera = cameraInfos.get(cameraId).getFirst();
+        CameraQueryResult.Info baseCamera = cameraInfos.get(cameraId).get(0);
 
         return new Info(
             baseCamera.scenery(),

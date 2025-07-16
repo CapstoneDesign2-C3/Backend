@@ -24,7 +24,7 @@ public class HwpReportProvider implements ReportProvider {
     public HWPFile createDetectedObjectReport() throws IOException {
         HWPFile hwpFile = BlankFileMaker.make();
         configurer.configureHWPFile(hwpFile);
-        Section section = hwpFile.getBodyText().getSectionList().getFirst();
+        Section section = hwpFile.getBodyText().getSectionList().get(0);
 
         Paragraph title = section.getParagraph(0);
         writeText(title, "title", "객체 이동 보고서");

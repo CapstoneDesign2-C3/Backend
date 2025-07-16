@@ -4,6 +4,7 @@ import capstone.design.control_automation.detection.repository.dto.DetectionQuer
 import capstone.design.control_automation.report.util.hwp.HwpTableEditor;
 import kr.dogfoot.hwplib.object.HWPFile;
 import kr.dogfoot.hwplib.reader.HWPReader;
+import kr.dogfoot.hwplib.tool.blankfilemaker.BlankFileMaker;
 import kr.dogfoot.hwplib.writer.HWPWriter;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -13,7 +14,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class InsertingTableTest {
-    private final String folder_path = "C:/Users/dn060/hwptest/"; // 개인 폴더 경로로 지정할 것
     private HwpTableEditor hwpTableEditor;
     private static List<DetectionQueryResult.Track> tracks;
 
@@ -29,15 +29,13 @@ public class InsertingTableTest {
 
     @Test
     public void insertingTableTest() throws Exception {
-        String filename = folder_path + "blank.hwp";
-        HWPFile hwpFile = HWPReader.fromFile(filename);
+        HWPFile hwpFile = BlankFileMaker.make();
 
         hwpTableEditor = new HwpTableEditor(hwpFile);
 
         if (hwpFile != null) {
             hwpTableEditor.makeTable(hwpFile, tracks);
-            String writePath = folder_path + "result-inserting-table.hwp";
-            HWPWriter.toFile(hwpFile, writePath);
+            HWPWriter.toFile(hwpFile, "C:/Users/Suhyeon/Desktop/hwpTest/insert_table.hwp");
         }
     }
 }

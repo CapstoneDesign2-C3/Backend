@@ -49,7 +49,7 @@ public class HwpConfigurer {
     public void configureParagraph(Paragraph paragraph, String paramName) {
         paragraph.getHeader().setParaShapeId(styleIdContext.getParaShapeId(paramName)); // 문단 모양 설정
         paragraph.getCharShape().addParaCharShape(0, styleIdContext.getCharShapeId(paramName)); // 글자 모양 설정
-        LineSegItem firstLine = paragraph.getLineSeg().getLineSegItemList().getFirst(); // Text 높이 설정
+        LineSegItem firstLine = paragraph.getLineSeg().getLineSegItemList().get(0); // Text 높이 설정
         firstLine.setTextPartHeight(textSizeMap.get(paramName));
         firstLine.setDistanceBaseLineToLineVerticalPosition(textSizeMap.get(paramName));
     }
@@ -88,7 +88,7 @@ public class HwpConfigurer {
 
     private void loadCharShapes(DocInfo docInfo) {
         ArrayList<CharShape> charShapes = docInfo.getCharShapeList();
-        CharShape originCharShape = charShapes.getFirst();
+        CharShape originCharShape = charShapes.get(0);
         CharShape titleCharShape = originCharShape.clone(); // add 시, 5번으로 들어감.
         titleCharShape.setBaseSize(textSizeMap.get("title"));
         titleCharShape.getProperty().setBold(true);

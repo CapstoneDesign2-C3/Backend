@@ -69,7 +69,7 @@ class ReportCreateTest {
         ArrayList<ParaShape> paraShapeList = hwpFile.getDocInfo().getParaShapeList();
         System.out.println("paraShapeList = " + paraShapeList);
 
-        Section section = hwpFile.getBodyText().getSectionList().getFirst();
+        Section section = hwpFile.getBodyText().getSectionList().get(0);
         Paragraph paragraph = section.getParagraph(0);
         System.out.println("currentParaShapeId = " + paragraph.getHeader().getParaShapeId());
 
@@ -89,25 +89,25 @@ class ReportCreateTest {
         ArrayList<CharShape> charShapeList = hwpFile.getDocInfo().getCharShapeList();
         System.out.println("charShapeList = " + charShapeList);
 
-        Paragraph paragraph = hwpFile.getBodyText().getSectionList().getFirst().getParagraph(0);
+        Paragraph paragraph = hwpFile.getBodyText().getSectionList().get(0).getParagraph(0);
         int charShapeCount = paragraph.getHeader().getCharShapeCount();
         System.out.println("charShapeCount = " + charShapeCount);
 
         ParaCharShape paraCharShape = paragraph.getCharShape();
         ArrayList<CharPositionShapeIdPair> positionShapeIdPairList = paraCharShape.getPositonShapeIdPairList();
-        CharPositionShapeIdPair charPositionShapeIdPair = positionShapeIdPairList.getFirst();
+        CharPositionShapeIdPair charPositionShapeIdPair = positionShapeIdPairList.get(0);
         System.out.println("charPositionShapeIdPair.getShapeId = " + charPositionShapeIdPair.getShapeId());
         System.out.println("charPositionShapeIdPair.getPosition = " + charPositionShapeIdPair.getPosition());
         paragraph.getText().addString("객체 이동 보고서");
 
-        CharShape changedCharShape = charShapeList.getFirst().clone();
+        CharShape changedCharShape = charShapeList.get(0).clone();
         changedCharShape.setBaseSize(3000);
         changedCharShape.getProperty().setBold(true);
         charShapeList.add(changedCharShape);
 
         ArrayList<LineSegItem> lineSegItemList = paragraph.getLineSeg().getLineSegItemList();
         System.out.println("lineSegItemList = " + lineSegItemList);
-        LineSegItem lineSegItem = lineSegItemList.getFirst();
+        LineSegItem lineSegItem = lineSegItemList.get(0);
         lineSegItem.setTextPartHeight(3000);
         lineSegItem.setDistanceBaseLineToLineVerticalPosition(3000);
 
@@ -118,7 +118,7 @@ class ReportCreateTest {
     @Test
     void writeTwoLineTest() throws Exception {
         HWPFile hwpFile = BlankFileMaker.make();
-        Section section = hwpFile.getBodyText().getSectionList().getFirst();
+        Section section = hwpFile.getBodyText().getSectionList().get(0);
         Paragraph paragraph = section.getParagraph(0);
         System.out.println("currentParaShapeId = " + paragraph.getHeader().getParaShapeId());
 
@@ -140,7 +140,7 @@ class ReportCreateTest {
     void insertRectangleTest() throws Exception {
 
         HWPFile hwpFile = BlankFileMaker.make();
-        Section section = hwpFile.getBodyText().getSectionList().getFirst();
+        Section section = hwpFile.getBodyText().getSectionList().get(0);
         Paragraph paragraph = section.getParagraph(0);
 
         byte[] fileBinary = loadFile();
