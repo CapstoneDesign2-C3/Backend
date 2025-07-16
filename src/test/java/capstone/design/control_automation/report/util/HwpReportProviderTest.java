@@ -1,6 +1,5 @@
 package capstone.design.control_automation.report.util;
 
-import capstone.design.control_automation.report.util.hwp.ColumnProvider;
 import capstone.design.control_automation.report.util.hwp.HwpReportProvider;
 import kr.dogfoot.hwplib.object.HWPFile;
 import kr.dogfoot.hwplib.writer.HWPWriter;
@@ -16,25 +15,12 @@ class HwpReportProviderTest {
 
     @Autowired
     HwpReportProvider hwpReportProvider;
-    @Autowired
-    ColumnProvider columnProvider;
 
     @Test
     void createDetectedObjectReport() throws Exception {
         HWPFile hwpFile = hwpReportProvider.createDetectedObjectReport();
 
-        HWPWriter.toFile(hwpFile, "./hwptest/report_sample.hwp");
-    }
-
-    @Test
-    void reverse() throws Exception {
-        columnProvider.reversing();
-    }
-
-    @Test
-    void createColumnTest() throws Exception {
-        HWPFile hwpFile = columnProvider.test();
-        HWPWriter.toFile(hwpFile, "./hwptest/column_sample.hwp");
+        HWPWriter.toFile(hwpFile, "C:/Users/Suhyeon/Desktop/hwpTest/report_sample.hwp");
     }
 
 }
