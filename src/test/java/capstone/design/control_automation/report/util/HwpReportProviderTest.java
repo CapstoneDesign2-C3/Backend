@@ -20,7 +20,7 @@ class HwpReportProviderTest {
     void createDetectedObjectReport() throws Exception {
         HWPFile hwpFile = hwpReportProvider.createDetectedObjectReport();
 
-        HWPWriter.toFile(hwpFile, "../hwptest/report_sample.hwp");
+        HWPWriter.toFile(hwpFile, "./hwptest/report_sample.hwp");
     }
 
 }
