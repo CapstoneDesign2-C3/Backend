@@ -18,48 +18,45 @@ import kr.dogfoot.hwplib.object.bodytext.paragraph.lineseg.LineSegItem;
 import kr.dogfoot.hwplib.object.bodytext.paragraph.lineseg.ParaLineSeg;
 import kr.dogfoot.hwplib.object.bodytext.paragraph.text.ParaText;
 import kr.dogfoot.hwplib.object.docinfo.BorderFill;
+import kr.dogfoot.hwplib.object.docinfo.DocInfo;
 import kr.dogfoot.hwplib.object.docinfo.borderfill.BackSlashDiagonalShape;
 import kr.dogfoot.hwplib.object.docinfo.borderfill.BorderThickness;
 import kr.dogfoot.hwplib.object.docinfo.borderfill.BorderType;
 import kr.dogfoot.hwplib.object.docinfo.borderfill.SlashDiagonalShape;
 import kr.dogfoot.hwplib.object.docinfo.borderfill.fillinfo.PatternFill;
 import kr.dogfoot.hwplib.object.docinfo.borderfill.fillinfo.PatternType;
+import org.springframework.stereotype.Component;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+@Component
 public class HwpTableEditor {
-    private HWPFile hwpFile;
-    private ControlTable table;
     private Row row;
     private Cell cell;
     private int borderFillIDForCell;
     private int zOrder = 0;
 
-    public HwpTableEditor(HWPFile hwpFile){
-        this.hwpFile = hwpFile;
+    public HwpTableEditor(){
     }
 
-    public void makeTable(HWPFile hwpFile2, List<DetectionQueryResult.Track> tracks) {
-        hwpFile = hwpFile2;
+    public void writeTable(Paragraph paragraph, GsoParam gsoParam, List<DetectionQueryResult.Track> tracks, DocInfo docInfo){
         int rowCount = tracks.size() + 1; // table header 공간 + 1
         int colCount = 4;
-        createTableControlAtFirstParagraph();
-        setCtrlHeaderRecord();
-        setTableRecord(rowCount, colCount);
-        addCells(tracks, colCount, rowCount);
+        ControlTable table = createTableControlAtFirstParagraph(paragraph);
+        setCtrlHeaderRecord(table, gsoParam);
+        setTableRecord(table, rowCount, colCount, docInfo);
+        addCells(tracks, colCount, rowCount, docInfo, table);
     }
 
     // section, paragraph 지정
-    private void createTableControlAtFirstParagraph() {
-        Section firstSection = hwpFile.getBodyText().getSectionList().get(0);
-        Paragraph firstParagraph = firstSection.getParagraph(0);
-        firstParagraph.getText().addExtendCharForTable();
-        table = (ControlTable) firstParagraph.addNewControl(ControlType.Table);
+    private ControlTable createTableControlAtFirstParagraph(Paragraph paragraph) {
+        paragraph.getText().addExtendCharForTable();
+        return (ControlTable) paragraph.addNewControl(ControlType.Table);
     }
 
     //control header record 설정
-    private void setCtrlHeaderRecord() {
+    private void setCtrlHeaderRecord(ControlTable table, GsoParam gsoParam) {
         CtrlHeaderGso ctrlHeader = table.getHeader();
         ctrlHeader.getProperty().setLikeWord(false);
         ctrlHeader.getProperty().setApplyLineSpace(false);
@@ -75,8 +72,8 @@ public class HwpTableEditor {
         ctrlHeader.getProperty().setTextFlowMethod(TextFlowMethod.FitWithText);
         ctrlHeader.getProperty().setTextHorzArrange(TextHorzArrange.BothSides);
         ctrlHeader.getProperty().setObjectNumberSort(ObjectNumberSort.Table);
-        ctrlHeader.setxOffset(mmToHwp(0.0));
-        ctrlHeader.setyOffset(mmToHwp(0.0));
+        ctrlHeader.setxOffset(mmToHwp(gsoParam.posX()));
+        ctrlHeader.setyOffset(mmToHwp(gsoParam.posY()));
         ctrlHeader.setWidth(mmToHwp(60.0));
         ctrlHeader.setHeight(mmToHwp(30.0));
         ctrlHeader.setzOrder(zOrder++);
@@ -91,7 +88,7 @@ public class HwpTableEditor {
     }
 
     // table record 지정(row, col 개수 포함)
-    private void setTableRecord(int rowCount, int colCount) {
+    private void setTableRecord(ControlTable table, int rowCount, int colCount, DocInfo docInfo) {
         Table tableRecord = table.getTable();
         tableRecord.getProperty().setDivideAtPageBoundary(DivideAtPageBoundary.DivideByCell);
         tableRecord.getProperty().setAutoRepeatTitleRow(false);
@@ -102,13 +99,13 @@ public class HwpTableEditor {
         tableRecord.setRightInnerMargin(0);
         tableRecord.setTopInnerMargin(0);
         tableRecord.setBottomInnerMargin(0);
-        tableRecord.setBorderFillId(getBorderFillIDForTableOutterLine());
+        tableRecord.setBorderFillId(getBorderFillIDForTableOutterLine(docInfo));
         for(int i = 0; i < rowCount; i++) tableRecord.getCellCountOfRowList().add(colCount);
     }
 
     // table 외곽선의 스타일 관리
-    private int getBorderFillIDForTableOutterLine() {
-        BorderFill bf = hwpFile.getDocInfo().addNewBorderFill();
+    private int getBorderFillIDForTableOutterLine(DocInfo docInfo) {
+        BorderFill bf = docInfo.addNewBorderFill();
         bf.getProperty().set3DEffect(false);
         bf.getProperty().setShadowEffect(false);
         bf.getProperty().setSlashDiagonalShape(SlashDiagonalShape.None);
@@ -135,12 +132,12 @@ public class HwpTableEditor {
         pf.getBackColor().setValue(-1);
         pf.getPatternColor().setValue(0);
 
-        return hwpFile.getDocInfo().getBorderFillList().size();
+        return docInfo.getBorderFillList().size();
     }
 
     // cell의 스타일 관리
-    private int getBorderFillIDForCell() {
-        BorderFill bf = hwpFile.getDocInfo().addNewBorderFill();
+    private int getBorderFillIDForCell(DocInfo docInfo) {
+        BorderFill bf = docInfo.addNewBorderFill();
         bf.getProperty().set3DEffect(false);
         bf.getProperty().setShadowEffect(false);
         bf.getProperty().setSlashDiagonalShape(SlashDiagonalShape.None);
@@ -166,7 +163,7 @@ public class HwpTableEditor {
         pf.getBackColor().setValue(-1);
         pf.getPatternColor().setValue(0);
 
-        return hwpFile.getDocInfo().getBorderFillList().size();
+        return docInfo.getBorderFillList().size();
     }
 
     // cell의 위치 및 크기 관리
@@ -265,9 +262,9 @@ public class HwpTableEditor {
         return (int) (pt * 100.0f);
     }
 
-    public void addCells(List<DetectionQueryResult.Track> tracks, int colCount, int rowCount){
-        borderFillIDForCell = getBorderFillIDForCell();
-        initTheader();
+    public void addCells(List<DetectionQueryResult.Track> tracks, int colCount, int rowCount, DocInfo docInfo, ControlTable table){
+        borderFillIDForCell = getBorderFillIDForCell(docInfo);
+        initTheader(table);
 
         for(int r = 0; r < rowCount - 1; r++) { // table header 때문에 범위 특이함.
             row = table.addNewRow();
@@ -289,10 +286,10 @@ public class HwpTableEditor {
     }
 
     private double getAutoWidthByText(String text) {
-        return (double) Math.max(Math.min((text.length() * 3.5), 45), 8);
+        return (double) Math.max(Math.min((text.length() * 2.5), 40), 8);
     }
 
-    private void initTheader(){
+    private void initTheader(ControlTable table){
         row = table.addNewRow();
         List<String> data = List.of("경로 번호", "출현 장소", "출현 시간", "퇴장 시간");
 

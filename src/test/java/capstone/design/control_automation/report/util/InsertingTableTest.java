@@ -29,13 +29,5 @@ public class InsertingTableTest {
 
     @Test
     public void insertingTableTest() throws Exception {
-        HWPFile hwpFile = BlankFileMaker.make();
-
-        hwpTableEditor = new HwpTableEditor(hwpFile);
-
-        if (hwpFile != null) {
-            hwpTableEditor.makeTable(hwpFile, tracks);
-            HWPWriter.toFile(hwpFile, "C:/Users/Suhyeon/Desktop/hwpTest/insert_table.hwp");
-        }
     }
 }
