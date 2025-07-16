@@ -157,7 +157,9 @@ class ReportCreateTest {
         bd.setExtensionForEmbedding("jpg");
         hwpFile.getDocInfo().getBinDataList().add(bd);
 
-        Rectangle shapePosition = new Rectangle(0, 0, 100, 100);
+
+
+        Rectangle shapePosition = new Rectangle(0, 0, 150, 100);
         
         paragraph.getText().addExtendCharForGSO();
         ControlRectangle controlRectangle = (ControlRectangle) paragraph.addNewGsoControl(GsoControlType.Rectangle);
@@ -170,7 +172,7 @@ class ReportCreateTest {
         ShapeComponentNormal shapeComponent = (ShapeComponentNormal) controlRectangle.getShapeComponent();
         configureShapeComponent(shapeComponent, shapePosition);
         configureLineInfo(shapeComponent);
-        configureFillInfo(shapeComponent, hwpFile.getDocInfo().getBinDataList().size());
+        configureFillInfo(shapeComponent, streamIndex);
         configureShadowInfo(shapeComponent);
         shapeComponent.setMatrixsNormal();
 
@@ -225,12 +227,7 @@ class ReportCreateTest {
         fi.getType().setPatternFill(false);
         fi.getType().setImageFill(true);
         fi.getType().setGradientFill(false);
-//        fi.createPatternFill();
-//        PatternFill patternFill = fi.getPatternFill();
-//        patternFill.setPatternType(PatternType.None);
-//
-//        patternFill.getPatternColor().setValue(0x000000);
-//        patternFill.getBackColor().setValue(0x000000);
+
         fi.createImageFill();
         ImageFill imgF = fi.getImageFill();
         imgF.setImageFillType(ImageFillType.FitSize);
@@ -294,7 +291,7 @@ class ReportCreateTest {
         prop.setHorzRelTo(HorzRelTo.Para);
         prop.setHorzRelativeArrange(RelativeArrange.TopOrLeft);
         prop.setVertRelToParaLimit(true);
-        prop.setAllowOverlap(true);
+        prop.setAllowOverlap(false);
         prop.setWidthCriterion(WidthCriterion.Absolute);
         prop.setHeightCriterion(HeightCriterion.Absolute);
         prop.setProtectSize(false);

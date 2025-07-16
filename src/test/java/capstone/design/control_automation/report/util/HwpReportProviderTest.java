@@ -1,18 +1,16 @@
 package capstone.design.control_automation.report.util;
 
-import capstone.design.control_automation.report.util.HwpReportProviderTest.TestHwpReportConfig;
+import capstone.design.control_automation.report.util.hwp.HwpReportProvider;
 import kr.dogfoot.hwplib.object.HWPFile;
 import kr.dogfoot.hwplib.writer.HWPWriter;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Bean;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.test.context.TestPropertySource;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = TestHwpReportConfig.class)
+@SpringBootTest(webEnvironment = WebEnvironment.MOCK)
+@TestPropertySource("classpath:local.env")
 class HwpReportProviderTest {
 
     @Autowired
@@ -25,12 +23,4 @@ class HwpReportProviderTest {
         HWPWriter.toFile(hwpFile, "C:/Users/Suhyeon/Desktop/hwpTest/report_sample.hwp");
     }
 
-    @TestConfiguration
-    public static class TestHwpReportConfig {
-
-        @Bean
-        public HwpReportProvider hwpReportProvider() {
-            return new HwpReportProvider(); // @PostConstruct 작동
-        }
-    }
 }

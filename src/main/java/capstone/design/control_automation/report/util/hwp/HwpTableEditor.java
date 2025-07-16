@@ -1,4 +1,4 @@
-package capstone.design.control_automation.report.util;
+package capstone.design.control_automation.report.util.hwp;
 
 import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult;
 import kr.dogfoot.hwplib.object.HWPFile;
@@ -67,7 +67,7 @@ public class HwpTableEditor {
         ctrlHeader.getProperty().setVertRelativeArrange(RelativeArrange.TopOrLeft);
         ctrlHeader.getProperty().setHorzRelTo(HorzRelTo.Para);
         ctrlHeader.getProperty().setHorzRelativeArrange(RelativeArrange.TopOrLeft);
-        ctrlHeader.getProperty().setVertRelToParaLimit(false);
+        ctrlHeader.getProperty().setVertRelToParaLimit(false); // 다름
         ctrlHeader.getProperty().setAllowOverlap(false);
         ctrlHeader.getProperty().setWidthCriterion(WidthCriterion.Absolute);
         ctrlHeader.getProperty().setHeightCriterion(HeightCriterion.Absolute);

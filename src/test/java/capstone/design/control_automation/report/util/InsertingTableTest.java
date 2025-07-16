@@ -1,6 +1,7 @@
 package capstone.design.control_automation.report.util;
 
 import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult;
+import capstone.design.control_automation.report.util.hwp.HwpTableEditor;
 import kr.dogfoot.hwplib.object.HWPFile;
 import kr.dogfoot.hwplib.reader.HWPReader;
 import kr.dogfoot.hwplib.writer.HWPWriter;
