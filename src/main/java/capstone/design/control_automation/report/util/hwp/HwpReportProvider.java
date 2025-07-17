@@ -83,8 +83,9 @@ public class HwpReportProvider implements ReportProvider {
             ios.read(buffer);
         } finally {
             try {
-                if (ios != null)
+                if (ios != null) {
                     ios.close();
+                }
             } catch (IOException e) {
             }
         }
