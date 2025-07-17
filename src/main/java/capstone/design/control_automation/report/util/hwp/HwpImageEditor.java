@@ -33,7 +33,6 @@ import kr.dogfoot.hwplib.object.docinfo.borderfill.fillinfo.FillInfo;
 import kr.dogfoot.hwplib.object.docinfo.borderfill.fillinfo.ImageFill;
 import kr.dogfoot.hwplib.object.docinfo.borderfill.fillinfo.ImageFillType;
 import kr.dogfoot.hwplib.object.docinfo.borderfill.fillinfo.PictureEffect;
-import lombok.Getter;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -77,7 +76,6 @@ public class HwpImageEditor {
         configureLineInfo(shapeComponent);
         configureFillInfo(shapeComponent, binDataId);
         configureShadowInfo(shapeComponent);
-        shapeComponent.setMatrixsNormal();
 
         configureShapeComponentRectangle(controlRectangle, rectangle);
     }
@@ -95,6 +93,7 @@ public class HwpImageEditor {
         sc.setRotateAngle(0);
         sc.setRotateXCenter(fromMM(shapePosition.width / 2));
         sc.setRotateYCenter(fromMM(shapePosition.height / 2));
+        sc.setMatrixsNormal();
     }
 
     private void configureGsoHeader(CtrlHeaderGso hdr, Rectangle shapePosition) {
