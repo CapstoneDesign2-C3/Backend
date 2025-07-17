@@ -73,8 +73,8 @@ public class HwpTableEditor {
 
         int rowCount = tracks.size() + 1; // table header 공간 + 1
         int colCount = 4; // table column 개수
-        configureTable(table, rowCount, colCount, borderFillId);
-        makeTableCells(controlTable, rowCount, colCount, borderFillId);
+        configureTable(table, borderFillId);
+        makeTableCells(table, controlTable, rowCount, colCount, borderFillId);
         writeObjectsInCell(controlTable, tracks);
     }
 
@@ -106,22 +106,23 @@ public class HwpTableEditor {
     }
 
     // table record 지정(row, col 개수 포함)
-    private void configureTable(Table table, int rowCount, int colCount, int borderFillId) {
+    private void configureTable(Table table, int borderFillId) {
         table.getProperty().setDivideAtPageBoundary(DivideAtPageBoundary.DivideByCell);
         table.getProperty().setAutoRepeatTitleRow(false);
-        table.setRowCount(rowCount);
-        table.setColumnCount(colCount);
         table.setCellSpacing(0);
         table.setLeftInnerMargin(0);
         table.setRightInnerMargin(0);
         table.setTopInnerMargin(0);
         table.setBottomInnerMargin(0);
         table.setBorderFillId(borderFillId);
-        for(int i = 0; i < rowCount; i++) table.getCellCountOfRowList().add(colCount);
     }
 
-    private void makeTableCells(ControlTable controlTable, int rowCount, int colCount, int borderFillId) {
+    private void makeTableCells(Table table, ControlTable controlTable, int rowCount, int colCount, int borderFillId) {
+        table.setRowCount(rowCount);
+        table.setColumnCount(colCount);
+        ArrayList<Integer> cellCountOfRowList = table.getCellCountOfRowList();
         for (int i = 0; i < rowCount; i++) {
+            cellCountOfRowList.add(colCount);
             Row row = controlTable.addNewRow();
             for (int j = 0; j < colCount; j++) {
                 Cell cell = row.addNewCell();
