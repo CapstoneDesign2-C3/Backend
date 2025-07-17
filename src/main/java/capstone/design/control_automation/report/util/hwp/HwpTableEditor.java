@@ -74,15 +74,9 @@ public class HwpTableEditor {
         int rowCount = tracks.size() + 1; // table header 공간 + 1
         int colCount = 4; // table column 개수
         configureTable(table, rowCount, colCount, borderFillId);
-        for (int i = 0; i < rowCount; i++) {
-            Row row = controlTable.addNewRow();
-            for (int j = 0; j < colCount; j++) {
-                row.addNewCell();
-            }
-        }
-        writeObjectsInCell(tracks, colCount, rowCount, controlTable, borderFillId);
+        makeTableCells(controlTable, rowCount, colCount, borderFillId);
+        writeObjectsInCell(controlTable, tracks);
     }
-
 
     //control header record 설정
     private void configureHeaderGso(CtrlHeaderGso headerGso, GsoParam gsoParam) {
@@ -126,10 +120,20 @@ public class HwpTableEditor {
         for(int i = 0; i < rowCount; i++) table.getCellCountOfRowList().add(colCount);
     }
 
-    public void writeObjectsInCell(List<DetectionQueryResult.Track> tracks, int colCount, int rowCount, ControlTable controlTable, int borderFillId)
+    private void makeTableCells(ControlTable controlTable, int rowCount, int colCount, int borderFillId) {
+        for (int i = 0; i < rowCount; i++) {
+            Row row = controlTable.addNewRow();
+            for (int j = 0; j < colCount; j++) {
+                Cell cell = row.addNewCell();
+                configureListHeaderForCell(cell, i, j, borderFillId);
+            }
+        }
+    }
+
+    public void writeObjectsInCell(ControlTable controlTable, List<DetectionQueryResult.Track> tracks)
         throws UnsupportedEncodingException {
         ArrayList<Row> rows = controlTable.getRowList();
-        for (int rowIdx = 0; rowIdx < rowCount; rowIdx++) {
+        for (int rowIdx = 0; rowIdx < rows.size(); rowIdx++) {
             Row row = rows.get(rowIdx);
             List<String> data = List.of("경로 번호", "출현 장소", "출현 시간", "퇴장 시간");
 
@@ -144,10 +148,9 @@ public class HwpTableEditor {
             }
 
             ArrayList<Cell> cells = row.getCellList();
-            for(int colIdx = 0; colIdx < colCount; colIdx++) {
+            for(int colIdx = 0; colIdx < cells.size(); colIdx++) {
                 Cell cell = cells.get(colIdx);
                 String text = data.get(colIdx);
-                configureListHeaderForCell(cell, colIdx, rowIdx, borderFillId);
                 configureCellSize(cell, mmToHwp(getAutoWidthByText(text)));
 
                 Paragraph paragraph = createParagraphForCell(cell);
@@ -156,7 +159,7 @@ public class HwpTableEditor {
         }
     }
 
-    private void configureListHeaderForCell(Cell cell, int colIndex, int rowIndex, int borderFillId) {
+    private void configureListHeaderForCell(Cell cell, int rowIndex, int colIndex, int borderFillId) {
         ListHeaderForCell lh = cell.getListHeader();
         lh.setParaCount(1);
         lh.getProperty().setTextDirection(TextDirection.Horizontal);
