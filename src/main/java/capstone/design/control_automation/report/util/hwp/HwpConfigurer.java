@@ -67,6 +67,7 @@ public class HwpConfigurer {
     private void fillTextSizeMap() {
         textSizeMap.put("title", 2500);
         textSizeMap.put("publishInfo", 1200);
+        textSizeMap.put("tdata", 800);
     }
 
     private void loadParaShapes(DocInfo docInfo) {
@@ -84,6 +85,10 @@ public class HwpConfigurer {
         publishInfoParaShape.getProperty1().setAlignment(Alignment.Right);
         publishInfoParaShape.setBottomParaSpace(2000);
         paraShapeMap.put("publishInfo", publishInfoParaShape);
+
+        ParaShape tdataParaShape = originParaShape.clone();
+        tdataParaShape.getProperty1().setAlignment(Alignment.Center);
+        paraShapeMap.put("tdata", tdataParaShape);
     }
 
     private void loadCharShapes(DocInfo docInfo) {
@@ -97,6 +102,10 @@ public class HwpConfigurer {
         CharShape publishInfoCharShape = originCharShape.clone();
         publishInfoCharShape.setBaseSize(textSizeMap.get("publishInfo"));
         charShapeMap.put("publishInfo", publishInfoCharShape);
+
+        CharShape tdataCharShape = originCharShape.clone();
+        tdataCharShape.setBaseSize(textSizeMap.get("tdata"));
+        charShapeMap.put("tdata", tdataCharShape);
     }
 
 }

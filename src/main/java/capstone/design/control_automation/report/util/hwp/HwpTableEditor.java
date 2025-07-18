@@ -23,13 +23,17 @@ import kr.dogfoot.hwplib.object.docinfo.borderfill.BorderType;
 import kr.dogfoot.hwplib.object.docinfo.borderfill.SlashDiagonalShape;
 import kr.dogfoot.hwplib.object.docinfo.borderfill.fillinfo.PatternFill;
 import kr.dogfoot.hwplib.object.docinfo.borderfill.fillinfo.PatternType;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 public class HwpTableEditor {
+
+    private final HwpConfigurer configurer;
 
     public int addBorderFillInfo(DocInfo docInfo) {
         BorderFill bf = docInfo.addNewBorderFill();
@@ -198,57 +202,12 @@ public class HwpTableEditor {
     // cell의 텍스트 지정
     private Paragraph createParagraphForCell(Cell cell) {
         Paragraph paragraph = cell.getParagraphList().addNewParagraph();
-        configureParaHeader(paragraph);
+        paragraph.createCharShape();
+        paragraph.createLineSeg();
+        paragraph.getLineSeg().addNewLineSegItem();
         paragraph.createText();
-        configureCharShape(paragraph);
-        configureLineSegItem(paragraph);
+        configurer.configureParagraph(paragraph, "tdata");
         return paragraph;
-    }
-
-    // 셀 문단의 스타일 관리
-    private void configureParaHeader(Paragraph p) {
-        ParaHeader ph = p.getHeader();
-        ph.setLastInList(true);
-        ph.setParaShapeId(1);
-        ph.setStyleId((short) 1);
-        ph.getDivideSort().setDivideSection(false);
-        ph.getDivideSort().setDivideMultiColumn(false);
-        ph.getDivideSort().setDividePage(false);
-        ph.getDivideSort().setDivideColumn(false);
-        ph.setCharShapeCount(1);
-        ph.setRangeTagCount(0);
-        ph.setLineAlignCount(1);
-        ph.setInstanceID(0);
-        ph.setIsMergedByTrack(0);
-    }
-
-    // paragraph의 스타일 지정
-    private void configureCharShape(Paragraph p) {
-        p.createCharShape();
-
-        ParaCharShape pcs = p.getCharShape();
-        // 셀의 글자 모양을 이미 만들어진 글자 모양으로 사용함
-        pcs.addParaCharShape(0, 1);
-    }
-
-    private void configureLineSegItem(Paragraph p) {
-        p.createLineSeg();
-
-        LineSegItem lsi = p.getLineSeg().addNewLineSegItem();
-        lsi.setTextStartPosition(0);
-        lsi.setLineVerticalPosition(0);
-        lsi.setLineHeight(ptToLineHeight(10.0));
-        lsi.setTextPartHeight(ptToLineHeight(10.0));
-        lsi.setDistanceBaseLineToLineVerticalPosition(ptToLineHeight(10.0 * 0.85));
-        lsi.setLineSpace(ptToLineHeight(3.0));
-        lsi.setStartPositionFromColumn(0);
-        lsi.setSegmentWidth((int) mmToHwp(50.0));
-        lsi.getTag().setFirstSegmentAtLine(true);
-        lsi.getTag().setLastSegmentAtLine(true);
-    }
-
-    private int ptToLineHeight(double pt) {
-        return (int) (pt * 100.0f);
     }
 
 }
