@@ -68,6 +68,7 @@ public class HwpConfigurer {
         textSizeMap.put("title", 2500);
         textSizeMap.put("publishInfo", 1200);
         textSizeMap.put("tdata", 800);
+        textSizeMap.put("column", 1000);
     }
 
     private void loadParaShapes(DocInfo docInfo) {
@@ -89,11 +90,18 @@ public class HwpConfigurer {
         ParaShape tdataParaShape = originParaShape.clone();
         tdataParaShape.getProperty1().setAlignment(Alignment.Center);
         paraShapeMap.put("tdata", tdataParaShape);
+
+        // 단 은 좌측 정렬, 글자 크기 10
+        ParaShape columnParashape = originParaShape.clone();
+        columnParashape.getProperty1().setAlignment(Alignment.Left);
+        columnParashape.setBottomParaSpace(1000);
+        paraShapeMap.put("column", columnParashape);
     }
 
     private void loadCharShapes(DocInfo docInfo) {
         ArrayList<CharShape> charShapes = docInfo.getCharShapeList();
         CharShape originCharShape = charShapes.get(0);
+
         CharShape titleCharShape = originCharShape.clone(); // add 시, 5번으로 들어감.
         titleCharShape.setBaseSize(textSizeMap.get("title"));
         titleCharShape.getProperty().setBold(true);
@@ -106,6 +114,10 @@ public class HwpConfigurer {
         CharShape tdataCharShape = originCharShape.clone();
         tdataCharShape.setBaseSize(textSizeMap.get("tdata"));
         charShapeMap.put("tdata", tdataCharShape);
+
+        CharShape columnCharShape = originCharShape.clone();
+        columnCharShape.setBaseSize(textSizeMap.get("column"));
+        charShapeMap.put("column", columnCharShape);
     }
 
 }
