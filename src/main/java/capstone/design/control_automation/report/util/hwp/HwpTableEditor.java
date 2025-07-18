@@ -1,20 +1,33 @@
 package capstone.design.control_automation.report.util.hwp;
 
-import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult;
-import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult.Track;
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import kr.dogfoot.hwplib.object.bodytext.control.ControlTable;
 import kr.dogfoot.hwplib.object.bodytext.control.ControlType;
 import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.CtrlHeaderGso;
-import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.gso.*;
+import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.gso.HeightCriterion;
+import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.gso.HorzRelTo;
+import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.gso.ObjectNumberSort;
+import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.gso.RelativeArrange;
+import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.gso.TextFlowMethod;
+import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.gso.TextHorzArrange;
+import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.gso.VertRelTo;
+import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.gso.WidthCriterion;
 import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.sectiondefine.TextDirection;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.textbox.LineChange;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.textbox.TextVerticalAlignment;
-import kr.dogfoot.hwplib.object.bodytext.control.table.*;
+import kr.dogfoot.hwplib.object.bodytext.control.table.Cell;
+import kr.dogfoot.hwplib.object.bodytext.control.table.DivideAtPageBoundary;
+import kr.dogfoot.hwplib.object.bodytext.control.table.ListHeaderForCell;
+import kr.dogfoot.hwplib.object.bodytext.control.table.Row;
+import kr.dogfoot.hwplib.object.bodytext.control.table.Table;
 import kr.dogfoot.hwplib.object.bodytext.paragraph.Paragraph;
-import kr.dogfoot.hwplib.object.bodytext.paragraph.charshape.ParaCharShape;
-import kr.dogfoot.hwplib.object.bodytext.paragraph.header.ParaHeader;
-import kr.dogfoot.hwplib.object.bodytext.paragraph.lineseg.LineSegItem;
 import kr.dogfoot.hwplib.object.docinfo.BorderFill;
 import kr.dogfoot.hwplib.object.docinfo.DocInfo;
 import kr.dogfoot.hwplib.object.docinfo.borderfill.BackSlashDiagonalShape;
@@ -26,12 +39,11 @@ import kr.dogfoot.hwplib.object.docinfo.borderfill.fillinfo.PatternType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.io.UnsupportedEncodingException;
-import java.util.List;
-
 @Component
 @RequiredArgsConstructor
 public class HwpTableEditor {
+
+    private static final Map<Class<?>, List<Field>> fieldCache = new ConcurrentHashMap<>();
 
     private final HwpConfigurer configurer;
 
@@ -65,8 +77,8 @@ public class HwpTableEditor {
         return docInfo.getBorderFillList().size();
     }
 
-    public void writeTable(Paragraph paragraph, List<DetectionQueryResult.Track> tracks, GsoParam gsoParam, Integer borderFillId)
-        throws UnsupportedEncodingException {
+    public <T> void writeTable(Paragraph paragraph, List<T> tableData, GsoParam gsoParam, Integer borderFillId)
+        throws UnsupportedEncodingException, IllegalAccessException {
         paragraph.getText().addExtendCharForTable();
 
         ControlTable controlTable = (ControlTable) paragraph.addNewControl(ControlType.Table);
@@ -75,11 +87,27 @@ public class HwpTableEditor {
 
         Table table = controlTable.getTable();
 
-        int rowCount = tracks.size() + 1; // table header 공간 + 1
-        int colCount = 4; // table column 개수
+        List<Field> fields = getFieldsToMakeTable(tableData.get(0));
+
+        int rowCount = tableData.size() + 1; // table header 공간 + 1
+        int colCount = fields.size() + 1; // table column 개수
         configureTable(table, borderFillId);
         makeTableCells(table, controlTable, rowCount, colCount, borderFillId);
-        writeObjectsInCell(controlTable, tracks);
+        writeObjectsInCell(controlTable, tableData, fields);
+    }
+
+    private <T> List<Field> getFieldsToMakeTable(T tableData) {
+        if (!fieldCache.containsKey(tableData.getClass())) {
+            Class<?> tableDataClass = tableData.getClass();
+            Field[] fields = tableDataClass.getDeclaredFields();
+            List<Field> sorted = Arrays.stream(fields)
+                .filter(field -> field.isAnnotationPresent(TableColumn.class))
+                .sorted(Comparator.comparingInt(field -> field.getAnnotation(TableColumn.class).order()))
+                .toList();
+            fieldCache.put(tableData.getClass(), sorted);
+            return sorted;
+        }
+        return fieldCache.get(tableData.getClass());
     }
 
     //control header record 설정
@@ -135,25 +163,25 @@ public class HwpTableEditor {
         }
     }
 
-    public void writeObjectsInCell(ControlTable controlTable, List<DetectionQueryResult.Track> tracks)
-        throws UnsupportedEncodingException {
+    public <T> void writeObjectsInCell(ControlTable controlTable, List<T> tableData, List<Field> fields)
+        throws UnsupportedEncodingException, IllegalAccessException {
         ArrayList<Row> rows = controlTable.getRowList();
+        List<String> data = getTHeader(fields);
+
         for (int rowIdx = 0; rowIdx < rows.size(); rowIdx++) {
             Row row = rows.get(rowIdx);
-            List<String> data = List.of("경로 번호", "출현 장소", "출현 시간", "퇴장 시간");
-
             if (rowIdx != 0) {
-                Track track = tracks.get(rowIdx - 1);
-                data = List.of(
-                    String.valueOf(rowIdx),
-                    track.cameraScenery(),
-                    track.appearedTime().toString(),
-                    track.exitTime().toString()
-                );
+                T tdata = tableData.get(rowIdx - 1);
+                data = new ArrayList<>();
+                data.add(String.valueOf(rowIdx));
+                for (Field f : fields) {
+                    f.setAccessible(true);
+                    data.add(f.get(tdata).toString());
+                }
             }
 
             ArrayList<Cell> cells = row.getCellList();
-            for(int colIdx = 0; colIdx < cells.size(); colIdx++) {
+            for (int colIdx = 0; colIdx < cells.size(); colIdx++) {
                 Cell cell = cells.get(colIdx);
                 String text = data.get(colIdx);
                 configureCellSize(cell, mmToHwp(getAutoWidthByText(text)));
@@ -162,6 +190,15 @@ public class HwpTableEditor {
                 paragraph.getText().addString(text);
             }
         }
+    }
+
+    private List<String> getTHeader(List<Field> fields) {
+        List<String> data = new ArrayList<>();
+        data.add("번호");
+        for (Field field : fields) {
+            data.add(field.getAnnotation(TableColumn.class).name());
+        }
+        return data;
     }
 
     private void configureListHeaderForCell(Cell cell, int rowIndex, int colIndex, int borderFillId) {

@@ -25,7 +25,7 @@ public class HwpReportProvider implements ReportProvider {
     private final HwpImageEditor imageEditor;
     private final HwpTableEditor tableEditor;
 
-    public HWPFile createDetectedObjectReport() throws IOException {
+    public HWPFile createDetectedObjectReport() throws IOException, IllegalAccessException {
         HWPFile hwpFile = BlankFileMaker.make();
         configurer.configureHWPFile(hwpFile);
         Section section = hwpFile.getBodyText().getSectionList().get(0);
