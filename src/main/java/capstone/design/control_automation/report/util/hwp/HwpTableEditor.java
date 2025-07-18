@@ -181,7 +181,7 @@ public class HwpTableEditor {
             }
 
             ArrayList<Cell> cells = row.getCellList();
-            for(int colIdx = 0; colIdx < cells.size(); colIdx++) {
+            for (int colIdx = 0; colIdx < cells.size(); colIdx++) {
                 Cell cell = cells.get(colIdx);
                 String text = data.get(colIdx);
                 configureCellSize(cell, mmToHwp(getAutoWidthByText(text)));
