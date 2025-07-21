@@ -1,0 +1,26 @@
+package capstone.design.control_automation.event.controller.dto;
+
+import capstone.design.control_automation.event.repository.dto.EventQueryResult;
+import java.time.LocalDateTime;
+
+public class EventResponse {
+
+    public record Info(
+        Long videoId,
+        String eventUUID,
+        String eventCodeName,
+        LocalDateTime appearedTime,
+        LocalDateTime exitTime
+    ) {
+
+        public static Info from(EventQueryResult.Info info) {
+            return new Info(
+                info.videoId(),
+                info.eventUUID(),
+                info.eventCodeName(),
+                info.appearedTime(),
+                info.exitTime()
+            );
+        }
+    }
+}
