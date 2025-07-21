@@ -6,6 +6,7 @@ public class EventQueryResult {
 
     public record Info(
         Long videoId,
+        String videoThumbnailUrl,
         String eventUUID,
         String eventCodeName,
         LocalDateTime appearedTime,

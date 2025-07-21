@@ -26,7 +26,7 @@ public class EventMyBatisRepository implements EventRepository {
             filter.endTime()
         );
 
-        if (count == 0) {
+        if (count == 0L) {
             return Page.empty();
         }
 
