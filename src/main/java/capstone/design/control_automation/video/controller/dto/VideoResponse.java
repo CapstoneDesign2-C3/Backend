@@ -33,22 +33,26 @@ public class VideoResponse {
         }
     }
 
-    public record SimpleWithFixedObject(
+    public record SimpleWithEvent(
         String videoUrl,
         String summary,
-        String detectedObjectAlias,
+        String eventUUID,
         LocalDateTime appearedTime,
-        LocalDateTime exitTime
+        LocalDateTime exitTime,
+        String eventCodeName,
+        String eventRisk
     ) {
 
-        public static SimpleWithFixedObject of(VideoQueryResult.SimpleWithFixedObject simpleVideo
+        public static SimpleWithEvent of(VideoQueryResult.SimpleWithEvent simpleVideo
         ) {
-            return new SimpleWithFixedObject(
+            return new SimpleWithEvent(
                 simpleVideo.videoUrl(),
                 simpleVideo.summary(),
-                simpleVideo.detectedObjectAlias(),
+                simpleVideo.eventUUID(),
                 simpleVideo.appearedTime(),
-                simpleVideo.exitTime()
+                simpleVideo.exitTime(),
+                simpleVideo.eventCodeName(),
+                simpleVideo.eventRisk()
             );
         }
     }

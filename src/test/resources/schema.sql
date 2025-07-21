@@ -147,6 +147,7 @@ CREATE TABLE user_account_history (
 
 CREATE TABLE video (
                        id IDENTITY PRIMARY KEY,
+                       summary VARCHAR(255),
                        video_url VARCHAR(255),
                        start_time TIMESTAMP,
                        end_time TIMESTAMP,

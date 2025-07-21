@@ -2,7 +2,7 @@ package capstone.design.control_automation.video.service;
 
 import capstone.design.control_automation.detected_object.controller.dto.DetectedObjectResponse.Common;
 import capstone.design.control_automation.video.controller.dto.VideoResponse;
-import capstone.design.control_automation.video.controller.dto.VideoResponse.SimpleWithFixedObject;
+import capstone.design.control_automation.video.controller.dto.VideoResponse.SimpleWithEvent;
 import capstone.design.control_automation.video.controller.dto.VideoResponse.SimpleWithMobileObject;
 import capstone.design.control_automation.video.repository.VideoRepository;
 import capstone.design.control_automation.video.repository.dto.VideoQueryResult;
@@ -45,7 +45,7 @@ public class VideoService {
         return VideoResponse.SimpleWithMobileObject.of(videoRepository.findByMobileDetectionId(mobileDetectionId));
     }
 
-    public SimpleWithFixedObject getSimpleVideoByFixedObjectId(Long fixedObjectId) {
-        return VideoResponse.SimpleWithFixedObject.of(videoRepository.findByFixedObjectId(fixedObjectId));
+    public SimpleWithEvent getSimpleVideoByEvent(Long eventId) {
+        return SimpleWithEvent.of(videoRepository.findByEventId(eventId));
     }
 }
