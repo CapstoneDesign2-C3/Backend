@@ -1,6 +1,7 @@
 package capstone.design.control_automation.event.controller.dto;
 
 import capstone.design.control_automation.event.repository.dto.EventQueryResult;
+import capstone.design.control_automation.event.repository.dto.EventQueryResult.Code;
 import java.time.LocalDateTime;
 
 public class EventResponse {
