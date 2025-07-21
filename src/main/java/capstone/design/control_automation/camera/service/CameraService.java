@@ -1,15 +1,10 @@
 package capstone.design.control_automation.camera.service;
 
-import capstone.design.control_automation.camera.controller.dto.CameraRequest;
 import capstone.design.control_automation.camera.controller.dto.CameraRequest.Filter;
 import capstone.design.control_automation.camera.controller.dto.CameraResponse;
 import capstone.design.control_automation.camera.controller.dto.CameraResponse.Info;
-import capstone.design.control_automation.camera.entity.Camera;
-import capstone.design.control_automation.camera.repository.CameraJpaRepository;
 import capstone.design.control_automation.camera.repository.CameraRepository;
 import capstone.design.control_automation.camera.repository.dto.CameraQueryResult;
-import capstone.design.control_automation.common.exception.ErrorCode;
-import capstone.design.control_automation.common.exception.ErrorException;
 import capstone.design.control_automation.video.controller.dto.VideoResponse.Simple;
 import java.util.List;
 import java.util.Map;
@@ -23,34 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class CameraService {
 
-    private final CameraJpaRepository cameraJpaRepository;
     private final CameraRepository cameraRepository;
-
-    @Transactional
-    public Long createCamera(CameraRequest.Upsert upsert) {
-        Camera camera = new Camera(upsert.latitude(), upsert.longitude(), upsert.scenery());
-
-        cameraJpaRepository.save(camera);
-
-        return camera.getId();
-    }
-
-    @Transactional
-    public void updateCamera(Long cameraId, CameraRequest.Upsert upsert) {
-        Camera camera = cameraJpaRepository.findById(cameraId)
-            .orElseThrow(() -> new ErrorException(ErrorCode.CAMERA_NOT_FOUND));
-
-        camera.updateInfo(
-            upsert.latitude(),
-            upsert.longitude(),
-            upsert.scenery()
-        );
-    }
-
-    @Transactional
-    public void deleteCamera(Long id) {
-        cameraJpaRepository.deleteById(id);
-    }
 
     public List<CameraResponse.Position> getCameraPositionByFilterCondition(Filter filter) {
         return cameraRepository.findAllByFilterCondition(filter)

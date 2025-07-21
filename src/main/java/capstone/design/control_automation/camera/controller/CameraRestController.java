@@ -38,24 +38,4 @@ public class CameraRestController {
         return ResponseEntity.ok(cameraService.getCameraInfo(cameraId));
     }
 
-    @PostMapping
-    public ResponseEntity<Void> createCamera(@RequestBody CameraRequest.Upsert upsert) {
-        Long cameraId = cameraService.createCamera(upsert);
-        URI location = ServletUriComponentsBuilder
-            .fromCurrentRequest()
-            .path("/{id}")
-            .buildAndExpand(cameraId)
-            .toUri();
-
-        return ResponseEntity.created(location).build();
-    }
-
-    @PutMapping("/{cameraId}")
-    public ResponseEntity<Void> updateCamera(
-        @PathVariable Long cameraId,
-        @RequestBody CameraRequest.Upsert upsert
-    ) {
-        cameraService.updateCamera(cameraId, upsert);
-        return ResponseEntity.ok().build();
-    }
 }

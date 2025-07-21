@@ -19,12 +19,10 @@ public class DetectedObjectMyBatisRepository implements DetectedObjectRepository
     private final DetectedObjectMapper detectedObjectMapper;
 
     @Override
-    public Page<MobileObject> findMobileObjectsByFilterAndIds(MobileObjectFilter filter,
-        List<Long> mobileObjectIds, Pageable pageable) {
+    public Page<MobileObject> findMobileObjectsByFilterAndIds(MobileObjectFilter filter, Pageable pageable) {
         Long count = detectedObjectMapper.findMobileObjectCountByFilterAndIds(
             filter.categoryName(),
-            filter.alias(),
-            mobileObjectIds
+            filter.alias()
         );
 
         if (count == 0) {
@@ -34,7 +32,6 @@ public class DetectedObjectMyBatisRepository implements DetectedObjectRepository
         List<MobileObject> mobileObjects = detectedObjectMapper.findMobileObjectsByFilterAndIds(
             filter.categoryName(),
             filter.alias(),
-            mobileObjectIds,
             pageable.getPageSize(),
             pageable.getOffset()
         );

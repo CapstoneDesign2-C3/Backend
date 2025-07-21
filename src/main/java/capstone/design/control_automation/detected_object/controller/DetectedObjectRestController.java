@@ -39,18 +39,6 @@ public class DetectedObjectRestController {
         return ResponseEntity.ok(detectedObjects);
     }
 
-    @PostMapping
-    public ResponseEntity<Void> createDetectedObject(@RequestBody Create create) {
-        Long detectedObjectId = detectedObjectService.createDetectedObject(create);
-
-        URI location = ServletUriComponentsBuilder
-            .fromCurrentRequest()
-            .path("/{detectedObjectId}")
-            .build(detectedObjectId);
-
-        return ResponseEntity.created(location).build();
-    }
-
     @PutMapping("/{detectedObjectId}")
     public ResponseEntity<Void> aliasDetectedObject(
         @PathVariable Long detectedObjectId,
@@ -61,10 +49,4 @@ public class DetectedObjectRestController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/{detectedObjectId}")
-    public ResponseEntity<Void> deleteDetectedObject(@PathVariable Long detectedObjectId) {
-        detectedObjectService.deleteDetectedObject(detectedObjectId);
-
-        return ResponseEntity.noContent().build();
-    }
 }
