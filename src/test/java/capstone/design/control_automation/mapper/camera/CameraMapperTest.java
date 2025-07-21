@@ -76,6 +76,33 @@ class CameraMapperTest {
                 "/thumbs/thumb13.jpg",
                 LocalDateTime.parse("2025-07-21 10:05:00", formatter),
                 LocalDateTime.parse("2025-07-21 10:09:00", formatter)
+            ),
+            new Info(1L,
+                "Camera1",
+                37.5661,
+                126.9781,
+                25L,
+                "/thumbs/thumb5.jpg",
+                LocalDateTime.parse("2025-07-21 09:25:00", formatter),
+                LocalDateTime.parse("2025-07-21 09:28:00", formatter)
+            ),
+            new Info(1L,
+                "Camera1",
+                37.5661,
+                126.9781,
+                33L,
+                "/thumbs/thumb13.jpg",
+                LocalDateTime.parse("2025-07-21 10:05:00", formatter),
+                LocalDateTime.parse("2025-07-21 10:10:00", formatter)
+            ),
+            new Info(1L,
+                "Camera1",
+                37.5661,
+                126.9781,
+                39L,
+                "/thumbs/thumb19.jpg",
+                LocalDateTime.parse("2025-07-21 10:35:00", formatter),
+                LocalDateTime.parse("2025-07-21 10:40:00", formatter)
             )
         );
 

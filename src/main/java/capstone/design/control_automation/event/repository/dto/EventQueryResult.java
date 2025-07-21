@@ -14,4 +14,10 @@ public class EventQueryResult {
 
     }
 
+    public record Code(
+        Long eventCodeId,
+        String eventCodeName
+    ) {
+
+    }
 }

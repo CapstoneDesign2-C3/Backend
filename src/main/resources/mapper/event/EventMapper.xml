@@ -38,4 +38,9 @@
       </if>
     </where>
   </select>
+
+  <select id="getAllEventCodes" resultType="EventCode">
+    SELECT ec.code_id, ec.code_name
+    FROM event_codes ec
+  </select>
 </mapper>

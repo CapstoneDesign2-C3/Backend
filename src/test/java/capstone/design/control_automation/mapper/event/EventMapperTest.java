@@ -3,6 +3,7 @@ package capstone.design.control_automation.mapper.event;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import capstone.design.control_automation.common.config.MyBatisConfig;
+import capstone.design.control_automation.event.repository.dto.EventQueryResult.Code;
 import capstone.design.control_automation.event.repository.dto.EventQueryResult.Info;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -73,6 +74,24 @@ public class EventMapperTest {
             5, 0L
         );
         //then
+        assertThat(actual).hasSameElementsAs(expected);
+    }
+
+    @Test
+    @DisplayName("모든 이벤트 코드 조회")
+    void getAllEventCodesTest() {
+        //given
+        List<Code> expected = List.of(
+            new Code(1L, "안전조끼"),
+            new Code(2L, "위험구역 침입"),
+            new Code(3L, "배회"),
+            new Code(4L, "화재"),
+            new Code(5L, "사람")
+        );
+        //when
+        List<Code> actual = mapper.getAllEventCodes();
+        //then
+
         assertThat(actual).hasSameElementsAs(expected);
     }
 }

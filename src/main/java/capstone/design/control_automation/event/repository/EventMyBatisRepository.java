@@ -2,6 +2,7 @@ package capstone.design.control_automation.event.repository;
 
 import capstone.design.control_automation.event.controller.dto.EventRequest.Filter;
 import capstone.design.control_automation.event.repository.dto.EventQueryResult;
+import capstone.design.control_automation.event.repository.dto.EventQueryResult.Code;
 import capstone.design.control_automation.mapper.event.EventMapper;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -38,5 +39,10 @@ public class EventMyBatisRepository implements EventRepository {
         );
 
         return new PageImpl<>(eventInfos, pageable, count);
+    }
+
+    @Override
+    public List<Code> findAllEventCodes() {
+        return eventMapper.getAllEventCodes();
     }
 }

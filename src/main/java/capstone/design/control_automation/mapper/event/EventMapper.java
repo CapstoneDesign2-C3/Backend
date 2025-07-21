@@ -1,6 +1,7 @@
 package capstone.design.control_automation.mapper.event;
 
 import capstone.design.control_automation.event.repository.dto.EventQueryResult;
+import capstone.design.control_automation.event.repository.dto.EventQueryResult.Code;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
@@ -19,4 +20,6 @@ public interface EventMapper {
         LocalDateTime startTime,
         LocalDateTime endTime,
         Integer pageSize, Long offset);
+
+    List<Code> getAllEventCodes();
 }

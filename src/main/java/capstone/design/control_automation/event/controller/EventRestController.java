@@ -1,8 +1,11 @@
 package capstone.design.control_automation.event.controller;
 
 import capstone.design.control_automation.event.controller.dto.EventRequest;
+import capstone.design.control_automation.event.controller.dto.EventResponse;
+import capstone.design.control_automation.event.controller.dto.EventResponse.Code;
 import capstone.design.control_automation.event.controller.dto.EventResponse.Info;
 import capstone.design.control_automation.event.service.EventService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,4 +29,10 @@ public class EventRestController {
     ) {
         return ResponseEntity.ok(eventService.findEventsByFilter(filter, pageable));
     }
+
+    @GetMapping("/code")
+    public ResponseEntity<List<Code>> getEventCode() {
+        return ResponseEntity.ok(eventService.findEventCodes());
+    }
+
 }
