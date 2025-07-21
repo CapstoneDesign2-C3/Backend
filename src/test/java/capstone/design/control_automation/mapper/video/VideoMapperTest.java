@@ -34,9 +34,12 @@ class VideoMapperTest {
     @Test
     void findById() {
         List <Detail> expected = List.of(
-            new Detail(1L, "https://example.com/video1.mp4", "광화문 교차로", 37.5665, 126.9780, 1L, "사람", "https://example.com/crop1.jpg", "흰 셔츠를 입은 남성"),
-            new Detail(1L, "https://example.com/video1.mp4", "광화문 교차로", 37.5665, 126.9780, 11L, "사람", "https://example.com/crop11.jpg", "횡단보도 앞에 서 있는 사람"),
-            new Detail(1L, "https://example.com/video1.mp4", "광화문 교차로", 37.5665, 126.9780, 7L, "화재", "https://example.com/crop7.jpg", "건물 창문에서 화염 발생")
+            new Detail(1L, "/videos/video1.mp4", "Camera4", 37.5664, 126.9784, 1L, "사람", "/crops/object1.jpg", "노란색 헬멧을 쓴 남성"),
+            new Detail(1L, "/videos/video1.mp4", "Camera4", 37.5664, 126.9784, 3L, "사람", "/crops/object3.jpg", "검정색 가방을 든 여성"),
+            new Detail(1L, "/videos/video1.mp4", "Camera4", 37.5664, 126.9784, 6L, "사람", "/crops/object6.jpg", "손에 도구를 든 작업자"),
+            new Detail(1L, "/videos/video1.mp4", "Camera4", 37.5664, 126.9784, 14L, "사람", "/crops/object14.jpg", "흰색 장갑을 낀 남성"),
+            new Detail(1L, "/videos/video1.mp4", "Camera4", 37.5664, 126.9784, 17L, "사람", "/crops/object17.jpg", "노란 상의와 청바지를 입은 여성"),
+            new Detail(1L, "/videos/video1.mp4", "Camera4", 37.5664, 126.9784, 18L, "사람", "/crops/object18.jpg", "보호구 없이 접근한 인물")
         );
 
         List<Detail> actual = mapper.findById(1L);
@@ -46,7 +49,11 @@ class VideoMapperTest {
 
     @Test
     void findByMobileObjectId() {
-        SimpleWithMobileObject expected = new SimpleWithMobileObject("https://example.com/video1.mp4", "b3f8b7d9-17c7-4af2-b262-2db13ae7e40c", null, "https://example.com/crop1.jpg", LocalDateTime.parse("2025-07-09 08:00:10", formatter), LocalDateTime.parse("2025-07-09 08:00:12", formatter), "사람", "흰 셔츠를 입은 남성");
+        SimpleWithMobileObject expected = new SimpleWithMobileObject(
+            "/videos/video6.mp4",
+            "uuid8", "Object8", "/crops/object8.jpg",
+            LocalDateTime.parse("2025-07-21 09:25:37", formatter), LocalDateTime.parse("2025-07-21 09:26:44", formatter),
+            "사람", "작업 구역 안에 서 있는 사람");
 
         SimpleWithMobileObject actual = mapper.findByMobileDetectionId(1L);
 

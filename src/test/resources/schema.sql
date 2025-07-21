@@ -73,8 +73,8 @@ CREATE TABLE camera_info (
                              camera_id IDENTITY PRIMARY KEY,
                              camera_ip VARCHAR(255) NOT NULL,
                              camera_port INTEGER NOT NULL,
-                             lat NUMERIC,
-                             lon NUMERIC,
+                             lat double,
+                             lon double,
                              location_name VARCHAR(255),
                              location_address VARCHAR(255),
                              location_address_detail VARCHAR(255),
@@ -159,6 +159,7 @@ CREATE TABLE video (
 
 CREATE TABLE detected_object (
                                  id IDENTITY PRIMARY KEY,
+                                 uuid VARCHAR(255),
                                  alias VARCHAR(255),
                                  crop_img_url VARCHAR(255),
                                  feature VARCHAR(255),
@@ -170,7 +171,7 @@ CREATE TABLE detection (
                            id IDENTITY PRIMARY KEY,
                            detected_object_id BIGINT,
                            appeared_time TIMESTAMP,
-                           exit_time TIME,
+                           exit_time TIMESTAMP,
                            video_id BIGINT NOT NULL,
                            FOREIGN KEY (video_id) REFERENCES video(id),
                            FOREIGN KEY (detected_object_id) REFERENCES detected_object(id)

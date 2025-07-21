@@ -53,7 +53,7 @@
   <select id="findMobileObjectCountByFilterAndIds" resultType="Long">
     SELECT count(d.id)
     FROM detected_object d
-    INNER JOIN event_codes e IN e.code_id = d.code_id
+    INNER JOIN event_codes e ON e.code_id = d.code_id
     <where>
       <if test="categoryName != null">
         AND e.code_name LIKE concat('%', #{categoryName}, '%')
@@ -73,7 +73,7 @@
   <select id="findMobileObjectsByFilterAndIds" resultType="DetectedObjectMobile">
     SELECT d.id, e.code_name, d.crop_img_url, d.alias, d.feature
     FROM detected_object d
-    INNER JOIN event_codes e IN e.code_id = d.code_id
+    INNER JOIN event_codes e ON e.code_id = d.code_id
     <where>
       <if test="categoryName != null">
         AND e.code_name LIKE concat('%', #{categoryName}, '%')

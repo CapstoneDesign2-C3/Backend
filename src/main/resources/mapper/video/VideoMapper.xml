@@ -15,7 +15,7 @@
   </select>
 
   <select id="findByMobileDetectionId" resultType="SimpleVideoWithMobileObject">
-    SELECT v.video_url, o.uuid, o.alias, o.crop_img_url, d.appeared_time, d.exit_time, c.name, o.feature
+    SELECT v.video_url, o.uuid, o.alias, o.crop_img_url, d.appeared_time, d.exit_time, e.code_name, o.feature
     FROM video v
     INNER JOIN public.detection d on v.id = d.video_id
     INNER JOIN public.detected_object o on o.id = d.detected_object_id

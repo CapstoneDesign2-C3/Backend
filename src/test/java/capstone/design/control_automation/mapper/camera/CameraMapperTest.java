@@ -25,16 +25,11 @@ class CameraMapperTest {
     @Test
     void findAllByFilterCondition() {
         List<Position> expected = List.of(
-            new Position(1L, 37.5665, 126.9780),
-            new Position(2L, 37.5700, 126.9768),
-            new Position(3L, 37.5721, 126.9875),
-            new Position(4L, 37.5511, 126.9882),
-            new Position(5L, 37.5070, 127.0591),
-            new Position(6L, 37.4847, 126.8963),
-            new Position(7L, 37.4774, 126.9816),
-            new Position(8L, 37.3927, 126.9611),
-            new Position(9L, 35.1796, 129.0756),
-            new Position(10L, 35.1531, 129.1186)
+            new Position(1L, 37.5661, 126.9781),
+            new Position(2L, 37.5662, 126.9782),
+            new Position(3L, 37.5663, 126.9783),
+            new Position(4L, 37.5664, 126.9784),
+            new Position(5L, 37.5665, 126.9785)
         );
         List<Position> actual = cameraMapper.findAllByFilterCondition(50.1,120.1,10.1, 130.01);
 
@@ -47,13 +42,40 @@ class CameraMapperTest {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         List<Info> expected = List.of(
             new Info(1L,
-                "광화문 교차로",
-                37.5665,
-                126.9780,
-                1L,
-                "https://example.com/thumbnail1.mp4",
-                LocalDateTime.parse("2025-07-09 08:00:00", formatter),
-                LocalDateTime.parse("2025-07-09 08:05:00", formatter)
+                "Camera1",
+                37.5661,
+                126.9781,
+                2L,
+                "/thumbs/thumb2.jpg",
+                LocalDateTime.parse("2025-07-21 09:10:00", formatter),
+                LocalDateTime.parse("2025-07-21 09:14:00", formatter)
+            ),
+            new Info(1L,
+                "Camera1",
+                37.5661,
+                126.9781,
+                11L,
+                "/thumbs/thumb11.jpg",
+                LocalDateTime.parse("2025-07-21 09:55:00", formatter),
+                LocalDateTime.parse("2025-07-21 09:59:00", formatter)
+            ),
+            new Info(1L,
+                "Camera1",
+                37.5661,
+                126.9781,
+                12L,
+                "/thumbs/thumb12.jpg",
+                LocalDateTime.parse("2025-07-21 10:00:00", formatter),
+                LocalDateTime.parse("2025-07-21 10:04:00", formatter)
+            ),
+            new Info(1L,
+                "Camera1",
+                37.5661,
+                126.9781,
+                13L,
+                "/thumbs/thumb13.jpg",
+                LocalDateTime.parse("2025-07-21 10:05:00", formatter),
+                LocalDateTime.parse("2025-07-21 10:09:00", formatter)
             )
         );
 
