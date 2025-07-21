@@ -5,12 +5,12 @@
 
 <mapper namespace="capstone.design.control_automation.mapper.video.VideoMapper">
   <select id="findById" resultType="DetailVideo">
-    SELECT v.id, v.video_url, c.scenery, c.latitude, c.longitude, d.detected_object_id, c2.name, o.crop_img_url, o.feature
+    SELECT v.id, v.video_url, c.camera_name, c.lat, c.lon, d.detected_object_id, e.code_name, o.crop_img_url, o.feature
     FROM video v
     INNER JOIN public.detection d on v.id = d.video_id
-    INNER JOIN public.camera c on c.id = v.camera_id
+    INNER JOIN public.camera_info c on c.camera_id = v.camera_id
     INNER JOIN public.detected_object o on o.id = d.detected_object_id
-    INNER JOIN public.categories c2 on c2.id = o.category_id
+    INNER JOIN public.event_codes e on e.code_id = o.code_id
     WHERE v.id = #{id}
   </select>
 
@@ -19,18 +19,18 @@
     FROM video v
     INNER JOIN public.detection d on v.id = d.video_id
     INNER JOIN public.detected_object o on o.id = d.detected_object_id
-    INNER JOIN public.categories c on c.id = o.category_id
+    INNER JOIN public.event_codes e on e.code_id = o.code_id
     WHERE d.id = #{mobileDetectionId}
     LIMIT 1
   </select>
 
-  <select id="findByFixedObjectId" resultType="SimpleVideoWithFixedObject">
-    SELECT v.video_url, v.summary, o.alias, d.appeared_time, d.exit_time, c.name
-    FROM video v
-    INNER JOIN public.detection d on v.id = d.video_id
-    INNER JOIN public.detected_object o on d.detected_object_id = o.id
-    INNER JOIN public.categories c on c.id = o.category_id
-    WHERE o.id = #{fixedObjectId}
-    LIMIT 1
-  </select>
+<!--  <select id="findByFixedObjectId" resultType="SimpleVideoWithFixedObject">-->
+<!--    SELECT v.video_url, v.summary, o.alias, d.appeared_time, d.exit_time, c.name-->
+<!--    FROM video v-->
+<!--    INNER JOIN public.detection d on v.id = d.video_id-->
+<!--    INNER JOIN public.detected_object o on d.detected_object_id = o.id-->
+<!--    INNER JOIN public.categories c on c.id = o.category_id-->
+<!--    WHERE o.id = #{fixedObjectId}-->
+<!--    LIMIT 1-->
+<!--  </select>-->
 </mapper>

@@ -53,11 +53,10 @@
   <select id="findMobileObjectCountByFilterAndIds" resultType="Long">
     SELECT count(d.id)
     FROM detected_object d
-    INNER JOIN categories c on c.id = d.category_id
+    INNER JOIN event_codes e IN e.code_id = d.code_id
     <where>
-      d.dtype LIKE 'mobile'
       <if test="categoryName != null">
-        AND c.name LIKE concat('%', #{categoryName}, '%')
+        AND e.code_name LIKE concat('%', #{categoryName}, '%')
       </if>
       <if test="alias != null">
         AND d.alias LIKE concat('%', #{alias}, '%')
@@ -72,13 +71,12 @@
   </select>
 
   <select id="findMobileObjectsByFilterAndIds" resultType="DetectedObjectMobile">
-    SELECT d.id, c.name, d.crop_img_url, d.alias, d.feature
+    SELECT d.id, e.code_name, d.crop_img_url, d.alias, d.feature
     FROM detected_object d
-    inner join categories c on c.id = d.category_id
+    INNER JOIN event_codes e IN e.code_id = d.code_id
     <where>
-      d.dtype LIKE 'mobile'
       <if test="categoryName != null">
-        AND c.name LIKE concat('%', #{categoryName}, '%')
+        AND e.code_name LIKE concat('%', #{categoryName}, '%')
       </if>
       <if test="alias != null">
         AND d.alias LIKE concat('%', #{alias}, '%')
