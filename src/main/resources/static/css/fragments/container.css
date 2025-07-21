@@ -1,5 +1,0 @@
-.container {
-  display: flex;
-  flex-direction: row;
-  height: calc(100vh - 56px);
-}
