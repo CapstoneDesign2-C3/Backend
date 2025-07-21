@@ -21,10 +21,10 @@
   </select>
 
   <select id="getTracksOfMobileObject" resultType="DetectionTrack">
-    SELECT d.id, c.scenery , v.thumbnail_url, d.appeared_time, d.exit_time
+    SELECT d.id, c.camera_name , v.thumbnail_url, d.appeared_time, d.exit_time
     FROM detection d
     INNER JOIN video v on d.video_id = v.id
-    INNER JOIN camera c on v.camera_id = c.id
+    INNER JOIN camera_info c on v.camera_id = c.camera_id
      <where>
       <if test="mobileObjectId != null">
         d.detected_object_id = #{mobileObjectId}
@@ -42,10 +42,10 @@
   </select>
 
   <select id="getPositionsOfMobileObject" resultType="DetectionPosition">
-    SELECT d.id, c.latitude, c.longitude
+    SELECT d.id, c.lat, c.lon
     FROM detection d
     INNER JOIN video v on v.id = d.video_id
-    INNER JOIN camera c on c.id = v.camera_id
+    INNER JOIN camera_info c on c.camera_id = v.camera_id
     <where>
       <if test="mobileObjectId != null">
         d.detected_object_id = #{mobileObjectId}
@@ -60,7 +60,7 @@
     ORDER BY d.appeared_time ASC
   </select>
 
-  <select id="getFixedDetectionCountByFilterAndIds" resultType="Long">
+  <select id="getFixedDetectionCountByFilterAndIds" resultType="Long">--  TODO
     SELECT count(d.id)
     FROM detection d
     INNER JOIN public.detected_object o on o.id = d.detected_object_id
@@ -82,7 +82,7 @@
     </where>
   </select>
 
-  <select id="getFixedDetectionsByFilterAndIds" resultType="DetectedObjectFixed">
+  <select id="getFixedDetectionsByFilterAndIds" resultType="DetectedObjectFixed"> -- TODO
     SELECT v.id, v.video_url, c.name, o.alias, v.summary
     FROM detection d
     INNER JOIN public.detected_object o on o.id = d.detected_object_id
