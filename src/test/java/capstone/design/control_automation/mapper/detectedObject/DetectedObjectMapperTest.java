@@ -43,7 +43,7 @@ class DetectedObjectMapperTest {
             new MobileObject(4L, "uuid4", "사람", "/crops/object4.jpg", "Object4"),
             new MobileObject(5L, "uuid5", "사람", "/crops/object5.jpg", "Object5")
         );
-        List<MobileObject> actual = detectedObjectMapper.findMobileObjectsByFilterAndIds("사람", null,5, 0L);
+        List<MobileObject> actual = detectedObjectMapper.findMobileObjectsByFilterAndIds("사람", null, 5, 0L);
 
         assertThat(actual).hasSameElementsAs(expected);
     }
