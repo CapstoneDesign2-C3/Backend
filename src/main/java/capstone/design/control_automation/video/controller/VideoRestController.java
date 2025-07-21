@@ -2,6 +2,7 @@ package capstone.design.control_automation.video.controller;
 
 import capstone.design.control_automation.video.controller.dto.VideoResponse;
 import capstone.design.control_automation.video.controller.dto.VideoResponse.Detail;
+import capstone.design.control_automation.video.controller.dto.VideoResponse.SimpleWithEvent;
 import capstone.design.control_automation.video.service.VideoService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -31,9 +32,9 @@ public class VideoRestController {
         return ResponseEntity.ok(simpleVideo);
     }
 
-    @GetMapping("/fixed-object")
-    public ResponseEntity<VideoResponse.SimpleWithFixedObject> getSimpleVideoWithFixedObject(@RequestParam Long fixedObjectId) {
-        VideoResponse.SimpleWithFixedObject simpleVideo = videoService.getSimpleVideoByFixedObjectId(fixedObjectId);
+    @GetMapping("/event")
+    public ResponseEntity<SimpleWithEvent> getSimpleVideoWithEvent(@RequestParam Long fixedObjectId) {
+        SimpleWithEvent simpleVideo = videoService.getSimpleVideoByEvent(fixedObjectId);
         return ResponseEntity.ok(simpleVideo);
     }
 

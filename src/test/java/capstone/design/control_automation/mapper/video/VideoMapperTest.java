@@ -4,12 +4,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import capstone.design.control_automation.common.config.MyBatisConfig;
 import capstone.design.control_automation.video.repository.dto.VideoQueryResult.Detail;
-import capstone.design.control_automation.video.repository.dto.VideoQueryResult.SimpleWithFixedObject;
+import capstone.design.control_automation.video.repository.dto.VideoQueryResult.SimpleWithEvent;
 import capstone.design.control_automation.video.repository.dto.VideoQueryResult.SimpleWithMobileObject;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +57,26 @@ class VideoMapperTest {
             "사람", "작업 구역 안에 서 있는 사람");
 
         SimpleWithMobileObject actual = mapper.findByMobileDetectionId(1L);
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("eventId로 simpleVideo 정보 가져 오기")
+    void findByEventIdTest() {
+        //given
+        SimpleWithEvent expected = new SimpleWithEvent(
+            "/videos/video4.mp4",
+            "summary24",
+            "a9778202-6320-43c7-b4a4-404d03513921",
+            LocalDateTime.parse("2025-07-21 08:00:00", formatter),
+            LocalDateTime.parse("2025-07-21 08:02:47", formatter),
+            "배회",
+            "위험"
+        );
+        //when
+        SimpleWithEvent actual = mapper.findByEventId(1L);
+        //then
 
         assertThat(actual).isEqualTo(expected);
     }

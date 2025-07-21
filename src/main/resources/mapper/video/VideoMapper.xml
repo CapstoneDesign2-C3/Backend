@@ -24,13 +24,13 @@
     LIMIT 1
   </select>
 
-<!--  <select id="findByFixedObjectId" resultType="SimpleVideoWithFixedObject">-->
-<!--    SELECT v.video_url, v.summary, o.alias, d.appeared_time, d.exit_time, c.name-->
-<!--    FROM video v-->
-<!--    INNER JOIN public.detection d on v.id = d.video_id-->
-<!--    INNER JOIN public.detected_object o on d.detected_object_id = o.id-->
-<!--    INNER JOIN public.categories c on c.id = o.category_id-->
-<!--    WHERE o.id = #{fixedObjectId}-->
-<!--    LIMIT 1-->
-<!--  </select>-->
+  <select id="findByEventId" resultType="SimpleVideoWithEvent">
+    SELECT v.video_url, v.summary, ei.event_uuid, ei.start_frame_at, ei.end_frame_at, ec.code_name, er.risk_level
+    FROM video v
+    INNER JOIN public.event_info ei on v.event_id = ei.event_id
+    INNER JOIN public.event_codes ec on ei.code_id = ec.code_id
+    INNER JOIN public.event_risks er on ec.risk_id = er.risk_id
+    WHERE ei.event_id = #{eventId}
+    LIMIT 1
+  </select>
 </mapper>
