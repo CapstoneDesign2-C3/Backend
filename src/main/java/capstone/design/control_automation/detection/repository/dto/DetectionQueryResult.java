@@ -1,5 +1,6 @@
 package capstone.design.control_automation.detection.repository.dto;
 
+import capstone.design.control_automation.report.util.hwp.TableColumn;
 import com.querydsl.core.annotations.QueryProjection;
 import java.time.LocalDateTime;
 
@@ -7,10 +8,10 @@ public class DetectionQueryResult {
 
     public record Track(
         Long detectionId,
-        String cameraScenery,
+        @TableColumn(name = "출현 장소", order = 1) String cameraScenery,
         String thumbnailUrl,
-        LocalDateTime appearedTime,
-        LocalDateTime exitTime
+        @TableColumn(name = "출현 시간", order = 2) LocalDateTime appearedTime,
+        @TableColumn(name = "퇴장 시간", order = 3) LocalDateTime exitTime
     ) {
 
         @QueryProjection
@@ -21,8 +22,8 @@ public class DetectionQueryResult {
 
     public record Position(
         Long detectionId,
-        double latitudeY,
-        double longitudeX
+        @TableColumn(name = "위도", order = 1) double latitudeY,
+        @TableColumn(name = "경도", order = 2) double longitudeX
     ) {
 
         @QueryProjection

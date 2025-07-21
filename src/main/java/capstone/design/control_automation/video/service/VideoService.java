@@ -30,7 +30,7 @@ public class VideoService {
             .findAny().get();
 
         // 모든 Detail의 Video 정보는 같다
-        VideoQueryResult.Detail base = videoGroup.get(videoId).getFirst();
+        VideoQueryResult.Detail base = videoGroup.get(videoId).get(0);
 
         return new VideoResponse.Detail(
             base.videoUrl(),
