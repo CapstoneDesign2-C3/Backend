@@ -5,23 +5,23 @@
 
 <mapper namespace="capstone.design.control_automation.mapper.camera.CameraMapper">
   <select id="findAllByFilterCondition" resultType="CameraPosition">
-    SELECT c.id, c.latitude, c.longitude
-    FROM camera c
+    SELECT c.camera_id, c.lat, c.lon
+    FROM camera_info c
     <where>
       <if test="topLeftLatitude != null
           and topLeftLongitude != null
           and bottomRightLatitude != null
           and bottomRightLongitude != null">
-        c.latitude BETWEEN #{bottomRightLatitude} AND #{topLeftLatitude}
-        AND c.longitude BETWEEN #{topLeftLongitude} AND #{bottomRightLongitude}
+        c.lat BETWEEN #{bottomRightLatitude} AND #{topLeftLatitude}
+        AND c.lon BETWEEN #{topLeftLongitude} AND #{bottomRightLongitude}
       </if>
     </where>
   </select>
 
   <select id="findWithVideosById" resultType="CameraInfo">
-    SELECT DISTINCT c.id, c.scenery, c.latitude, c.longitude, v.id, v.thumbnail_url, v.start_time, v.end_time
-    FROM camera c
-    LEFT JOIN public.video v on c.id = v.camera_id
-    WHERE c.id = #{cameraId}
+    SELECT DISTINCT c.camera_id, c.camera_name, c.lat, c.lon, v.id, v.thumbnail_url, v.start_time, v.end_time
+    FROM camera_info c
+    LEFT JOIN public.video v on c.camera_id = v.camera_id
+    WHERE c.camera_id = #{cameraId}
   </select>
 </mapper>
