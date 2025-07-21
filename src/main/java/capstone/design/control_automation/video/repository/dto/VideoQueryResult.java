@@ -17,13 +17,14 @@ public class VideoQueryResult {
 
     }
 
-    public record SimpleWithFixedObject(
+    public record SimpleWithEvent(
         String videoUrl,
         String summary,
-        String detectedObjectAlias,
+        String eventUUID,
         LocalDateTime appearedTime,
         LocalDateTime exitTime,
-        String categoryName
+        String eventCodeName,
+        String eventRisk
     ) {
 
     }

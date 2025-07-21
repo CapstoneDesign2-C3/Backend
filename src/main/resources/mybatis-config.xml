@@ -11,7 +11,7 @@
     <typeAlias alias="DetectionPosition" type="capstone.design.control_automation.detection.repository.dto.DetectionQueryResult$Position"/>
     <typeAlias alias="DetectedObjectFixed" type="capstone.design.control_automation.detected_object.repository.dto.DetectedObjectQueryResult$FixedObject"/>
     <typeAlias alias="DetectedObjectMobile" type="capstone.design.control_automation.detected_object.repository.dto.DetectedObjectQueryResult$MobileObject"/>
-    <typeAlias alias="SimpleVideoWithFixedObject" type="capstone.design.control_automation.video.repository.dto.VideoQueryResult$SimpleWithFixedObject"/>
+    <typeAlias alias="SimpleVideoWithEvent" type="capstone.design.control_automation.video.repository.dto.VideoQueryResult$SimpleWithEvent"/>
     <typeAlias alias="SimpleVideoWithMobileObject" type="capstone.design.control_automation.video.repository.dto.VideoQueryResult$SimpleWithMobileObject"/>
     <typeAlias alias="DetailVideo" type="capstone.design.control_automation.video.repository.dto.VideoQueryResult$Detail"/>
     <typeAlias alias="EventInfo" type="capstone.design.control_automation.event.repository.dto.EventQueryResult$Info"/>

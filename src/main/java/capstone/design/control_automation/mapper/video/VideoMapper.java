@@ -12,5 +12,5 @@ public interface VideoMapper {
 
     VideoQueryResult.SimpleWithMobileObject findByMobileDetectionId(Long detectionId);
 
-    VideoQueryResult.SimpleWithFixedObject findByFixedObjectId(Long fixedObjectId);
+    VideoQueryResult.SimpleWithEvent findByEventId(Long eventId);
 }

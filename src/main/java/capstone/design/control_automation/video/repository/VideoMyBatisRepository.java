@@ -2,7 +2,7 @@ package capstone.design.control_automation.video.repository;
 
 import capstone.design.control_automation.mapper.video.VideoMapper;
 import capstone.design.control_automation.video.repository.dto.VideoQueryResult.Detail;
-import capstone.design.control_automation.video.repository.dto.VideoQueryResult.SimpleWithFixedObject;
+import capstone.design.control_automation.video.repository.dto.VideoQueryResult.SimpleWithEvent;
 import capstone.design.control_automation.video.repository.dto.VideoQueryResult.SimpleWithMobileObject;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -27,8 +27,8 @@ public class VideoMyBatisRepository implements VideoRepository {
     }
 
     @Override
-    public SimpleWithFixedObject findByFixedObjectId(Long fixedObjectId) {
-        return videoMapper.findByFixedObjectId(fixedObjectId);
+    public SimpleWithEvent findByEventId(Long eventId) {
+        return videoMapper.findByEventId(eventId);
     }
 
 
