@@ -11,4 +11,6 @@ public interface DetectedObjectMapper {
 
     List<MobileObject> findMobileObjectsByFilterAndIds(String categoryName, String alias, Integer pageSize,
         Long offset);
+
+    void aliasDetectedObject(Long detectedObjectId, String alias);
 }

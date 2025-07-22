@@ -11,15 +11,13 @@ public class VideoQueryResult {
         String detectedObjectCropUrl,
         LocalDateTime appearedTime,
         LocalDateTime exitTime,
-        String categoryName,
-        String feature
+        String categoryName
     ) {
 
     }
 
     public record SimpleWithEvent(
         String videoUrl,
-        String summary,
         String eventUUID,
         LocalDateTime appearedTime,
         LocalDateTime exitTime,
@@ -36,9 +34,9 @@ public class VideoQueryResult {
         Double latitude,
         Double longitude,
         Long detectedObjectId,
+        String detectedObjectUUID,
         String categoryName,
-        String cropImgUrl,
-        String feature
+        String cropImgUrl
     ) {
 
     }

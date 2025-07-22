@@ -19,18 +19,6 @@ public class VideoResponse {
         String feature
     ) {
 
-        public static SimpleWithMobileObject of(VideoQueryResult.SimpleWithMobileObject simpleVideo) {
-            return new SimpleWithMobileObject(
-                simpleVideo.videoUrl(),
-                simpleVideo.detectedObjectUUID(),
-                simpleVideo.detectedObjectAlias(),
-                simpleVideo.detectedObjectCropUrl(),
-                simpleVideo.appearedTime(),
-                simpleVideo.exitTime(),
-                simpleVideo.categoryName(),
-                simpleVideo.feature()
-            );
-        }
     }
 
     public record SimpleWithEvent(
@@ -43,18 +31,6 @@ public class VideoResponse {
         String eventRisk
     ) {
 
-        public static SimpleWithEvent of(VideoQueryResult.SimpleWithEvent simpleVideo
-        ) {
-            return new SimpleWithEvent(
-                simpleVideo.videoUrl(),
-                simpleVideo.summary(),
-                simpleVideo.eventUUID(),
-                simpleVideo.appearedTime(),
-                simpleVideo.exitTime(),
-                simpleVideo.eventCodeName(),
-                simpleVideo.eventRisk()
-            );
-        }
     }
 
     public record Detail(

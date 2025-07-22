@@ -10,4 +10,6 @@ public interface DetectedObjectRepository {
 
     Page<MobileObject> findMobileObjectsByFilterAndIds(MobileObjectFilter mobileObjectFilter,
         Pageable pageable);
+
+    void aliasDetectedObject(Long detectedObjectId, String alias);
 }

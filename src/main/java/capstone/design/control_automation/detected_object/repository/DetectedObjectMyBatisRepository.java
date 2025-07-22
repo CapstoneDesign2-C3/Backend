@@ -38,4 +38,9 @@ public class DetectedObjectMyBatisRepository implements DetectedObjectRepository
 
         return new PageImpl<>(mobileObjects, pageable, count);
     }
+
+    @Override
+    public void aliasDetectedObject(Long detectedObjectId, String alias) {
+        detectedObjectMapper.aliasDetectedObject(detectedObjectId, alias);
+    }
 }
