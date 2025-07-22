@@ -19,18 +19,6 @@ public class VideoResponse {
         String feature
     ) {
 
-        public static SimpleWithMobileObject of(VideoQueryResult.SimpleWithMobileObject simpleVideo) {
-            return new SimpleWithMobileObject(
-                simpleVideo.videoUrl(),
-                simpleVideo.detectedObjectUUID(),
-                simpleVideo.detectedObjectAlias(),
-                simpleVideo.detectedObjectCropUrl(),
-                simpleVideo.appearedTime(),
-                simpleVideo.exitTime(),
-                simpleVideo.categoryName(),
-                simpleVideo.feature()
-            );
-        }
     }
 
     public record SimpleWithEvent(
