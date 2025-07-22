@@ -41,12 +41,12 @@ public class HwpImageEditor {
     public int addBinDataToHwpFile(HWPFile hwpFile, byte[] fileBinary) {
         int binDataId = hwpFile.getBinData().getEmbeddedBinaryDataList().size() + 1;
         String streamName = "Bin" + String.format("%04X", binDataId) + ".jpg";
-        hwpFile.getBinData().addNewEmbeddedBinaryData(streamName, fileBinary, BinDataCompress.ByStroageDefault);
+        hwpFile.getBinData().addNewEmbeddedBinaryData(streamName, fileBinary, BinDataCompress.ByStorageDefault);
 
         BinData bd = new BinData();
         bd.getProperty().setType(BinDataType.Embedding);
-        bd.getProperty().setCompress(BinDataCompress.ByStroageDefault);
-        bd.getProperty().setState(BinDataState.NotAcceess);
+        bd.getProperty().setCompress(BinDataCompress.ByStorageDefault);
+        bd.getProperty().setState(BinDataState.NotAccess);
         bd.setBinDataID(binDataId);
         bd.setExtensionForEmbedding("jpg");
         hwpFile.getDocInfo().getBinDataList().add(bd);
