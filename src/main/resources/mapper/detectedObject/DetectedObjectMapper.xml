@@ -34,4 +34,9 @@
     OFFSET #{offset}
   </select>
 
+  <update id="aliasDetectedObject">
+    UPDATE detected_object
+    SET alias = #{alias}
+    WHERE id = #{detectedObjectId}
+  </update>
 </mapper>
