@@ -9,7 +9,6 @@
     <typeAlias alias="CameraInfo" type="capstone.design.control_automation.camera.repository.dto.CameraQueryResult$Info"/>
     <typeAlias alias="DetectionTrack" type="capstone.design.control_automation.detection.repository.dto.DetectionQueryResult$Track"/>
     <typeAlias alias="DetectionPosition" type="capstone.design.control_automation.detection.repository.dto.DetectionQueryResult$Position"/>
-    <typeAlias alias="DetectedObjectFixed" type="capstone.design.control_automation.detected_object.repository.dto.DetectedObjectQueryResult$FixedObject"/>
     <typeAlias alias="DetectedObjectMobile" type="capstone.design.control_automation.detected_object.repository.dto.DetectedObjectQueryResult$MobileObject"/>
     <typeAlias alias="SimpleVideoWithEvent" type="capstone.design.control_automation.video.repository.dto.VideoQueryResult$SimpleWithEvent"/>
     <typeAlias alias="SimpleVideoWithMobileObject" type="capstone.design.control_automation.video.repository.dto.VideoQueryResult$SimpleWithMobileObject"/>

@@ -35,7 +35,7 @@ public class EventMapperTest {
     @DisplayName("filter 조건으로 eventCount 조회")
     void findEventCountByFilterTest() {
         //given
-        Long expected = 5L;
+        Long expected = 6L;
         //when
         Long actual = mapper.getEventCountByFilter(
             "화재",
@@ -66,6 +66,14 @@ public class EventMapperTest {
                 "배회",
                 LocalDateTime.parse("2025-07-21 08:54:00", formatter),
                 LocalDateTime.parse("2025-07-21 08:55:18", formatter)
+            ),
+            new Info(
+                39L,
+                "/thumbs/thumb19.jpg",
+                "461738b1-6a42-4900-9d19-2a6cec8c42d1",
+                "배회",
+                LocalDateTime.parse("2025-07-21 08:48:00", formatter),
+                LocalDateTime.parse("2025-07-21 08:50:02", formatter)
             )
         );
         //when
