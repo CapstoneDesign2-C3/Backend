@@ -67,7 +67,6 @@ class VideoMapperTest {
         //given
         SimpleWithEvent expected = new SimpleWithEvent(
             "/videos/video4.mp4",
-            "summary24",
             "a9778202-6320-43c7-b4a4-404d03513921",
             LocalDateTime.parse("2025-07-21 08:00:00", formatter),
             LocalDateTime.parse("2025-07-21 08:02:47", formatter),

@@ -25,7 +25,7 @@
   </select>
 
   <select id="findByEventId" resultType="SimpleVideoWithEvent">
-    SELECT v.video_url, v.summary, ei.event_uuid, ei.start_frame_at, ei.end_frame_at, ec.code_name, er.risk_level
+    SELECT v.video_url, ei.event_uuid, ei.start_frame_at, ei.end_frame_at, ec.code_name, er.risk_level
     FROM video v
     INNER JOIN public.event_info ei on v.event_id = ei.event_id
     INNER JOIN public.event_codes ec on ei.code_id = ec.code_id
