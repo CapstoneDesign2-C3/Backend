@@ -5,10 +5,21 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Base64;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import kr.dogfoot.hwplib.object.HWPFile;
 import kr.dogfoot.hwplib.object.bodytext.Section;
+import kr.dogfoot.hwplib.object.bodytext.control.ControlColumnDefine;
+import kr.dogfoot.hwplib.object.bodytext.control.ControlSectionDefine;
+import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.CtrlHeader;
 import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.CtrlHeaderGso;
+import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.columndefine.ColumnInfo;
 import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.gso.GsoHeaderProperty;
 import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.gso.HeightCriterion;
 import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.gso.HorzRelTo;
@@ -19,7 +30,9 @@ import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.gso.TextHorzArrange;
 import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.gso.VertRelTo;
 import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.gso.WidthCriterion;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.ControlRectangle;
+import kr.dogfoot.hwplib.object.bodytext.control.gso.GsoControl;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.GsoControlType;
+import kr.dogfoot.hwplib.object.bodytext.control.gso.shapecomponent.ShapeComponent;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.shapecomponent.ShapeComponentNormal;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.shapecomponent.lineinfo.LineArrowShape;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.shapecomponent.lineinfo.LineArrowSize;
@@ -34,8 +47,13 @@ import kr.dogfoot.hwplib.object.bodytext.paragraph.Paragraph;
 import kr.dogfoot.hwplib.object.bodytext.paragraph.charshape.CharPositionShapeIdPair;
 import kr.dogfoot.hwplib.object.bodytext.paragraph.charshape.ParaCharShape;
 import kr.dogfoot.hwplib.object.bodytext.paragraph.lineseg.LineSegItem;
+import kr.dogfoot.hwplib.object.bodytext.paragraph.lineseg.ParaLineSeg;
+import kr.dogfoot.hwplib.object.bodytext.paragraph.text.HWPChar;
+import kr.dogfoot.hwplib.object.bodytext.paragraph.text.HWPCharControlExtend;
 import kr.dogfoot.hwplib.object.docinfo.BinData;
 import kr.dogfoot.hwplib.object.docinfo.CharShape;
+import kr.dogfoot.hwplib.object.docinfo.DocInfo;
+import kr.dogfoot.hwplib.object.docinfo.Numbering;
 import kr.dogfoot.hwplib.object.docinfo.ParaShape;
 import kr.dogfoot.hwplib.object.docinfo.bindata.BinDataCompress;
 import kr.dogfoot.hwplib.object.docinfo.bindata.BinDataState;
@@ -43,13 +61,18 @@ import kr.dogfoot.hwplib.object.docinfo.bindata.BinDataType;
 import kr.dogfoot.hwplib.object.docinfo.borderfill.fillinfo.FillInfo;
 import kr.dogfoot.hwplib.object.docinfo.borderfill.fillinfo.ImageFill;
 import kr.dogfoot.hwplib.object.docinfo.borderfill.fillinfo.ImageFillType;
+import kr.dogfoot.hwplib.object.docinfo.borderfill.fillinfo.PatternFill;
+import kr.dogfoot.hwplib.object.docinfo.borderfill.fillinfo.PatternType;
 import kr.dogfoot.hwplib.object.docinfo.borderfill.fillinfo.PictureEffect;
 import kr.dogfoot.hwplib.object.docinfo.parashape.Alignment;
+import kr.dogfoot.hwplib.reader.HWPReader;
 import kr.dogfoot.hwplib.tool.blankfilemaker.BlankFileMaker;
 import kr.dogfoot.hwplib.writer.HWPWriter;
 import org.junit.jupiter.api.Test;
 
 class ReportCreateTest {
+
+    private final Set<String> visited = new HashSet<>();
 
     /*  Section : 쪽
         Paragraph : 문단
@@ -125,6 +148,84 @@ class ReportCreateTest {
         HWPWriter.toFile(hwpFile, "C:/Users/Suhyeon/Desktop/hwpTest/two_line_test.hwp");
     }
 
+    @Test
+    void configureColumnTest() throws Exception {
+
+        HWPFile hwpFile1 = HWPReader.fromFile("./hwptest/column_test.hwp");
+        HWPFile hwpFile2 = HWPReader.fromFile("./hwptest/column_test1.hwp");
+
+        ControlColumnDefine controlColumnDefine2 = (ControlColumnDefine) hwpFile2.getBodyText().getSectionList().get(0)
+            .getParagraph(0).getControlList().get(1);
+        controlColumnDefine2.getHeader().getProperty().setValue(8);
+        ColumnInfo columnInfo1 = controlColumnDefine2.getHeader().addNewColumnInfo();
+        ColumnInfo columnInfo2 = controlColumnDefine2.getHeader().addNewColumnInfo();
+        columnInfo1.setWidth(10339);
+        columnInfo1.setGap(1747);
+        columnInfo2.setWidth(20682);
+
+        compareObjects(hwpFile1, hwpFile2, "HWPFile");
+        HWPWriter.toFile(hwpFile2, "./hwptest/column_test2.hwp");
+    }
+
+    private void compareObjects(Object o1, Object o2, String path) throws IllegalAccessException {
+        if (o1 == null && o2 == null) return;
+
+        if (o1 == null || o2 == null) {
+            System.out.printf("[DIFF] %s → %s vs %s\n", path, format(o1), format(o2));
+            return;
+        }
+
+        Class<?> clazz = o1.getClass();
+
+        // 리스트인 경우
+        if (o1 instanceof List<?> list1 && o2 instanceof List<?> list2) {
+            int max = Math.max(list1.size(), list2.size());
+            for (int i = 0; i < max; i++) {
+                Object v1 = i < list1.size() ? list1.get(i) : null;
+                Object v2 = i < list2.size() ? list2.get(i) : null;
+                compareObjects(v1, v2, path + "[" + i + "]");
+            }
+            return;
+        }
+
+        // 기본형 or equals 비교로 끝낼 수 있는 타입
+        if (isLeafType(clazz)) {
+            if (!Objects.equals(o1, o2)) {
+                System.out.printf("[DIFF] %s → %s vs %s\n", path, format(o1), format(o2));
+            }
+            return;
+        }
+
+        // 무한루프 방지용
+        if (!visited.add(System.identityHashCode(o1) + "|" + System.identityHashCode(o2))) return;
+
+        // 필드 순회
+        while (clazz != null && clazz != Object.class) {
+            for (Field field : clazz.getDeclaredFields()) {
+                field.setAccessible(true);
+                Object f1 = field.get(o1);
+                Object f2 = field.get(o2);
+                compareObjects(f1, f2, path + "." + field.getName());
+            }
+            clazz = clazz.getSuperclass();
+        }
+    }
+
+    private boolean isLeafType(Class<?> clazz) {
+        return clazz.isPrimitive() ||
+            clazz == String.class ||
+            Number.class.isAssignableFrom(clazz) ||
+            Boolean.class.isAssignableFrom(clazz) ||
+            Enum.class.isAssignableFrom(clazz) ||
+            clazz.getPackageName().startsWith("java.");
+    }
+
+
+    private String format(Object obj) {
+        if (obj == null) return "null";
+        return obj.toString();
+    }
+
     /*
         GSO 는 그리기 도구
      */
@@ -149,8 +250,10 @@ class ReportCreateTest {
         bd.setExtensionForEmbedding("jpg");
         hwpFile.getDocInfo().getBinDataList().add(bd);
 
-        Rectangle shapePosition = new Rectangle(0, 0, 150, 100);
 
+
+        Rectangle shapePosition = new Rectangle(0, 0, 150, 100);
+        
         paragraph.getText().addExtendCharForGSO();
         ControlRectangle controlRectangle = (ControlRectangle) paragraph.addNewGsoControl(GsoControlType.Rectangle);
 
@@ -180,9 +283,8 @@ class ReportCreateTest {
             ios.read(buffer);
         } finally {
             try {
-                if (ios != null) {
+                if (ios != null)
                     ios.close();
-                }
             } catch (IOException e) {
             }
         }
