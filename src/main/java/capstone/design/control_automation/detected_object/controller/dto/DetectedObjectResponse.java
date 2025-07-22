@@ -30,14 +30,5 @@ public class DetectedObjectResponse {
         String feature
     ) {
 
-        public static MobileObject from(DetectedObjectQueryResult.MobileObject mobileObject) {
-            return new MobileObject(
-                mobileObject.detectedObjectId(),
-                mobileObject.categoryName(),
-                mobileObject.cropImgUrl(),
-                mobileObject.alias(),
-                mobileObject.feature()
-            );
-        }
     }
 }
