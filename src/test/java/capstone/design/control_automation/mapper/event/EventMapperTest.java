@@ -72,6 +72,7 @@ public class EventMapperTest {
             new Info(
                 39L,
                 "/thumbs/thumb19.jpg",
+                17L,
                 "461738b1-6a42-4900-9d19-2a6cec8c42d1",
                 "배회",
                 LocalDateTime.parse("2025-07-21 08:48:00", formatter),
