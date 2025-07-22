@@ -54,7 +54,6 @@ public class EventMapperTest {
             new Info(
                 24L,
                 "/thumbs/thumb4.jpg",
-                1L,
                 "a9778202-6320-43c7-b4a4-404d03513921",
                 "배회",
                 LocalDateTime.parse("2025-07-21 08:00:00", formatter),
@@ -63,7 +62,6 @@ public class EventMapperTest {
             new Info(
                 38L,
                 "/thumbs/thumb18.jpg",
-                19L,
                 "b57312ae-45d7-4b60-9e57-a8e47f7ac9ff",
                 "배회",
                 LocalDateTime.parse("2025-07-21 08:54:00", formatter),
@@ -72,7 +70,6 @@ public class EventMapperTest {
             new Info(
                 39L,
                 "/thumbs/thumb19.jpg",
-                17L,
                 "461738b1-6a42-4900-9d19-2a6cec8c42d1",
                 "배회",
                 LocalDateTime.parse("2025-07-21 08:48:00", formatter),
