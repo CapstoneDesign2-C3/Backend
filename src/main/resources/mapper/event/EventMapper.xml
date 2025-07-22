@@ -22,7 +22,7 @@
   </select>
 
   <select id="getEventsByFilter" resultType="EventInfo">
-    SELECT v.id, v.thumbnail_url, ei.event_uuid, ec.code_name, ei.start_frame_at, ei.end_frame_at
+    SELECT v.id, v.thumbnail_url, ei.event_id, ei.event_uuid, ec.code_name, ei.start_frame_at, ei.end_frame_at
     FROM event_info ei
     INNER JOIN public.video v on ei.event_id = v.event_id
     INNER JOIN public.event_codes ec on ec.code_id = ei.code_id

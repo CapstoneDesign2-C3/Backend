@@ -9,6 +9,7 @@ public class EventResponse {
     public record Info(
         Long videoId,
         String videoThumbnailUrl,
+        Long eventId,
         String eventUUID,
         String eventCodeName,
         LocalDateTime appearedTime,
@@ -19,6 +20,7 @@ public class EventResponse {
             return new Info(
                 info.videoId(),
                 info.videoThumbnailUrl(),
+                info.eventId(),
                 info.eventUUID(),
                 info.eventCodeName(),
                 info.appearedTime(),
