@@ -33,7 +33,6 @@ public class DetectedObjectService {
 
     @Transactional
     public void aliasDetectedObject(Long detectedObjectId, String alias) {
-        //TODO
         detectedObjectRepository.aliasDetectedObject(detectedObjectId, alias);
     }
 
