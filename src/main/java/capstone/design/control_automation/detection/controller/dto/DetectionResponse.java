@@ -40,20 +40,4 @@ public class DetectionResponse {
         }
     }
 
-    public record Fixed(
-        Long videoId,
-        String categoryName,
-        String alias,
-        String summary
-    ) {
-
-        public static Fixed from(DetectedObjectQueryResult.FixedObject fixedObject) {
-            return new Fixed(
-                fixedObject.videoId(),
-                fixedObject.categoryName(),
-                fixedObject.alias(),
-                fixedObject.summary()
-            );
-        }
-    }
 }

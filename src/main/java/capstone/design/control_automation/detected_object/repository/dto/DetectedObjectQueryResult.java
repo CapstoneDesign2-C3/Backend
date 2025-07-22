@@ -4,20 +4,6 @@ import com.querydsl.core.annotations.QueryProjection;
 
 public class DetectedObjectQueryResult {
 
-    public record FixedObject(
-        Long videoId,
-        String videoUrl,
-        String categoryName,
-        String alias,
-        String summary
-    ) {
-
-        @QueryProjection
-        public FixedObject {
-
-        }
-    }
-
     public record MobileObject(
         Long detectedObjectId,
         String categoryName,
