@@ -19,7 +19,6 @@ public class VideoQueryResult {
 
     public record SimpleWithEvent(
         String videoUrl,
-        String summary,
         String eventUUID,
         LocalDateTime appearedTime,
         LocalDateTime exitTime,

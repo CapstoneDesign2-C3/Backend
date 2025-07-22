@@ -1,6 +1,7 @@
 package capstone.design.control_automation.video.service;
 
 import capstone.design.control_automation.detected_object.controller.dto.DetectedObjectResponse.Common;
+import capstone.design.control_automation.event.client.EventSummaryClient;
 import capstone.design.control_automation.video.controller.dto.VideoResponse;
 import capstone.design.control_automation.video.controller.dto.VideoResponse.SimpleWithEvent;
 import capstone.design.control_automation.video.controller.dto.VideoResponse.SimpleWithMobileObject;
@@ -20,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class VideoService {
 
     private final VideoRepository videoRepository;
+    private final EventSummaryClient eventSummaryClient;
 
     public VideoResponse.Detail findById(Long videoId) {
         Map<Long, List<VideoQueryResult.Detail>> videoGroup = videoRepository.findById(videoId).stream()
@@ -46,6 +48,16 @@ public class VideoService {
     }
 
     public SimpleWithEvent getSimpleVideoByEvent(Long eventId) {
-        return SimpleWithEvent.of(videoRepository.findByEventId(eventId));
+        VideoQueryResult.SimpleWithEvent simpleWithEvent = videoRepository.findByEventId(eventId);
+
+        return new SimpleWithEvent(
+            simpleWithEvent.videoUrl(),
+            eventSummaryClient.getSummaryByUuid(simpleWithEvent.eventUUID()),
+            simpleWithEvent.eventUUID(),
+            simpleWithEvent.appearedTime(),
+            simpleWithEvent.exitTime(),
+            simpleWithEvent.eventCodeName(),
+            simpleWithEvent.eventRisk()
+        );
     }
 }
