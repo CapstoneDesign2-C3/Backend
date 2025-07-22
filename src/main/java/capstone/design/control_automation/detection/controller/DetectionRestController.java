@@ -1,8 +1,6 @@
 package capstone.design.control_automation.detection.controller;
 
-import capstone.design.control_automation.detected_object.controller.dto.DetectedObjectRequest;
 import capstone.design.control_automation.detection.controller.dto.DetectionRequest.Filter;
-import capstone.design.control_automation.detection.controller.dto.DetectionResponse.Fixed;
 import capstone.design.control_automation.detection.controller.dto.DetectionResponse.Position;
 import capstone.design.control_automation.detection.controller.dto.DetectionResponse.Track;
 import capstone.design.control_automation.detection.service.DetectionService;
@@ -39,11 +37,4 @@ public class DetectionRestController {
         return ResponseEntity.ok(detectionService.getPositionsByFilterCondition(filter));
     }
 
-    @GetMapping("/fixed")
-    public ResponseEntity<Page<Fixed>> getFixedDetectionByFilterCondition(
-        @ModelAttribute DetectedObjectRequest.FixedObjectFilter fixedObjectFilter,
-        @PageableDefault Pageable pageable
-    ) {
-        return ResponseEntity.ok(detectionService.getFixedDetectionByFilterCondition(fixedObjectFilter, pageable));
-    }
 }

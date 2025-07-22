@@ -21,9 +21,8 @@ class DetectedObjectMapperTest {
 
     @Test
     void findMobileObjectCountByFilterAndIds() {
-        Long expected = 4L;
-        Long actual = detectedObjectMapper.findMobileObjectCountByFilterAndIds("사람", null,
-            List.of(1L, 2L, 3L, 4L));
+        Long expected = 20L;
+        Long actual = detectedObjectMapper.findMobileObjectCountByFilterAndIds("사람", null);
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -37,8 +36,7 @@ class DetectedObjectMapperTest {
             new MobileObject(4L, "사람", "/crops/object4.jpg", "Object4", "하얀 모자를 쓴 노인"),
             new MobileObject(5L, "사람", "/crops/object5.jpg", "Object5", "파란 유니폼을 입은 남성")
         );
-        List<MobileObject> actual = detectedObjectMapper.findMobileObjectsByFilterAndIds("사람", null,
-            List.of(1L, 2L, 3L, 4L, 5L, 6L), 5, 0L);
+        List<MobileObject> actual = detectedObjectMapper.findMobileObjectsByFilterAndIds("사람", null,5, 0L);
 
         assertThat(actual).hasSameElementsAs(expected);
     }

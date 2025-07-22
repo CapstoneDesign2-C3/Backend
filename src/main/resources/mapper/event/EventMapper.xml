@@ -7,15 +7,16 @@
   <select id="getEventCountByFilter" resultType="Long">
     SELECT count(*)
     FROM event_info ei
+    INNER JOIN public.video v on ei.event_id = v.event_id
     INNER JOIN public.event_codes ec on ec.code_id = ei.code_id
     <where>
       <if test="eventCodeName != null">
-        ec.code_name LIKE concat('%', #{eventCodeName}, '%')
+        AND ec.code_name LIKE concat('%', #{eventCodeName}, '%')
       </if>
       <if test="startTime != null and endTime != null">
         AND (
-        ei.start_frame_at BETWEEN #{startTime} AND #{endTime}
-        OR ei.end_frame_at BETWEEN #{startTime} AND #{endTime}
+          ei.start_frame_at BETWEEN #{startTime} AND #{endTime}
+          OR ei.end_frame_at BETWEEN #{startTime} AND #{endTime}
         )
       </if>
     </where>
@@ -28,7 +29,7 @@
     INNER JOIN public.event_codes ec on ec.code_id = ei.code_id
     <where>
       <if test="eventCodeName != null">
-        ec.code_name LIKE concat('%', #{eventCodeName}, '%')
+        AND ec.code_name LIKE concat('%', #{eventCodeName}, '%')
       </if>
       <if test="startTime != null and endTime != null">
         AND (

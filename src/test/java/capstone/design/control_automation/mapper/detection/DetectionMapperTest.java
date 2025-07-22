@@ -3,7 +3,6 @@ package capstone.design.control_automation.mapper.detection;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import capstone.design.control_automation.common.config.MyBatisConfig;
-import capstone.design.control_automation.detected_object.repository.dto.DetectedObjectQueryResult.FixedObject;
 import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult.Position;
 import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult.Track;
 import java.time.LocalDateTime;
@@ -45,9 +44,12 @@ class DetectionMapperTest {
     @Test
     void getTracksOfMobileObject() {
         List<Track> expected = List.of(
-            new Track(2L, "Camera5", "/thumbs/thumb9.jpg", LocalDateTime.parse("2025-07-21 09:40:33", formatter), LocalDateTime.parse("2025-07-21 09:41:59", formatter)),
-            new Track(62L, "Camera4", "/thumbs/thumb1.jpg", LocalDateTime.parse("2025-07-21 09:00:22", formatter), LocalDateTime.parse("2025-07-21 09:00:51", formatter)),
-            new Track(79L, "Camera2", "/thumbs/thumb10.jpg", LocalDateTime.parse("2025-07-21 09:45:35", formatter), LocalDateTime.parse("2025-07-21 09:46:37", formatter))
+            new Track(2L, "Camera5", "/thumbs/thumb9.jpg", LocalDateTime.parse("2025-07-21 09:40:33", formatter),
+                LocalDateTime.parse("2025-07-21 09:41:59", formatter)),
+            new Track(62L, "Camera4", "/thumbs/thumb1.jpg", LocalDateTime.parse("2025-07-21 09:00:22", formatter),
+                LocalDateTime.parse("2025-07-21 09:00:51", formatter)),
+            new Track(79L, "Camera2", "/thumbs/thumb10.jpg", LocalDateTime.parse("2025-07-21 09:45:35", formatter),
+                LocalDateTime.parse("2025-07-21 09:46:37", formatter))
         );
 
         List<Track> actual = detectionMapper.getTracksOfMobileObject(
@@ -76,33 +78,4 @@ class DetectionMapperTest {
         assertThat(actual).hasSameElementsAs(expected);
     }
 
-    @Test
-    void getFixedDetectionCountByFilterAndIds() {
-        //TODO
-//        Long expected = 3L;
-//        Long actual = detectionMapper.getFixedDetectionCountByFilterAndIds(null, null,
-//            List.of(6L, 7L, 8L, 9L));
-//
-//        assertThat(actual).isEqualTo(expected);
-    }
-
-    @Test
-    void getFixedDetectionsByFilterAndIds() {
-        //TODO
-//        List<FixedObject> expected = List.of(
-//            new FixedObject(7L, "https://example.com/video7.mp4","화재", null, "자전거 도로 상황"),
-//            new FixedObject(8L, "https://example.com/video8.mp4", "화재", null, "길거리 공연 장면"),
-//            new FixedObject(9L, "https://example.com/video9.mp4", "교통사고", null, "도로 정비 작업")
-//        );
-//
-//        List<FixedObject> actual = detectionMapper.getFixedDetectionsByFilterAndIds(
-//            null,
-//            null,
-//            List.of(6L, 7L, 8L, 9L),
-//            10,
-//            0L
-//        );
-//
-//        assertThat(actual).hasSameElementsAs(expected);
-    }
 }

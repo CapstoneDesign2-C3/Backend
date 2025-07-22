@@ -33,8 +33,8 @@ public class VideoRestController {
     }
 
     @GetMapping("/event")
-    public ResponseEntity<SimpleWithEvent> getSimpleVideoWithEvent(@RequestParam Long fixedObjectId) {
-        SimpleWithEvent simpleVideo = videoService.getSimpleVideoByEvent(fixedObjectId);
+    public ResponseEntity<SimpleWithEvent> getSimpleVideoWithEvent(@RequestParam Long eventId) {
+        SimpleWithEvent simpleVideo = videoService.getSimpleVideoByEvent(eventId);
         return ResponseEntity.ok(simpleVideo);
     }
 
