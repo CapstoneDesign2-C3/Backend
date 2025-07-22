@@ -1,6 +1,8 @@
 package capstone.design.control_automation.video.service;
 
+import capstone.design.control_automation.detected_object.client.MobileObjectFeatureClient;
 import capstone.design.control_automation.detected_object.controller.dto.DetectedObjectResponse.Common;
+import capstone.design.control_automation.event.client.EventSummaryClient;
 import capstone.design.control_automation.video.controller.dto.VideoResponse;
 import capstone.design.control_automation.video.controller.dto.VideoResponse.SimpleWithEvent;
 import capstone.design.control_automation.video.controller.dto.VideoResponse.SimpleWithMobileObject;
@@ -20,13 +22,25 @@ import org.springframework.transaction.annotation.Transactional;
 public class VideoService {
 
     private final VideoRepository videoRepository;
+    private final EventSummaryClient eventSummaryClient;
+    private final MobileObjectFeatureClient mobileObjectFeatureClient;
 
     public VideoResponse.Detail findById(Long videoId) {
         Map<Long, List<VideoQueryResult.Detail>> videoGroup = videoRepository.findById(videoId).stream()
             .collect(Collectors.groupingBy(Detail::videoId));
 
-        List<Common> detectedObjects = videoGroup.values().stream()
-            .map(details -> details.stream().map(Common::of).toList())
+        List<Common> mobileObjects = videoGroup.values().stream()
+            .map(details -> details.stream()
+                .map(
+                    detail -> new Common(
+                        detail.detectedObjectId(),
+                        detail.categoryName(),
+                        detail.cropImgUrl(),
+                        mobileObjectFeatureClient.getFeatureByUuid(detail.detectedObjectUUID())
+                    )
+                )
+                .toList()
+            )
             .findAny().get();
 
         // 모든 Detail의 Video 정보는 같다
@@ -37,15 +51,36 @@ public class VideoService {
             base.cameraScenery(),
             base.latitude(),
             base.longitude(),
-            detectedObjects
+            mobileObjects
         );
     }
 
     public SimpleWithMobileObject getSimpleVideoByMobileObjectId(Long mobileDetectionId) {
-        return VideoResponse.SimpleWithMobileObject.of(videoRepository.findByMobileDetectionId(mobileDetectionId));
+        VideoQueryResult.SimpleWithMobileObject simpleWithMobileObject = videoRepository.findByMobileDetectionId(
+            mobileDetectionId);
+        return new SimpleWithMobileObject(
+            simpleWithMobileObject.videoUrl(),
+            simpleWithMobileObject.detectedObjectUUID(),
+            simpleWithMobileObject.detectedObjectAlias(),
+            simpleWithMobileObject.detectedObjectCropUrl(),
+            simpleWithMobileObject.appearedTime(),
+            simpleWithMobileObject.exitTime(),
+            simpleWithMobileObject.categoryName(),
+            mobileObjectFeatureClient.getFeatureByUuid(simpleWithMobileObject.detectedObjectUUID())
+        );
     }
 
     public SimpleWithEvent getSimpleVideoByEvent(Long eventId) {
-        return SimpleWithEvent.of(videoRepository.findByEventId(eventId));
+        VideoQueryResult.SimpleWithEvent simpleWithEvent = videoRepository.findByEventId(eventId);
+
+        return new SimpleWithEvent(
+            simpleWithEvent.videoUrl(),
+            eventSummaryClient.getSummaryByUuid(simpleWithEvent.eventUUID()),
+            simpleWithEvent.eventUUID(),
+            simpleWithEvent.appearedTime(),
+            simpleWithEvent.exitTime(),
+            simpleWithEvent.eventCodeName(),
+            simpleWithEvent.eventRisk()
+        );
     }
 }

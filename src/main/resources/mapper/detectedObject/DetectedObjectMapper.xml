@@ -19,7 +19,7 @@
   </select>
 
   <select id="findMobileObjectsByFilterAndIds" resultType="DetectedObjectMobile">
-    SELECT d.id, e.code_name, d.crop_img_url, d.alias, d.feature
+    SELECT d.id, d.uuid, e.code_name, d.crop_img_url, d.alias
     FROM detected_object d
     INNER JOIN event_codes e ON e.code_id = d.code_id
     <where>
@@ -34,4 +34,9 @@
     OFFSET #{offset}
   </select>
 
+  <update id="aliasDetectedObject">
+    UPDATE detected_object
+    SET alias = #{alias}
+    WHERE id = #{detectedObjectId}
+  </update>
 </mapper>

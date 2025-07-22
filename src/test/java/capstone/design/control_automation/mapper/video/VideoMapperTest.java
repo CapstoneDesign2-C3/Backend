@@ -35,12 +35,12 @@ class VideoMapperTest {
     @Test
     void findById() {
         List <Detail> expected = List.of(
-            new Detail(1L, "/videos/video1.mp4", "Camera4", 37.5664, 126.9784, 1L, "사람", "/crops/object1.jpg", "노란색 헬멧을 쓴 남성"),
-            new Detail(1L, "/videos/video1.mp4", "Camera4", 37.5664, 126.9784, 3L, "사람", "/crops/object3.jpg", "검정색 가방을 든 여성"),
-            new Detail(1L, "/videos/video1.mp4", "Camera4", 37.5664, 126.9784, 6L, "사람", "/crops/object6.jpg", "손에 도구를 든 작업자"),
-            new Detail(1L, "/videos/video1.mp4", "Camera4", 37.5664, 126.9784, 14L, "사람", "/crops/object14.jpg", "흰색 장갑을 낀 남성"),
-            new Detail(1L, "/videos/video1.mp4", "Camera4", 37.5664, 126.9784, 17L, "사람", "/crops/object17.jpg", "노란 상의와 청바지를 입은 여성"),
-            new Detail(1L, "/videos/video1.mp4", "Camera4", 37.5664, 126.9784, 18L, "사람", "/crops/object18.jpg", "보호구 없이 접근한 인물")
+            new Detail(1L, "/videos/video1.mp4", "Camera4", 37.5664, 126.9784, 1L, "uuid1", "사람", "/crops/object1.jpg"),
+            new Detail(1L, "/videos/video1.mp4", "Camera4", 37.5664, 126.9784, 3L, "uuid3", "사람", "/crops/object3.jpg"),
+            new Detail(1L, "/videos/video1.mp4", "Camera4", 37.5664, 126.9784, 6L, "uuid6", "사람", "/crops/object6.jpg"),
+            new Detail(1L, "/videos/video1.mp4", "Camera4", 37.5664, 126.9784, 14L, "uuid14", "사람", "/crops/object14.jpg"),
+            new Detail(1L, "/videos/video1.mp4", "Camera4", 37.5664, 126.9784, 17L, "uuid17", "사람", "/crops/object17.jpg"),
+            new Detail(1L, "/videos/video1.mp4", "Camera4", 37.5664, 126.9784, 18L, "uuid18", "사람", "/crops/object18.jpg")
         );
 
         List<Detail> actual = mapper.findById(1L);
@@ -54,7 +54,7 @@ class VideoMapperTest {
             "/videos/video6.mp4",
             "uuid8", "Object8", "/crops/object8.jpg",
             LocalDateTime.parse("2025-07-21 09:25:37", formatter), LocalDateTime.parse("2025-07-21 09:26:44", formatter),
-            "사람", "작업 구역 안에 서 있는 사람");
+            "사람");
 
         SimpleWithMobileObject actual = mapper.findByMobileDetectionId(1L);
 
@@ -67,7 +67,6 @@ class VideoMapperTest {
         //given
         SimpleWithEvent expected = new SimpleWithEvent(
             "/videos/video4.mp4",
-            "summary24",
             "a9778202-6320-43c7-b4a4-404d03513921",
             LocalDateTime.parse("2025-07-21 08:00:00", formatter),
             LocalDateTime.parse("2025-07-21 08:02:47", formatter),

@@ -5,11 +5,11 @@ import com.querydsl.core.annotations.QueryProjection;
 public class DetectedObjectQueryResult {
 
     public record MobileObject(
-        Long detectedObjectId,
+        Long mobileObjectId,
+        String mobileObjectUuid,
         String categoryName,
         String cropImgUrl,
-        String alias,
-        String feature
+        String alias
     ) {
 
         @QueryProjection

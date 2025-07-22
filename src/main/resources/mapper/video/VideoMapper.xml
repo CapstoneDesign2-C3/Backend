@@ -5,7 +5,7 @@
 
 <mapper namespace="capstone.design.control_automation.mapper.video.VideoMapper">
   <select id="findById" resultType="DetailVideo">
-    SELECT v.id, v.video_url, c.camera_name, c.lat, c.lon, d.detected_object_id, e.code_name, o.crop_img_url, o.feature
+    SELECT v.id, v.video_url, c.camera_name, c.lat, c.lon, d.detected_object_id, o.uuid, e.code_name, o.crop_img_url
     FROM video v
     INNER JOIN public.detection d on v.id = d.video_id
     INNER JOIN public.camera_info c on c.camera_id = v.camera_id
@@ -15,7 +15,7 @@
   </select>
 
   <select id="findByMobileDetectionId" resultType="SimpleVideoWithMobileObject">
-    SELECT v.video_url, o.uuid, o.alias, o.crop_img_url, d.appeared_time, d.exit_time, e.code_name, o.feature
+    SELECT v.video_url, o.uuid, o.alias, o.crop_img_url, d.appeared_time, d.exit_time, e.code_name
     FROM video v
     INNER JOIN public.detection d on v.id = d.video_id
     INNER JOIN public.detected_object o on o.id = d.detected_object_id
@@ -25,7 +25,7 @@
   </select>
 
   <select id="findByEventId" resultType="SimpleVideoWithEvent">
-    SELECT v.video_url, v.summary, ei.event_uuid, ei.start_frame_at, ei.end_frame_at, ec.code_name, er.risk_level
+    SELECT v.video_url, ei.event_uuid, ei.start_frame_at, ei.end_frame_at, ec.code_name, er.risk_level
     FROM video v
     INNER JOIN public.event_info ei on v.event_id = ei.event_id
     INNER JOIN public.event_codes ec on ei.code_id = ec.code_id

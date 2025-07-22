@@ -21,8 +21,7 @@ public class DetectedObjectRequest {
 
     public record MobileObjectFilter(
         String categoryName,
-        String alias,
-        String searchInput
+        String alias
     ) {
 
     }
