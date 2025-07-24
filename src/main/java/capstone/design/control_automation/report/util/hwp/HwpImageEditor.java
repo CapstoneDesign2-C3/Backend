@@ -58,8 +58,8 @@ public class HwpImageEditor {
         paragraph.getText().addExtendCharForGSO();
 
         Rectangle rectangle = new Rectangle(
-            gsoParam.posX(),
-            gsoParam.posY(),
+            (int) gsoParam.posX(),
+            (int) gsoParam.posY(),
             gsoParam.width(),
             gsoParam.height()
         );
@@ -67,7 +67,7 @@ public class HwpImageEditor {
         ControlRectangle controlRectangle = (ControlRectangle) paragraph.addNewGsoControl(GsoControlType.Rectangle);
 
         CtrlHeaderGso headerGso = controlRectangle.getHeader();
-        configureGsoHeader(headerGso, rectangle);
+        configureGsoHeader(headerGso, rectangle, gsoParam.bottomMargin());
         GsoHeaderProperty headerProperty = headerGso.getProperty();
         configureGsoHeaderProperty(headerProperty);
 
@@ -96,7 +96,7 @@ public class HwpImageEditor {
         sc.setMatrixsNormal();
     }
 
-    private void configureGsoHeader(CtrlHeaderGso hdr, Rectangle shapePosition) {
+    private void configureGsoHeader(CtrlHeaderGso hdr, Rectangle shapePosition, int bottomMargin) {
         hdr.setyOffset(fromMM(shapePosition.y));
         hdr.setxOffset(fromMM(shapePosition.x));
         hdr.setWidth(fromMM(shapePosition.width));
@@ -105,7 +105,7 @@ public class HwpImageEditor {
         hdr.setOutterMarginLeft(0);
         hdr.setOutterMarginRight(0);
         hdr.setOutterMarginTop(0);
-        hdr.setOutterMarginBottom(0);
+        hdr.setOutterMarginBottom(fromMM(bottomMargin));
         hdr.setInstanceId(0x5bb840e1);
         hdr.setPreventPageDivide(false);
         hdr.getExplanation().setBytes(null);
@@ -123,7 +123,7 @@ public class HwpImageEditor {
         prop.setWidthCriterion(WidthCriterion.Absolute);
         prop.setHeightCriterion(HeightCriterion.Absolute);
         prop.setProtectSize(false);
-        prop.setTextFlowMethod(TextFlowMethod.FitWithText);
+        prop.setTextFlowMethod(TextFlowMethod.TakePlace);
         prop.setTextHorzArrange(TextHorzArrange.BothSides);
         prop.setObjectNumberSort(ObjectNumberSort.Figure);
     }
