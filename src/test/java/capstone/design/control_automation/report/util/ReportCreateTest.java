@@ -6,9 +6,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Base64;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -16,8 +15,8 @@ import java.util.Set;
 import kr.dogfoot.hwplib.object.HWPFile;
 import kr.dogfoot.hwplib.object.bodytext.Section;
 import kr.dogfoot.hwplib.object.bodytext.control.ControlColumnDefine;
-import kr.dogfoot.hwplib.object.bodytext.control.ControlSectionDefine;
-import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.CtrlHeader;
+import kr.dogfoot.hwplib.object.bodytext.control.ControlType;
+import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.CtrlHeaderColumnDefine;
 import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.CtrlHeaderGso;
 import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.columndefine.ColumnInfo;
 import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.gso.GsoHeaderProperty;
@@ -30,9 +29,7 @@ import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.gso.TextHorzArrange;
 import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.gso.VertRelTo;
 import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.gso.WidthCriterion;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.ControlRectangle;
-import kr.dogfoot.hwplib.object.bodytext.control.gso.GsoControl;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.GsoControlType;
-import kr.dogfoot.hwplib.object.bodytext.control.gso.shapecomponent.ShapeComponent;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.shapecomponent.ShapeComponentNormal;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.shapecomponent.lineinfo.LineArrowShape;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.shapecomponent.lineinfo.LineArrowSize;
@@ -47,25 +44,22 @@ import kr.dogfoot.hwplib.object.bodytext.paragraph.Paragraph;
 import kr.dogfoot.hwplib.object.bodytext.paragraph.charshape.CharPositionShapeIdPair;
 import kr.dogfoot.hwplib.object.bodytext.paragraph.charshape.ParaCharShape;
 import kr.dogfoot.hwplib.object.bodytext.paragraph.lineseg.LineSegItem;
-import kr.dogfoot.hwplib.object.bodytext.paragraph.lineseg.ParaLineSeg;
-import kr.dogfoot.hwplib.object.bodytext.paragraph.text.HWPChar;
+import kr.dogfoot.hwplib.object.bodytext.paragraph.text.HWPCharControlChar;
 import kr.dogfoot.hwplib.object.bodytext.paragraph.text.HWPCharControlExtend;
+import kr.dogfoot.hwplib.object.bodytext.paragraph.text.ParaText;
 import kr.dogfoot.hwplib.object.docinfo.BinData;
 import kr.dogfoot.hwplib.object.docinfo.CharShape;
-import kr.dogfoot.hwplib.object.docinfo.DocInfo;
-import kr.dogfoot.hwplib.object.docinfo.Numbering;
 import kr.dogfoot.hwplib.object.docinfo.ParaShape;
 import kr.dogfoot.hwplib.object.docinfo.bindata.BinDataCompress;
 import kr.dogfoot.hwplib.object.docinfo.bindata.BinDataState;
 import kr.dogfoot.hwplib.object.docinfo.bindata.BinDataType;
+import kr.dogfoot.hwplib.object.docinfo.borderfill.BorderThickness;
+import kr.dogfoot.hwplib.object.docinfo.borderfill.BorderType;
 import kr.dogfoot.hwplib.object.docinfo.borderfill.fillinfo.FillInfo;
 import kr.dogfoot.hwplib.object.docinfo.borderfill.fillinfo.ImageFill;
 import kr.dogfoot.hwplib.object.docinfo.borderfill.fillinfo.ImageFillType;
-import kr.dogfoot.hwplib.object.docinfo.borderfill.fillinfo.PatternFill;
-import kr.dogfoot.hwplib.object.docinfo.borderfill.fillinfo.PatternType;
 import kr.dogfoot.hwplib.object.docinfo.borderfill.fillinfo.PictureEffect;
 import kr.dogfoot.hwplib.object.docinfo.parashape.Alignment;
-import kr.dogfoot.hwplib.reader.HWPReader;
 import kr.dogfoot.hwplib.tool.blankfilemaker.BlankFileMaker;
 import kr.dogfoot.hwplib.writer.HWPWriter;
 import org.junit.jupiter.api.Test;
@@ -150,25 +144,60 @@ class ReportCreateTest {
 
     @Test
     void configureColumnTest() throws Exception {
+        HWPFile hwpFile2 = BlankFileMaker.make();
 
-        HWPFile hwpFile1 = HWPReader.fromFile("./hwptest/column_test.hwp");
-        HWPFile hwpFile2 = HWPReader.fromFile("./hwptest/column_test1.hwp");
+        Paragraph paragraph = hwpFile2.getBodyText().getSectionList().get(0)
+            .addNewParagraph();
+        paragraph.createCharShape();
+        paragraph.createLineSeg();
+        paragraph.getLineSeg().addNewLineSegItem();
+        paragraph.createText();
 
-        ControlColumnDefine controlColumnDefine2 = (ControlColumnDefine) hwpFile2.getBodyText().getSectionList().get(0)
-            .getParagraph(0).getControlList().get(1);
+        ParaText paraText2 = paragraph.getText();
+        HWPCharControlExtend hwpChar = paraText2.addNewExtendControlChar();
+        HWPCharControlChar hwpCharControlChar = paraText2.addNewCharControlChar();
+        hwpCharControlChar.setCode(13);
+        hwpChar.setCode(2);
+        byte[] arr = new byte[12];
+        String str = "dloc";
+        System.arraycopy(str.getBytes(StandardCharsets.US_ASCII), 0, arr, 0, str.length());
+        hwpChar.setAddition(arr);
+        paraText2.addString("a"); // 이것도 해야함.
+        System.out.println(paraText2.getCharList().size());
+
+        paragraph.addNewControl(ControlType.ColumnDefine);
+        // 단 세팅
+        ControlColumnDefine controlColumnDefine2 = (ControlColumnDefine) paragraph.getControlList().get(0);
         controlColumnDefine2.getHeader().getProperty().setValue(8);
+//        controlColumnDefine2.getHeader().setProperty2(2268);
         ColumnInfo columnInfo1 = controlColumnDefine2.getHeader().addNewColumnInfo();
         ColumnInfo columnInfo2 = controlColumnDefine2.getHeader().addNewColumnInfo();
-        columnInfo1.setWidth(10339);
-        columnInfo1.setGap(1747);
-        columnInfo2.setWidth(20682);
+//        columnInfo1.setWidth(5000); // 10338
+//        columnInfo1.setGap(1746);
+//        columnInfo2.setWidth(5000); // 20684
+//        columnInfo2.setGap(1746);
+        columnInfo1.setWidth(mmToHwp(40));
+        columnInfo1.setGap(mmToHwp(10));
+        columnInfo2.setWidth(mmToHwp(100));
 
-        compareObjects(hwpFile1, hwpFile2, "HWPFile");
+        CtrlHeaderColumnDefine header2 = controlColumnDefine2.getHeader();
+
+        header2.getDivideLine().setThickness(BorderThickness.MM0_1);
+        header2.getDivideLine().getColor().setValue(0);
+        header2.getDivideLine().setType(BorderType.None);
+
         HWPWriter.toFile(hwpFile2, "./hwptest/column_test2.hwp");
     }
 
+    private int mmToHwp(double mm) {
+        double weight = 10f / 13f;
+        return (int) (mm * 72000.0f * weight / 254.0f + 0.5f);
+    }
+
     private void compareObjects(Object o1, Object o2, String path) throws IllegalAccessException {
-        if (o1 == null && o2 == null) return;
+        if (o1 == null && o2 == null) {
+            return;
+        }
 
         if (o1 == null || o2 == null) {
             System.out.printf("[DIFF] %s → %s vs %s\n", path, format(o1), format(o2));
@@ -197,7 +226,9 @@ class ReportCreateTest {
         }
 
         // 무한루프 방지용
-        if (!visited.add(System.identityHashCode(o1) + "|" + System.identityHashCode(o2))) return;
+        if (!visited.add(System.identityHashCode(o1) + "|" + System.identityHashCode(o2))) {
+            return;
+        }
 
         // 필드 순회
         while (clazz != null && clazz != Object.class) {
@@ -222,7 +253,9 @@ class ReportCreateTest {
 
 
     private String format(Object obj) {
-        if (obj == null) return "null";
+        if (obj == null) {
+            return "null";
+        }
         return obj.toString();
     }
 
@@ -250,10 +283,8 @@ class ReportCreateTest {
         bd.setExtensionForEmbedding("jpg");
         hwpFile.getDocInfo().getBinDataList().add(bd);
 
-
-
         Rectangle shapePosition = new Rectangle(0, 0, 150, 100);
-        
+
         paragraph.getText().addExtendCharForGSO();
         ControlRectangle controlRectangle = (ControlRectangle) paragraph.addNewGsoControl(GsoControlType.Rectangle);
 
@@ -283,8 +314,9 @@ class ReportCreateTest {
             ios.read(buffer);
         } finally {
             try {
-                if (ios != null)
+                if (ios != null) {
                     ios.close();
+                }
             } catch (IOException e) {
             }
         }

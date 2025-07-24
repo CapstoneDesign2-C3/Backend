@@ -64,8 +64,8 @@ public class HwpTableEditor {
         bf.getTopBorder().getColor().setValue(0x0);
         bf.getBottomBorder().setType(BorderType.Solid);
         bf.getBottomBorder().setThickness(BorderThickness.MM0_5);
-//        bf.setDiagonalSort(BorderType.None);
-//        bf.setDiagonalThickness(BorderThickness.MM0_7);
+        bf.getDiagonalBorder().setType(BorderType.None);
+        bf.getDiagonalBorder().setThickness(BorderThickness.MM0_7);
 
         bf.getFillInfo().getType().setPatternFill(true);
         bf.getFillInfo().createPatternFill();
@@ -123,7 +123,7 @@ public class HwpTableEditor {
         headerGso.getProperty().setWidthCriterion(WidthCriterion.Absolute);
         headerGso.getProperty().setHeightCriterion(HeightCriterion.Absolute);
         headerGso.getProperty().setProtectSize(false);
-        headerGso.getProperty().setTextFlowMethod(TextFlowMethod.FitWithText);
+        headerGso.getProperty().setTextFlowMethod(TextFlowMethod.TakePlace);
         headerGso.getProperty().setTextHorzArrange(TextHorzArrange.BothSides);
         headerGso.getProperty().setObjectNumberSort(ObjectNumberSort.Table);
         headerGso.setxOffset(mmToHwp(gsoParam.posX()));
@@ -134,7 +134,7 @@ public class HwpTableEditor {
         headerGso.setOutterMarginLeft(0);
         headerGso.setOutterMarginRight(0);
         headerGso.setOutterMarginTop(0);
-        headerGso.setOutterMarginBottom(0);
+        headerGso.setOutterMarginBottom(gsoParam.bottomMargin());
     }
 
     // table record 지정(row, col 개수 포함)

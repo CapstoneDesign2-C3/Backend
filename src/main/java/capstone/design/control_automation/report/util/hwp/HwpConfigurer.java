@@ -32,17 +32,28 @@ public class HwpConfigurer {
         for (String key : paraShapeMap.keySet()) {
             styleIdContext.putParaShapeId(key, paraShapeList.size());
             paraShapeList.add(paraShapeMap.get(key));
+        }
+
+        for (String key : charShapeMap.keySet()) {
             styleIdContext.putCharShapeId(key, charShapeList.size());
             charShapeList.add(charShapeMap.get(key));
         }
     }
 
     public void configureParagraph(Paragraph paragraph, String paramName) {
-        paragraph.getHeader().setParaShapeId(styleIdContext.getParaShapeId(paramName)); // 문단 모양 설정
-        paragraph.getCharShape().addParaCharShape(0, styleIdContext.getCharShapeId(paramName)); // 글자 모양 설정
-        LineSegItem firstLine = paragraph.getLineSeg().getLineSegItemList().get(0); // Text 높이 설정
-        firstLine.setTextPartHeight(textSizeMap.get(paramName));
-        firstLine.setDistanceBaseLineToLineVerticalPosition(textSizeMap.get(paramName));
+        if (paraShapeMap.containsKey(paramName)) {
+            paragraph.getHeader().setParaShapeId(styleIdContext.getParaShapeId(paramName)); // 문단 모양 설정
+        }
+
+        if (charShapeMap.containsKey(paramName)) {
+            paragraph.getCharShape().addParaCharShape(0, styleIdContext.getCharShapeId(paramName)); // 글자 모양 설정
+        }
+
+        if (textSizeMap.containsKey(paramName)) {
+            LineSegItem firstLine = paragraph.getLineSeg().getLineSegItemList().get(0); // Text 높이 설정
+            firstLine.setTextPartHeight(textSizeMap.get(paramName));
+            firstLine.setDistanceBaseLineToLineVerticalPosition(textSizeMap.get(paramName));
+        }
     }
 
     // === Shape 지정 장소 ===
@@ -67,6 +78,7 @@ public class HwpConfigurer {
 
         // Title 은 중앙 정렬
         ParaShape originParaShape = paraShapes.get(3);
+
         ParaShape titleParaShape = originParaShape.clone();
         titleParaShape.getProperty1().setAlignment(Alignment.Center);
         titleParaShape.setBottomParaSpace(5000);
@@ -77,6 +89,10 @@ public class HwpConfigurer {
         publishInfoParaShape.getProperty1().setAlignment(Alignment.Right);
         publishInfoParaShape.setBottomParaSpace(2000);
         paraShapeMap.put("publishInfo", publishInfoParaShape);
+
+        ParaShape mapParaShape = originParaShape.clone();
+        mapParaShape.setBottomParaSpace(2000);
+        paraShapeMap.put("map", mapParaShape);
 
         ParaShape tdataParaShape = originParaShape.clone();
         tdataParaShape.getProperty1().setAlignment(Alignment.Center);
