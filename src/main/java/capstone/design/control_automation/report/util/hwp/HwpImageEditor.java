@@ -159,9 +159,9 @@ public class HwpImageEditor {
         li.getProperty().setEndArrowSize(LineArrowSize.MiddleMiddle);
         li.getProperty().setFillStartArrow(true);
         li.getProperty().setFillEndArrow(true);
-        li.getProperty().setLineType(LineType.None);
+        li.getProperty().setLineType(LineType.Solid);
         li.setOutlineStyle(OutlineStyle.Normal);
-        li.setThickness(0);
+        li.setThickness(fromMM(0.5));
         li.getColor().setValue(0);
     }
 
@@ -188,12 +188,12 @@ public class HwpImageEditor {
         scr.setY4(fromMM(shapePosition.height));
     }
 
-    private int fromMM(int mm) {
+    private int fromMM(double mm) {
         if (mm == 0) {
             return 1;
         }
 
-        return (int) ((double) mm * 72000.0f / 254.0f + 0.5f);
+        return (int) (mm * 72000.0f / 254.0f + 0.5f);
     }
 
 }

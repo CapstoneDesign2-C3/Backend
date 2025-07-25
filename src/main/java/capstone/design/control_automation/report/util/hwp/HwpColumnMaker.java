@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class HwpColumnMaker {
 
-    private static final double DEFAULT_COLUMN_GAP = 5;
+    private static final double DEFAULT_COLUMN_GAP = 10;
 
     public void configureColumn(Paragraph paragraph, Double... widths) throws Exception {
         addColumnControl(paragraph);
