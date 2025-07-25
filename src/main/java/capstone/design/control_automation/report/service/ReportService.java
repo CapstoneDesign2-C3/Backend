@@ -6,7 +6,6 @@ import capstone.design.control_automation.detected_object.repository.dto.Detecte
 import capstone.design.control_automation.detection.repository.DetectionRepository;
 import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult.Track;
 import capstone.design.control_automation.report.util.ReportProvider;
-import capstone.design.control_automation.report.util.hwp.TableDataDto;
 import capstone.design.control_automation.report.util.hwp.TableDataDto.MobileObjectInfo;
 import java.time.LocalDate;
 import java.util.List;

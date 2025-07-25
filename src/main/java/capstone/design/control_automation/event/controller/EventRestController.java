@@ -1,7 +1,6 @@
 package capstone.design.control_automation.event.controller;
 
 import capstone.design.control_automation.event.controller.dto.EventRequest;
-import capstone.design.control_automation.event.controller.dto.EventResponse;
 import capstone.design.control_automation.event.controller.dto.EventResponse.Code;
 import capstone.design.control_automation.event.controller.dto.EventResponse.Info;
 import capstone.design.control_automation.event.service.EventService;

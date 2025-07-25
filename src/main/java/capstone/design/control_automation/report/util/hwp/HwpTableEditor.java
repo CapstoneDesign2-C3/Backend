@@ -117,7 +117,8 @@ public class HwpTableEditor {
         writeDataInTable(controlTable, tableData);
     }
 
-    private <T> List<List<String>> extractVerticalTableDataFromOrigin(T dataToWrite, List<Field> fields) throws IllegalAccessException {
+    private <T> List<List<String>> extractVerticalTableDataFromOrigin(T dataToWrite, List<Field> fields)
+        throws IllegalAccessException {
         List<List<String>> tableData = new ArrayList<>();
         for (int row = 0; row < fields.size() + 1; row++) {
             tableData.add(new ArrayList<>());
