@@ -69,6 +69,7 @@ public class HwpConfigurer {
     private void fillTextSizeMap() {
         textSizeMap.put("title", 2500);
         textSizeMap.put("publishInfo", 1200);
+        textSizeMap.put("body", 1200);
         textSizeMap.put("tdata", 800);
         textSizeMap.put("column", 1000);
     }
@@ -117,6 +118,11 @@ public class HwpConfigurer {
         CharShape publishInfoCharShape = originCharShape.clone();
         publishInfoCharShape.setBaseSize(textSizeMap.get("publishInfo"));
         charShapeMap.put("publishInfo", publishInfoCharShape);
+
+        CharShape bodyCharShape = originCharShape.clone();
+        bodyCharShape.setBaseSize(textSizeMap.get("body"));
+        bodyCharShape.getProperty().setBold(true);
+        charShapeMap.put("body", bodyCharShape);
 
         CharShape tdataCharShape = originCharShape.clone();
         tdataCharShape.setBaseSize(textSizeMap.get("tdata"));
