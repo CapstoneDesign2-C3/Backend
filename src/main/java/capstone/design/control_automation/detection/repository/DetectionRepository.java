@@ -11,6 +11,8 @@ public interface DetectionRepository {
 
     Page<Track> getTracksByFilterCondition(Filter filter, Pageable pageable);
 
+    List<Track> getTracksByMobileObjectId(Long mobileObjectId);
+
     List<Position> getPositionsByFilterCondition(Filter filter);
 
 }

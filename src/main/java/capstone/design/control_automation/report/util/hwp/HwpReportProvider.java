@@ -3,6 +3,7 @@ package capstone.design.control_automation.report.util.hwp;
 import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult;
 import capstone.design.control_automation.report.util.ReportProvider;
 import capstone.design.control_automation.report.util.hwp.GsoParam.PaperSize;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -14,6 +15,7 @@ import kr.dogfoot.hwplib.object.HWPFile;
 import kr.dogfoot.hwplib.object.bodytext.Section;
 import kr.dogfoot.hwplib.object.bodytext.paragraph.Paragraph;
 import kr.dogfoot.hwplib.tool.blankfilemaker.BlankFileMaker;
+import kr.dogfoot.hwplib.writer.HWPWriter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -26,7 +28,7 @@ public class HwpReportProvider implements ReportProvider {
     private final HwpTableEditor tableEditor;
     private final HwpColumnMaker columnMaker;
 
-    public HWPFile createDetectedObjectReport(
+    public byte[] createDetectedObjectReport(
         LocalDate date,
         String author,
         TableDataDto.MobileObjectInfo mobileObjectInfo,
@@ -80,7 +82,9 @@ public class HwpReportProvider implements ReportProvider {
             tableBorderFillId
         );
 
-        return hwpFile;
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        HWPWriter.toStream(hwpFile, out);
+        return out.toByteArray();
     }
 
     private void writeText(Paragraph paragraph, String paraName, String text) throws UnsupportedEncodingException {

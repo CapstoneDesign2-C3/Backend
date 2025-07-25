@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface DetectedObjectMapper {
 
+    MobileObject findById(Long mobileObjectId);
+
     Long findMobileObjectCountByFilterAndIds(String categoryName, String alias);
 
     List<MobileObject> findMobileObjectsByFilterAndIds(String categoryName, String alias, Integer pageSize,
