@@ -38,22 +38,18 @@ public class HwpReportProvider implements ReportProvider {
         configurer.configureHWPFile(hwpFile);
         Section section = hwpFile.getBodyText().getSectionList().get(0);
 
-
         Paragraph title = section.getParagraph(0);
         writeText(title, "title", "객체 이동 보고서");
-
 
         Paragraph publishInfo = createParagraph(section);
         writeText(publishInfo, "publishInfo",
             "발행 일자 : " + date.toString() + "\n"
                 + "발행자 : " + author);
 
-
         Paragraph map = createParagraph(section);
         configurer.configureParagraph(map, "map");
         int mapImageId = imageEditor.addBinDataToHwpFile(hwpFile, loadFile("./hwptest/image.png"));
         imageEditor.writeImage(map, mapImageId, new GsoParam(0, 0, PaperSize.MAX_WIDTH.getValue(), 75));
-
 
         Paragraph bodyLeftColumn = createParagraph(section);
         columnMaker.configureColumn(bodyLeftColumn, 40.0, 90.0);
@@ -70,7 +66,6 @@ public class HwpReportProvider implements ReportProvider {
             new GsoParam(0, 70, 40, 60),
             tableBorderFillId
         );
-
 
         Paragraph bodyRightColumn = createParagraph(section);
         writeText(bodyRightColumn, "body",

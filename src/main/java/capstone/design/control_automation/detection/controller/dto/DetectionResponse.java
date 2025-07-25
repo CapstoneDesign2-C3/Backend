@@ -1,6 +1,5 @@
 package capstone.design.control_automation.detection.controller.dto;
 
-import capstone.design.control_automation.detected_object.repository.dto.DetectedObjectQueryResult;
 import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult;
 import java.time.LocalDateTime;
 
