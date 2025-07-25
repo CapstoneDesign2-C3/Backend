@@ -40,6 +40,11 @@ public class DetectionMyBatisRepository implements DetectionRepository {
     }
 
     @Override
+    public List<Track> getTracksByMobileObjectId(Long mobileObjectId) {
+        return detectionMapper.getTracksOfMobileObject(mobileObjectId, null, null, null, null);
+    }
+
+    @Override
     public List<Position> getPositionsByFilterCondition(Filter filter) {
         return detectionMapper.getPositionsOfMobileObject(
             filter.detectedObjectId(),
