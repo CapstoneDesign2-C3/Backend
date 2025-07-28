@@ -1,6 +1,7 @@
 package capstone.design.control_automation.report.util.hwp;
 
-import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult;
+import capstone.design.control_automation.report.util.ReportParam;
+import capstone.design.control_automation.report.util.ReportParam.Track;
 import capstone.design.control_automation.report.util.ReportProvider;
 import capstone.design.control_automation.report.util.hwp.GsoParam.PaperSize;
 import java.io.ByteArrayOutputStream;
@@ -9,7 +10,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.time.LocalDate;
 import java.util.List;
 import kr.dogfoot.hwplib.object.HWPFile;
 import kr.dogfoot.hwplib.object.bodytext.Section;
@@ -29,54 +29,68 @@ public class HwpReportProvider implements ReportProvider {
     private final HwpColumnMaker columnMaker;
 
     public byte[] createDetectedObjectReport(
-        LocalDate date,
-        String author,
-        TableDataDto.MobileObjectInfo mobileObjectInfo,
-        List<DetectionQueryResult.Track> trackOfMobileObject
+        List<ReportParam.Track> tracks
     ) throws Exception {
         HWPFile hwpFile = BlankFileMaker.make();
         configurer.configureHWPFile(hwpFile);
         Section section = hwpFile.getBodyText().getSectionList().get(0);
 
-        Paragraph title = section.getParagraph(0);
-        writeText(title, "title", "객체 이동 보고서");
+        for (int i = 0; i < tracks.size(); i++) {
+            Track track = tracks.get(i);
 
-        Paragraph publishInfo = createParagraph(section);
-        writeText(publishInfo, "publishInfo",
-            "발행 일자 : " + date.toString() + "\n"
-                + "발행자 : " + author);
+            Paragraph title = section.getParagraph(0);
+            if (i == 0) {
+                title.getLineSeg().getLineSegItemList().remove(0);
+            } else {
+                title = createParagraph(section);
+                columnMaker.mergeToOneColumn(title);
+            }
 
-        Paragraph map = createParagraph(section);
-        configurer.configureParagraph(map, "map");
-        int mapImageId = imageEditor.addBinDataToHwpFile(hwpFile, loadFile("./hwptest/image.png"));
-        imageEditor.writeImage(map, mapImageId, new GsoParam(0, 0, PaperSize.MAX_WIDTH.getValue(), 75));
+            writeText(title, "title", "객체 이동 보고서");
 
-        Paragraph bodyLeftColumn = createParagraph(section);
-        columnMaker.configureColumn(bodyLeftColumn, 40.0, 90.0);
+            Paragraph publishInfo = createParagraph(section);
+            writeText(publishInfo, "publishInfo",
+                "발행 일자 : " + track.date().toString() + "\n");
+            writeText(publishInfo, "publishInfo",
+                "발행자 : " + track.author());
 
-        int cropImageId = imageEditor.addBinDataToHwpFile(hwpFile, loadFile("./hwptest/crop.png"));
-        imageEditor.writeImage(bodyLeftColumn, cropImageId, new GsoParam(0, 0, 44, 60));
+            Paragraph map = createParagraph(section);
+            configurer.configureParagraph(map, "map");
+            int mapImageId = imageEditor.addBinDataToHwpFile(hwpFile, loadFile("./hwptest/image.png"));
+            imageEditor.writeImage(map, mapImageId, new GsoParam(0, 0, PaperSize.MAX_WIDTH.getValue(), 75));
 
-        writeText(bodyLeftColumn, "body",
-            "객체 분류");
-        int tableBorderFillId = tableEditor.addBorderFillInfo(hwpFile.getDocInfo());
-        tableEditor.writeVerticalTable(
-            bodyLeftColumn,
-            mobileObjectInfo,
-            new GsoParam(0, 70, 40, 60),
-            tableBorderFillId
-        );
+            Paragraph bodyLeftColumn = createParagraph(section);
+            columnMaker.configureColumn(bodyLeftColumn, 40.0, 90.0);
 
-        Paragraph bodyRightColumn = createParagraph(section);
-        writeText(bodyRightColumn, "body",
-            "객체 이동 현황\n");
-        tableEditor.writeTable(
-            bodyRightColumn,
-            trackOfMobileObject,
-            new GsoParam(0, 0, 100, 75),
-            tableBorderFillId
-        );
+            int cropImageId = imageEditor.addBinDataToHwpFile(hwpFile, loadFile("./hwptest/crop.png"));
+            imageEditor.writeImage(bodyLeftColumn, cropImageId, new GsoParam(0, 0, 44, 60));
 
+            writeText(bodyLeftColumn, "body",
+                "객체 분류");
+            int tableBorderFillId = tableEditor.addBorderFillInfo(hwpFile.getDocInfo());
+            tableEditor.writeVerticalTable(
+                bodyLeftColumn,
+                track.mobileObjectInfo(),
+                new GsoParam(0, 70, 40, 60),
+                tableBorderFillId
+            );
+
+            Paragraph bodyRightColumn = createParagraph(section);
+            writeText(bodyRightColumn, "body",
+                "객체 이동 현황\n");
+            tableEditor.writeTable(
+                bodyRightColumn,
+                track.trackOfMobileObject(),
+                new GsoParam(0, 0, 100, 75),
+                tableBorderFillId
+            );
+
+        }
+
+        return extractBytesFromHwpFile(hwpFile);
+    }
+
+    private byte[] extractBytesFromHwpFile(HWPFile hwpFile) throws Exception {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         HWPWriter.toStream(hwpFile, out);
         return out.toByteArray();
@@ -91,7 +105,6 @@ public class HwpReportProvider implements ReportProvider {
         Paragraph paragraph = section.addNewParagraph();
         paragraph.createCharShape();
         paragraph.createLineSeg();
-        paragraph.getLineSeg().addNewLineSegItem();
         paragraph.createText();
         return paragraph;
     }

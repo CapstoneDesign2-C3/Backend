@@ -5,6 +5,7 @@ import capstone.design.control_automation.detected_object.repository.DetectedObj
 import capstone.design.control_automation.detected_object.repository.dto.DetectedObjectQueryResult.MobileObject;
 import capstone.design.control_automation.detection.repository.DetectionRepository;
 import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult.Track;
+import capstone.design.control_automation.report.util.ReportParam;
 import capstone.design.control_automation.report.util.ReportProvider;
 import capstone.design.control_automation.report.util.hwp.TableDataDto.MobileObjectInfo;
 import java.time.LocalDate;
@@ -25,21 +26,24 @@ public class ReportService {
     private final ReportProvider reportProvider;
     private final MobileObjectFeatureClient mobileObjectFeatureClient;
 
-    public byte[] createMobileObjectTrackReport(List<Long> mobileObjectIds) throws Exception {
-        MobileObject mobileObject = detectedObjectRepository.findById(mobileObjectIds.get(0));
+    public byte[] createMobileObjectTrackReport(List<Long> mobileObjectIds, String author) throws Exception {
+        List<ReportParam.Track> reportParams = mobileObjectIds.stream().map(id -> {
+            MobileObject mobileObject = detectedObjectRepository.findById(id);
+            List<Track> tracks = detectionRepository.getTracksByMobileObjectId(id);
 
-        List<Track> tracks = detectionRepository.getTracksByMobileObjectId(mobileObjectIds.get(0));
+            return new ReportParam.Track(
+                LocalDate.now(),
+                author,
+                new MobileObjectInfo(
+                    mobileObject.mobileObjectUuid(),
+                    mobileObject.alias(),
+                    mobileObject.categoryName(),
+                    mobileObjectFeatureClient.getFeatureByUuid(mobileObject.mobileObjectUuid())
+                ),
+                tracks
+            );
+        }).toList();
 
-        return reportProvider.createDetectedObjectReport(
-            LocalDate.now(),
-            "이도훈",
-            new MobileObjectInfo(
-                mobileObject.mobileObjectUuid(),
-                mobileObject.alias(),
-                mobileObject.categoryName(),
-                mobileObjectFeatureClient.getFeatureByUuid(mobileObject.mobileObjectUuid())
-            ),
-            tracks
-        );
+        return reportProvider.createDetectedObjectReport(reportParams);
     }
 }
