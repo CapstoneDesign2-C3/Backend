@@ -22,6 +22,23 @@ public class HwpColumnMaker {
         configureColumnInfo(paragraph, widths);
     }
 
+    public void mergeToOneColumn(Paragraph paragraph) throws Exception {
+        paragraph.getHeader().getDivideSort().setDividePage(true);
+        addColumnControl(paragraph);
+
+        ControlColumnDefine columnDefine = (ControlColumnDefine) paragraph.addNewControl(ControlType.ColumnDefine);
+        CtrlHeaderColumnDefine columnDefineHeader = columnDefine.getHeader();
+        configureOneColumn(columnDefineHeader);
+    }
+
+    private void configureOneColumn(CtrlHeaderColumnDefine columnDefineHeader) {
+        columnDefineHeader.setProperty2(32768);
+        columnDefineHeader.getProperty().setColumnCount((short) 1);
+        columnDefineHeader.getDivideLine().setType(BorderType.None);
+        columnDefineHeader.getDivideLine().getColor().setValue(0);
+        columnDefineHeader.getDivideLine().setThickness(BorderThickness.MM0_1);
+    }
+
     private void addColumnControl(Paragraph paragraph) throws Exception {
         ParaText paraText = paragraph.getText();
         HWPCharControlExtend columnControlExtend = paraText.addNewExtendControlChar();

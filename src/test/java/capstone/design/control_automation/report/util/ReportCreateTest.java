@@ -1,5 +1,7 @@
 package capstone.design.control_automation.report.util;
 
+import static org.assertj.core.api.Assertions.fail;
+
 import java.awt.Rectangle;
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,6 +16,7 @@ import java.util.Objects;
 import java.util.Set;
 import kr.dogfoot.hwplib.object.HWPFile;
 import kr.dogfoot.hwplib.object.bodytext.Section;
+import kr.dogfoot.hwplib.object.bodytext.control.Control;
 import kr.dogfoot.hwplib.object.bodytext.control.ControlColumnDefine;
 import kr.dogfoot.hwplib.object.bodytext.control.ControlType;
 import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.CtrlHeaderColumnDefine;
@@ -60,6 +63,7 @@ import kr.dogfoot.hwplib.object.docinfo.borderfill.fillinfo.ImageFill;
 import kr.dogfoot.hwplib.object.docinfo.borderfill.fillinfo.ImageFillType;
 import kr.dogfoot.hwplib.object.docinfo.borderfill.fillinfo.PictureEffect;
 import kr.dogfoot.hwplib.object.docinfo.parashape.Alignment;
+import kr.dogfoot.hwplib.reader.HWPReader;
 import kr.dogfoot.hwplib.tool.blankfilemaker.BlankFileMaker;
 import kr.dogfoot.hwplib.writer.HWPWriter;
 import org.junit.jupiter.api.Test;
@@ -194,6 +198,24 @@ class ReportCreateTest {
         return (int) (mm * 72000.0f * weight / 254.0f + 0.5f);
     }
 
+    @Test
+    void reverse() throws Exception {
+        HWPFile hwpFile = HWPReader.fromFile("./hwptest/report_sample.hwp");
+
+        Section section = hwpFile.getBodyText().getSectionList().get(0);
+        Paragraph[] paragraphs = section.getParagraphs();
+
+//        HWPFile hwpFile1 = BlankFileMaker.make();
+//        compareObjects(hwpFile1.getBodyText().getSectionList().get(0).getParagraph(0).getLineSeg(), paragraphs[1].getLineSeg(), "seg");
+        compareObjects(paragraphs[0], paragraphs[5], "title");
+//        compareObjects(paragraphs[1], paragraphs[6], "publishInfo");
+//        compareObjects(paragraphs[2], paragraphs[7], "map");
+//        compareObjects(paragraphs[3], paragraphs[8], "leftColumn");
+//        compareObjects(paragraphs[4], paragraphs[9], "rightColumn");
+
+        fail();
+    }
+
     private void compareObjects(Object o1, Object o2, String path) throws IllegalAccessException {
         if (o1 == null && o2 == null) {
             return;
@@ -205,6 +227,10 @@ class ReportCreateTest {
         }
 
         Class<?> clazz = o1.getClass();
+        if (!clazz.isInstance(o2)) {
+            System.out.printf("[DIFF] %s -> %s vs %s\n", path, o1.getClass(), o2.getClass());
+            return;
+        }
 
         // 리스트인 경우
         if (o1 instanceof List<?> list1 && o2 instanceof List<?> list2) {
@@ -258,7 +284,6 @@ class ReportCreateTest {
         }
         return obj.toString();
     }
-
     /*
         GSO 는 그리기 도구
      */

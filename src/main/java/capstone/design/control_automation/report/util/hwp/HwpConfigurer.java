@@ -50,10 +50,12 @@ public class HwpConfigurer {
         }
 
         if (textSizeMap.containsKey(paramName)) {
-            LineSegItem firstLine = paragraph.getLineSeg().getLineSegItemList().get(0); // Text 높이 설정
-            firstLine.setTextPartHeight(textSizeMap.get(paramName));
-            firstLine.setDistanceBaseLineToLineVerticalPosition(textSizeMap.get(paramName));
+            LineSegItem lineSegItem = paragraph.getLineSeg().addNewLineSegItem();
+            lineSegItem.setTextPartHeight(textSizeMap.get(paramName));
+            lineSegItem.setDistanceBaseLineToLineVerticalPosition(textSizeMap.get(paramName));
+            return;
         }
+        paragraph.getLineSeg().addNewLineSegItem();
     }
 
     // === Shape 지정 장소 ===
@@ -67,7 +69,7 @@ public class HwpConfigurer {
     }
 
     private void fillTextSizeMap() {
-        textSizeMap.put("title", 2500);
+        textSizeMap.put("title", 2000);
         textSizeMap.put("publishInfo", 1200);
         textSizeMap.put("body", 1200);
         textSizeMap.put("tdata", 800);
