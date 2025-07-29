@@ -1,0 +1,68 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="capstone.design.control_automation.mapper.dashboard.DashboardMapper">
+    <select id="countByEvent" parameterType="java.time.LocalDate" resultType="Pie">
+    SELECT
+      e.code_name AS id,
+      COUNT(i.code_id) AS value
+    FROM event_codes e
+    LEFT JOIN event_info i
+      ON e.code_id = i.code_id
+      <![CDATA[AND i.start_frame_at >= #{date}::timestamp
+      AND i.start_frame_at < (#{date}::timestamp + interval '1 day')]]>
+    GROUP BY e.code_name
+    ORDER BY e.code_name
+    </select>
+
+    <select id="countByTime" parameterType="java.time.LocalDate" resultType="Data">
+        <![CDATA[
+    WITH hours AS (
+      SELECT generate_series(
+        date_trunc('day', #{date}::timestamp),
+        date_trunc('day', #{date}::timestamp) + interval '23 hour',
+        '1 hour'
+      ) AS event_hour
+    )
+    SELECT
+      hours.event_hour::timestamp without time zone AS x,
+      COALESCE(COUNT(e.event_id), 0) AS y
+    FROM hours
+    LEFT JOIN event_info e
+      ON date_trunc('hour', e.start_frame_at) = hours.event_hour
+      AND e.start_frame_at >= hours.event_hour
+      AND e.start_frame_at < hours.event_hour + interval '1 hour'
+    GROUP BY hours.event_hour
+    ORDER BY hours.event_hour
+  ]]>
+    </select>
+
+    <select id="countByCamera" parameterType="java.time.LocalDate" resultType="Bar">
+    SELECT
+      c.camera_name AS id,
+      COUNT(i.event_id) AS data
+    FROM camera_info c
+    LEFT JOIN event_info i
+      ON c.camera_id = i.camera_id
+      <![CDATA[AND i.start_frame_at >= #{date}::timestamp
+      AND i.start_frame_at < (#{date}::timestamp + interval '1 day')]]>
+    GROUP BY c.camera_name
+    ORDER BY c.camera_name
+    </select>
+
+
+    <select id="countByRisk" parameterType="java.time.LocalDate" resultType="Bar">
+    SELECT
+      r.risk_level AS id,
+      COUNT(i.event_id) AS data
+    FROM event_risks r
+    LEFT JOIN event_codes c ON c.risk_id = r.risk_id
+    LEFT JOIN event_info i ON i.code_id = c.code_id
+      <![CDATA[AND i.start_frame_at >= #{date}::timestamp
+      AND i.start_frame_at < (#{date}::timestamp + interval '1 day')]]>
+    GROUP BY r.risk_level
+    ORDER BY r.risk_level
+    </select>
+</mapper>
