@@ -1,9 +1,10 @@
 package capstone.design.control_automation.detection.service;
 
 import capstone.design.control_automation.detection.controller.dto.DetectionRequest.Filter;
-import capstone.design.control_automation.detection.controller.dto.DetectionResponse.Position;
 import capstone.design.control_automation.detection.controller.dto.DetectionResponse.Track;
 import capstone.design.control_automation.detection.repository.DetectionRepository;
+import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult;
+import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult.Position;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,8 +25,10 @@ public class DetectionService {
     }
 
     public List<Position> getPositionsByFilterCondition(Filter filter) {
-        return detectionRepository.getPositionsByFilterCondition(filter)
-            .stream().map(Position::from).toList();
+        return detectionRepository.getPositionsByFilterCondition(filter);
     }
 
+    public List<DetectionQueryResult.Track> getTracksByMobileObjectId(Long id) {
+        return detectionRepository.getTracksByMobileObjectId(id);
+    }
 }

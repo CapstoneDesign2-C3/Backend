@@ -1,6 +1,7 @@
 package capstone.design.control_automation.report;
 
 import capstone.design.control_automation.report.controller.ReportRequest.CreateMobileObject;
+import capstone.design.control_automation.report.service.ReportFacade;
 import capstone.design.control_automation.report.service.ReportService;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -21,11 +22,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ReportRestController {
 
-    private final ReportService reportService;
+    private final ReportFacade reportFacade;
 
     @PostMapping("/create-mobile-object-track")
     public ResponseEntity<byte[]> createMobileObjectTrackingReport(@RequestBody CreateMobileObject createMobileObject) throws Exception {
-        byte[] report = reportService.createMobileObjectTrackReport(
+        byte[] report = reportFacade.createMobileObjectTrackReport(
             createMobileObject.mobileObjectIds(),
             createMobileObject.author()
         );
