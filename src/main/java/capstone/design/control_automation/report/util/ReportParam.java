@@ -11,6 +11,7 @@ public class ReportParam {
     public record Track(
         LocalDate date,
         String author,
+        byte[] mapImage,
         TableDataDto.MobileObjectInfo mobileObjectInfo,
         List<DetectionQueryResult.Track> trackOfMobileObject
     ) {
