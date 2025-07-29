@@ -56,7 +56,7 @@ public class HwpReportProvider implements ReportProvider {
 
             Paragraph map = createParagraph(section);
             configurer.configureParagraph(map, "map");
-            int mapImageId = imageEditor.addBinDataToHwpFile(hwpFile, loadFile("./hwptest/image.png"));
+            int mapImageId = imageEditor.addBinDataToHwpFile(hwpFile, track.mapImage());
             imageEditor.writeImage(map, mapImageId, new GsoParam(0, 0, PaperSize.MAX_WIDTH.getValue(), 75));
 
             Paragraph bodyLeftColumn = createParagraph(section);

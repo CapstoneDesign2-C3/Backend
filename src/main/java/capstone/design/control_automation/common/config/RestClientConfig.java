@@ -11,4 +11,11 @@ public class RestClientConfig {
     public RestClient restClient() {
         return RestClient.create();
     }
+
+    @Bean
+    public RestClient googleClient() {
+        return RestClient.builder()
+            .baseUrl("https://maps.googleapis.com")
+            .build();
+    }
 }
