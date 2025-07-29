@@ -4,6 +4,7 @@ import capstone.design.control_automation.detected_object.client.MobileObjectFea
 import capstone.design.control_automation.detected_object.controller.dto.DetectedObjectRequest.MobileObjectFilter;
 import capstone.design.control_automation.detected_object.controller.dto.DetectedObjectResponse.MobileObject;
 import capstone.design.control_automation.detected_object.repository.DetectedObjectRepository;
+import capstone.design.control_automation.detected_object.repository.dto.DetectedObjectQueryResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -36,4 +37,7 @@ public class DetectedObjectService {
         detectedObjectRepository.aliasDetectedObject(detectedObjectId, alias);
     }
 
+    public DetectedObjectQueryResult.MobileObject findById(Long id) {
+        return detectedObjectRepository.findById(id);
+    }
 }
