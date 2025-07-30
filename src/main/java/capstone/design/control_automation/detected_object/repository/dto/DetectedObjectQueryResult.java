@@ -8,7 +8,7 @@ public class DetectedObjectQueryResult {
         Long mobileObjectId,
         String mobileObjectUuid,
         String categoryName,
-        String cropImgUrl,
+        byte[] cropImg,
         String alias
     ) {
 

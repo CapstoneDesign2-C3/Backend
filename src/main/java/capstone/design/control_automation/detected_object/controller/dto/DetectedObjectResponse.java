@@ -14,7 +14,7 @@ public class DetectedObjectResponse {
     public record MobileObject(
         Long detectedObjectId,
         String categoryName,
-        String cropImgUrl,
+        byte[] cropImg,
         String alias,
         String feature
     ) {

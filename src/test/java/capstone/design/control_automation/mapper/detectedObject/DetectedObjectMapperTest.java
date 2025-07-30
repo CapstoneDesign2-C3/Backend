@@ -1,10 +1,16 @@
 package capstone.design.control_automation.mapper.detectedObject;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
 
 import capstone.design.control_automation.common.config.MyBatisConfig;
 import capstone.design.control_automation.detected_object.repository.dto.DetectedObjectQueryResult.MobileObject;
 import capstone.design.control_automation.mapper.event.EventMapper;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,18 +41,51 @@ class DetectedObjectMapperTest {
     }
 
     @Test
-    void findMobileObjectsByFilterAndIds() {
+    void findMobileObjectsByFilterAndIds() throws IOException {
+        byte[] expectedImage = loadFile("./hwptest/crop.png");
         List<MobileObject> expected = List.of(
-            new MobileObject(1L, "uuid1", "사람", "/crops/object1.jpg", "Object1"),
-            new MobileObject(2L, "uuid2", "사람", "/crops/object2.jpg", "Object2"),
-            new MobileObject(3L, "uuid3", "사람", "/crops/object3.jpg", "Object3"),
-            new MobileObject(4L, "uuid4", "사람", "/crops/object4.jpg", "Object4"),
-            new MobileObject(5L, "uuid5", "사람", "/crops/object5.jpg", "Object5")
+            new MobileObject(1L, "uuid1", "사람", expectedImage, "Object1"),
+            new MobileObject(2L, "uuid2", "사람", expectedImage, "Object2"),
+            new MobileObject(3L, "uuid3", "사람", expectedImage, "Object3"),
+            new MobileObject(4L, "uuid4", "사람", expectedImage, "Object4"),
+            new MobileObject(5L, "uuid5", "사람", expectedImage, "Object5")
         );
         List<MobileObject> actual = detectedObjectMapper.findMobileObjectsByFilterAndIds("사람", null, 5, 0L);
 
-        assertThat(actual).hasSameElementsAs(expected);
+        assertThat(actual).extracting("mobileObjectId", "mobileObjectUuid", "categoryName", "alias")
+            .contains(
+                tuple(1L, "uuid1", "사람", "Object1"),
+                tuple(2L, "uuid2", "사람", "Object2"),
+                tuple(3L, "uuid3", "사람", "Object3"),
+                tuple(4L, "uuid4", "사람", "Object4"),
+                tuple(5L, "uuid5", "사람", "Object5")
+            );
+
+        assertThat(actual).extracting(MobileObject::cropImg)
+            .zipSatisfy(expected.stream().map(MobileObject::cropImg).toList(),
+                (a,e) -> assertThat(Arrays.equals(a, e)).isTrue()
+            );
+
     }
+
+    private byte[] loadFile(String path) throws IOException {
+        File file = new File(path);
+        byte[] buffer = new byte[(int) file.length()];
+        InputStream ios = null;
+        try {
+            ios = new FileInputStream(file);
+            ios.read(buffer);
+        } finally {
+            try {
+                if (ios != null) {
+                    ios.close();
+                }
+            } catch (IOException e) {
+            }
+        }
+        return buffer;
+    }
+
 
     @Test
     @DisplayName("mobile object 에 별칭 붙이기 test")

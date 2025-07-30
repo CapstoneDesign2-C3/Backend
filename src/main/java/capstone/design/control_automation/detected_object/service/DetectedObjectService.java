@@ -25,7 +25,7 @@ public class DetectedObjectService {
             .map(mobileObject -> new MobileObject(
                     mobileObject.mobileObjectId(),
                     mobileObject.categoryName(),
-                    mobileObject.cropImgUrl(),
+                    mobileObject.cropImg(),
                     mobileObject.alias(),
                     mobileObjectFeatureClient.getFeatureByUuid(mobileObject.mobileObjectUuid())
                 )

@@ -165,6 +165,7 @@ CREATE TABLE detected_object (
                                  crop_img_url VARCHAR(255),
                                  feature VARCHAR(255),
                                  code_id BIGINT NOT NULL,
+                                 crop_img BYTEA,
                                  FOREIGN KEY (code_id) REFERENCES event_codes(code_id)
 );
 
