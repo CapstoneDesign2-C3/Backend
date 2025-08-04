@@ -56,22 +56,4 @@ public class ReportFacade {
 
         return reportService.createDetectedObjectReport(reportParams);
     }
-
-    private byte[] loadFile() throws IOException {
-        File file = new File("./hwptest/crop.png");
-        byte[] buffer = new byte[(int) file.length()];
-        InputStream ios = null;
-        try {
-            ios = new FileInputStream(file);
-            ios.read(buffer);
-        } finally {
-            try {
-                if (ios != null) {
-                    ios.close();
-                }
-            } catch (IOException e) {
-            }
-        }
-        return buffer;
-    }
 }

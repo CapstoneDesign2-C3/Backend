@@ -5,10 +5,6 @@ import capstone.design.control_automation.report.util.ReportParam.Track;
 import capstone.design.control_automation.report.util.ReportProvider;
 import capstone.design.control_automation.report.util.hwp.GsoParam.PaperSize;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import kr.dogfoot.hwplib.object.HWPFile;
@@ -107,23 +103,5 @@ public class HwpReportProvider implements ReportProvider {
         paragraph.createLineSeg();
         paragraph.createText();
         return paragraph;
-    }
-
-    private byte[] loadFile(String path) throws IOException {
-        File file = new File(path);
-        byte[] buffer = new byte[(int) file.length()];
-        InputStream ios = null;
-        try {
-            ios = new FileInputStream(file);
-            ios.read(buffer);
-        } finally {
-            try {
-                if (ios != null) {
-                    ios.close();
-                }
-            } catch (IOException e) {
-            }
-        }
-        return buffer;
     }
 }
