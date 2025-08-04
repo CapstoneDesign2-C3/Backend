@@ -64,8 +64,8 @@ public class HwpTableEditor {
         bf.getTopBorder().getColor().setValue(0x0);
         bf.getBottomBorder().setType(BorderType.Solid);
         bf.getBottomBorder().setThickness(BorderThickness.MM0_5);
-        bf.setDiagonalSort(BorderType.None);
-        bf.setDiagonalThickness(BorderThickness.MM0_7);
+        bf.getDiagonalBorder().setType(BorderType.None);
+        bf.getDiagonalBorder().setThickness(BorderThickness.MM0_7);
 
         bf.getFillInfo().getType().setPatternFill(true);
         bf.getFillInfo().createPatternFill();
@@ -77,7 +77,27 @@ public class HwpTableEditor {
         return docInfo.getBorderFillList().size();
     }
 
-    public <T> void writeTable(Paragraph paragraph, List<T> tableData, GsoParam gsoParam, Integer borderFillId)
+    public <T> void writeVerticalTable(Paragraph paragraph, T dataToWrite, GsoParam gsoParam, int borderFillId)
+        throws IllegalAccessException, UnsupportedEncodingException {
+        paragraph.getText().addExtendCharForTable();
+
+        ControlTable controlTable = (ControlTable) paragraph.addNewControl(ControlType.Table);
+        CtrlHeaderGso headerGso = controlTable.getHeader();
+        configureHeaderGso(headerGso, gsoParam);
+
+        Table table = controlTable.getTable();
+        configureTable(table, borderFillId, gsoParam);
+
+        List<Field> fields = getFieldsToMakeTable(dataToWrite);
+        int rowCount = fields.size() + 1;
+        int colCount = 2;
+        makeTableCells(table, controlTable, rowCount, colCount, borderFillId);
+
+        List<List<String>> tableData = extractVerticalTableDataFromOrigin(dataToWrite, fields);
+        writeDataInTable(controlTable, tableData);
+    }
+
+    public <T> void writeTable(Paragraph paragraph, List<T> dataToWrite, GsoParam gsoParam, Integer borderFillId)
         throws UnsupportedEncodingException, IllegalAccessException {
         paragraph.getText().addExtendCharForTable();
 
@@ -86,14 +106,75 @@ public class HwpTableEditor {
         configureHeaderGso(headerGso, gsoParam);
 
         Table table = controlTable.getTable();
+        configureTable(table, borderFillId, gsoParam);
 
-        List<Field> fields = getFieldsToMakeTable(tableData.get(0));
-
-        int rowCount = tableData.size() + 1; // table header 공간 + 1
+        List<Field> fields = getFieldsToMakeTable(dataToWrite.get(0));
+        int rowCount = dataToWrite.size() + 1; // table header 공간 + 1
         int colCount = fields.size() + 1; // table column 개수
-        configureTable(table, borderFillId);
         makeTableCells(table, controlTable, rowCount, colCount, borderFillId);
-        writeObjectsInCell(controlTable, tableData, fields);
+
+        List<List<String>> tableData = extractTableDataFromOrigin(dataToWrite, fields);
+        writeDataInTable(controlTable, tableData);
+    }
+
+    private <T> List<List<String>> extractVerticalTableDataFromOrigin(T dataToWrite, List<Field> fields)
+        throws IllegalAccessException {
+        List<List<String>> tableData = new ArrayList<>();
+        for (int row = 0; row < fields.size() + 1; row++) {
+            tableData.add(new ArrayList<>());
+            List<String> rowData = tableData.get(row);
+            if (row == 0) {
+                rowData.add("분류");
+                rowData.add("값");
+                continue;
+            }
+            Field field = fields.get(row - 1);
+            rowData.add(field.getAnnotation(TableColumn.class).name());
+            rowData.add(field.get(dataToWrite).toString());
+        }
+
+        return tableData;
+    }
+
+    private <T> List<List<String>> extractTableDataFromOrigin(List<T> dataToWrite, List<Field> fields)
+        throws IllegalAccessException {
+        List<List<String>> tableData = new ArrayList<>();
+        for (int row = 0; row < dataToWrite.size() + 1; row++) {
+            tableData.add(new ArrayList<>());
+            List<String> rowData = tableData.get(row);
+            if (row == 0) {
+                rowData.add("번호");
+                for (Field f : fields) {
+                    rowData.add(f.getAnnotation(TableColumn.class).name());
+                }
+                continue;
+            }
+
+            T curRowData = dataToWrite.get(row - 1);
+            rowData.add(String.valueOf(row));
+            for (Field f : fields) {
+                rowData.add(f.get(curRowData).toString());
+            }
+        }
+
+        return tableData;
+    }
+
+    private void writeDataInTable(ControlTable controlTable, List<List<String>> tableData) throws UnsupportedEncodingException {
+        ArrayList<Row> rows = controlTable.getRowList();
+        for (int i = 0; i < rows.size(); i++) {
+            Row row = rows.get(i);
+
+            ArrayList<Cell> cells = row.getCellList();
+            for (int j = 0; j < cells.size(); j++) {
+                Cell cell = cells.get(j);
+                String text = tableData.get(i).get(j);
+                configureCellSize(cell, mmToHwp(getAutoWidthByText(text)));
+
+                Paragraph paragraph = createParagraphForCell(cell);
+                paragraph.getText().addString(text);
+            }
+        }
     }
 
     private <T> List<Field> getFieldsToMakeTable(T tableData) {
@@ -102,6 +183,7 @@ public class HwpTableEditor {
             Field[] fields = tableDataClass.getDeclaredFields();
             List<Field> sorted = Arrays.stream(fields)
                 .filter(field -> field.isAnnotationPresent(TableColumn.class))
+                .peek(field -> field.setAccessible(true))
                 .sorted(Comparator.comparingInt(field -> field.getAnnotation(TableColumn.class).order()))
                 .toList();
             fieldCache.put(tableData.getClass(), sorted);
@@ -123,7 +205,7 @@ public class HwpTableEditor {
         headerGso.getProperty().setWidthCriterion(WidthCriterion.Absolute);
         headerGso.getProperty().setHeightCriterion(HeightCriterion.Absolute);
         headerGso.getProperty().setProtectSize(false);
-        headerGso.getProperty().setTextFlowMethod(TextFlowMethod.FitWithText);
+        headerGso.getProperty().setTextFlowMethod(TextFlowMethod.TakePlace);
         headerGso.getProperty().setTextHorzArrange(TextHorzArrange.BothSides);
         headerGso.getProperty().setObjectNumberSort(ObjectNumberSort.Table);
         headerGso.setxOffset(mmToHwp(gsoParam.posX()));
@@ -134,18 +216,18 @@ public class HwpTableEditor {
         headerGso.setOutterMarginLeft(0);
         headerGso.setOutterMarginRight(0);
         headerGso.setOutterMarginTop(0);
-        headerGso.setOutterMarginBottom(0);
+        headerGso.setOutterMarginBottom(gsoParam.bottomMargin());
     }
 
     // table record 지정(row, col 개수 포함)
-    private void configureTable(Table table, int borderFillId) {
+    private void configureTable(Table table, int borderFillId, GsoParam gsoParam) {
         table.getProperty().setDivideAtPageBoundary(DivideAtPageBoundary.DivideByCell);
         table.getProperty().setAutoRepeatTitleRow(false);
         table.setCellSpacing(0);
         table.setLeftInnerMargin(0);
         table.setRightInnerMargin(0);
         table.setTopInnerMargin(0);
-        table.setBottomInnerMargin(0);
+        table.setBottomInnerMargin(gsoParam.bottomMargin());
         table.setBorderFillId(borderFillId);
     }
 
@@ -161,44 +243,6 @@ public class HwpTableEditor {
                 configureListHeaderForCell(cell, i, j, borderFillId);
             }
         }
-    }
-
-    public <T> void writeObjectsInCell(ControlTable controlTable, List<T> tableData, List<Field> fields)
-        throws UnsupportedEncodingException, IllegalAccessException {
-        ArrayList<Row> rows = controlTable.getRowList();
-        List<String> data = getTHeader(fields);
-
-        for (int rowIdx = 0; rowIdx < rows.size(); rowIdx++) {
-            Row row = rows.get(rowIdx);
-            if (rowIdx != 0) {
-                T tdata = tableData.get(rowIdx - 1);
-                data = new ArrayList<>();
-                data.add(String.valueOf(rowIdx));
-                for (Field f : fields) {
-                    f.setAccessible(true);
-                    data.add(f.get(tdata).toString());
-                }
-            }
-
-            ArrayList<Cell> cells = row.getCellList();
-            for (int colIdx = 0; colIdx < cells.size(); colIdx++) {
-                Cell cell = cells.get(colIdx);
-                String text = data.get(colIdx);
-                configureCellSize(cell, mmToHwp(getAutoWidthByText(text)));
-
-                Paragraph paragraph = createParagraphForCell(cell);
-                paragraph.getText().addString(text);
-            }
-        }
-    }
-
-    private List<String> getTHeader(List<Field> fields) {
-        List<String> data = new ArrayList<>();
-        data.add("번호");
-        for (Field field : fields) {
-            data.add(field.getAnnotation(TableColumn.class).name());
-        }
-        return data;
     }
 
     private void configureListHeaderForCell(Cell cell, int rowIndex, int colIndex, int borderFillId) {
@@ -229,7 +273,23 @@ public class HwpTableEditor {
     }
 
     private double getAutoWidthByText(String text) {
-        return Math.max(Math.min((text.length() * 2.5), 40), 8);
+        int koreanCount = 0;
+        int otherCount = 0;
+
+        for (char c : text.toCharArray()) {
+            if (isKorean(c)) {
+                koreanCount++;
+            } else {
+                otherCount++;
+            }
+        }
+
+        double width = koreanCount * 2.8 + otherCount * 1.7;
+        return Math.max(Math.min(width, 36), 8);
+    }
+
+    private boolean isKorean(char c) {
+        return (c >= '가' && c <= '힣');
     }
 
     private long mmToHwp(double mm) {

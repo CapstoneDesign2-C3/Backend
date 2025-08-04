@@ -1,7 +1,5 @@
 package capstone.design.control_automation.detected_object.controller.dto;
 
-import capstone.design.control_automation.video.repository.dto.VideoQueryResult.Detail;
-
 public class DetectedObjectResponse {
 
     public record Common(
@@ -16,7 +14,7 @@ public class DetectedObjectResponse {
     public record MobileObject(
         Long detectedObjectId,
         String categoryName,
-        String cropImgUrl,
+        byte[] cropImg,
         String alias,
         String feature
     ) {

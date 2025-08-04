@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import capstone.design.control_automation.camera.repository.dto.CameraQueryResult.Info;
 import capstone.design.control_automation.camera.repository.dto.CameraQueryResult.Position;
+import capstone.design.control_automation.common.PostgresContainerTest;
 import capstone.design.control_automation.common.config.MyBatisConfig;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -11,13 +12,17 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
 @MybatisTest
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 @Import(MyBatisConfig.class)
-@ActiveProfiles("test")
-class CameraMapperTest {
+class CameraMapperTest extends PostgresContainerTest {
 
     @Autowired
     CameraMapper cameraMapper;

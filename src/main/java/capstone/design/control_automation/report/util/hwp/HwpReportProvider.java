@@ -1,19 +1,17 @@
 package capstone.design.control_automation.report.util.hwp;
 
-import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult;
+import capstone.design.control_automation.report.util.ReportParam;
+import capstone.design.control_automation.report.util.ReportParam.Track;
 import capstone.design.control_automation.report.util.ReportProvider;
 import capstone.design.control_automation.report.util.hwp.GsoParam.PaperSize;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
-import java.time.LocalDateTime;
 import java.util.List;
 import kr.dogfoot.hwplib.object.HWPFile;
 import kr.dogfoot.hwplib.object.bodytext.Section;
 import kr.dogfoot.hwplib.object.bodytext.paragraph.Paragraph;
 import kr.dogfoot.hwplib.tool.blankfilemaker.BlankFileMaker;
+import kr.dogfoot.hwplib.writer.HWPWriter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -24,40 +22,74 @@ public class HwpReportProvider implements ReportProvider {
     private final HwpConfigurer configurer;
     private final HwpImageEditor imageEditor;
     private final HwpTableEditor tableEditor;
+    private final HwpColumnMaker columnMaker;
 
-    public HWPFile createDetectedObjectReport() throws IOException, IllegalAccessException {
+    public byte[] createDetectedObjectReport(
+        List<ReportParam.Track> tracks
+    ) throws Exception {
         HWPFile hwpFile = BlankFileMaker.make();
         configurer.configureHWPFile(hwpFile);
         Section section = hwpFile.getBodyText().getSectionList().get(0);
 
-        Paragraph title = section.getParagraph(0);
-        writeText(title, "title", "객체 이동 보고서");
+        for (int i = 0; i < tracks.size(); i++) {
+            Track track = tracks.get(i);
 
-        Paragraph publishInfo = createParagraph(section);
-        writeText(publishInfo, "publishInfo",
-            "발행 일자 : 2025.01.01\n"
-                + "발행자 : 이도훈");
+            Paragraph title = section.getParagraph(0);
+            if (i == 0) {
+                title.getLineSeg().getLineSegItemList().remove(0);
+            } else {
+                title = createParagraph(section);
+                columnMaker.mergeToOneColumn(title);
+            }
 
-        Paragraph map = createParagraph(section);
-        int imageId = imageEditor.addBinDataToHwpFile(hwpFile, loadFile());
-        imageEditor.writeImage(map, imageId, new GsoParam(0, 0, PaperSize.MAX_WIDTH.getValue(), 75));
+            writeText(title, "title", "객체 이동 보고서");
 
-        Paragraph table = createParagraph(section);
-        int borderFillId = tableEditor.addBorderFillInfo(hwpFile.getDocInfo());
-        tableEditor.writeTable(table,
-            List.of(
-                new DetectionQueryResult.Track(1L, "광화문 교차로", "https://example.com/thumbnail1.mp4",
-                    LocalDateTime.parse("2025-07-09T08:00:10"), LocalDateTime.parse("2025-07-09T08:00:12")),
-                new DetectionQueryResult.Track(13L, "북촌 한옥마을 입구", "https://example.com/thumbnail3.mp4",
-                    LocalDateTime.parse("2025-07-09T08:10:30"), LocalDateTime.parse("2025-07-09T08:10:35")),
-                new DetectionQueryResult.Track(25L, "부산 해운대 해수욕장", "https://example.com/thumbnail9.mp4",
-                    LocalDateTime.parse("2025-07-09T09:40:00"), LocalDateTime.parse("2025-07-09T09:40:03"))
-            ),
-            new GsoParam(30, 0, 120, 75),
-            borderFillId
-        );
+            Paragraph publishInfo = createParagraph(section);
+            writeText(publishInfo, "publishInfo",
+                "발행 일자 : " + track.date().toString() + "\n");
+            writeText(publishInfo, "publishInfo",
+                "발행자 : " + track.author());
 
-        return hwpFile;
+            Paragraph map = createParagraph(section);
+            configurer.configureParagraph(map, "map");
+            int mapImageId = imageEditor.addBinDataToHwpFile(hwpFile, track.mapImage());
+            imageEditor.writeImage(map, mapImageId, new GsoParam(0, 0, PaperSize.MAX_WIDTH.getValue(), 75));
+
+            Paragraph bodyLeftColumn = createParagraph(section);
+            columnMaker.configureColumn(bodyLeftColumn, 40.0, 90.0);
+
+            int cropImageId = imageEditor.addBinDataToHwpFile(hwpFile, track.cropImage());
+            imageEditor.writeImage(bodyLeftColumn, cropImageId, new GsoParam(0, 0, 44, 60));
+
+            writeText(bodyLeftColumn, "body",
+                "객체 분류");
+            int tableBorderFillId = tableEditor.addBorderFillInfo(hwpFile.getDocInfo());
+            tableEditor.writeVerticalTable(
+                bodyLeftColumn,
+                track.mobileObjectInfo(),
+                new GsoParam(0, 70, 40, 60),
+                tableBorderFillId
+            );
+
+            Paragraph bodyRightColumn = createParagraph(section);
+            writeText(bodyRightColumn, "body",
+                "객체 이동 현황\n");
+            tableEditor.writeTable(
+                bodyRightColumn,
+                track.trackOfMobileObject(),
+                new GsoParam(0, 0, 100, 75),
+                tableBorderFillId
+            );
+
+        }
+
+        return extractBytesFromHwpFile(hwpFile);
+    }
+
+    private byte[] extractBytesFromHwpFile(HWPFile hwpFile) throws Exception {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        HWPWriter.toStream(hwpFile, out);
+        return out.toByteArray();
     }
 
     private void writeText(Paragraph paragraph, String paraName, String text) throws UnsupportedEncodingException {
@@ -69,26 +101,7 @@ public class HwpReportProvider implements ReportProvider {
         Paragraph paragraph = section.addNewParagraph();
         paragraph.createCharShape();
         paragraph.createLineSeg();
-        paragraph.getLineSeg().addNewLineSegItem();
         paragraph.createText();
         return paragraph;
-    }
-
-    private byte[] loadFile() throws IOException {
-        File file = new File("./hwptest/image.png");
-        byte[] buffer = new byte[(int) file.length()];
-        InputStream ios = null;
-        try {
-            ios = new FileInputStream(file);
-            ios.read(buffer);
-        } finally {
-            try {
-                if (ios != null) {
-                    ios.close();
-                }
-            } catch (IOException e) {
-            }
-        }
-        return buffer;
     }
 }

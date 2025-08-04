@@ -37,8 +37,12 @@
       </if>
     </where>
     ORDER BY d.appeared_time ASC
-    LIMIT #{pageSize}
-    OFFSET #{offset}
+    <if test="pageSize != null">
+      LIMIT #{pageSize}
+    </if>
+    <if test="offset != null">
+      OFFSET #{offset}
+    </if>
   </select>
 
   <select id="getPositionsOfMobileObject" resultType="DetectionPosition">

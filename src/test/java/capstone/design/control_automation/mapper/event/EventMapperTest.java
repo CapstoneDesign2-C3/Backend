@@ -2,6 +2,7 @@ package capstone.design.control_automation.mapper.event;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import capstone.design.control_automation.common.PostgresContainerTest;
 import capstone.design.control_automation.common.config.MyBatisConfig;
 import capstone.design.control_automation.event.repository.dto.EventQueryResult.Code;
 import capstone.design.control_automation.event.repository.dto.EventQueryResult.Info;
@@ -14,12 +15,12 @@ import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.annotation.DirtiesContext;
 
 @MybatisTest
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 @Import(MyBatisConfig.class)
-@ActiveProfiles("test")
-public class EventMapperTest {
+public class EventMapperTest extends PostgresContainerTest {
 
     @Autowired
     private EventMapper mapper;

@@ -63,4 +63,5 @@ jobs:
             -e POSTGRESQL_PASSWORD=${{ secrets.POSTGRESQL_PASSWORD }} \
             -e VIDEO_SRC_URL=${{ secrets.VIDEO_SRC_URL }} \
             -e VIDEO_DEST_URL=${{ secrets.VIDEO_DEST_URL }} \
+            -e GOOGLE_MAP_API_KEY=${{ secrets.GOOGLE_MAP_API_KEY }} \
             ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_REPOSITORY_NAME }}:latest

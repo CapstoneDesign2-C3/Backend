@@ -6,15 +6,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import kr.dogfoot.hwplib.object.HWPFile;
-import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.gso.GsoHeaderProperty;
-import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.gso.HeightCriterion;
-import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.gso.HorzRelTo;
-import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.gso.ObjectNumberSort;
-import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.gso.RelativeArrange;
-import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.gso.TextFlowMethod;
-import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.gso.TextHorzArrange;
-import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.gso.VertRelTo;
-import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.gso.WidthCriterion;
 import kr.dogfoot.hwplib.object.bodytext.paragraph.Paragraph;
 import kr.dogfoot.hwplib.object.bodytext.paragraph.lineseg.LineSegItem;
 import kr.dogfoot.hwplib.object.docinfo.CharShape;
@@ -41,17 +32,30 @@ public class HwpConfigurer {
         for (String key : paraShapeMap.keySet()) {
             styleIdContext.putParaShapeId(key, paraShapeList.size());
             paraShapeList.add(paraShapeMap.get(key));
+        }
+
+        for (String key : charShapeMap.keySet()) {
             styleIdContext.putCharShapeId(key, charShapeList.size());
             charShapeList.add(charShapeMap.get(key));
         }
     }
 
     public void configureParagraph(Paragraph paragraph, String paramName) {
-        paragraph.getHeader().setParaShapeId(styleIdContext.getParaShapeId(paramName)); // 문단 모양 설정
-        paragraph.getCharShape().addParaCharShape(0, styleIdContext.getCharShapeId(paramName)); // 글자 모양 설정
-        LineSegItem firstLine = paragraph.getLineSeg().getLineSegItemList().get(0); // Text 높이 설정
-        firstLine.setTextPartHeight(textSizeMap.get(paramName));
-        firstLine.setDistanceBaseLineToLineVerticalPosition(textSizeMap.get(paramName));
+        if (paraShapeMap.containsKey(paramName)) {
+            paragraph.getHeader().setParaShapeId(styleIdContext.getParaShapeId(paramName)); // 문단 모양 설정
+        }
+
+        if (charShapeMap.containsKey(paramName)) {
+            paragraph.getCharShape().addParaCharShape(0, styleIdContext.getCharShapeId(paramName)); // 글자 모양 설정
+        }
+
+        if (textSizeMap.containsKey(paramName)) {
+            LineSegItem lineSegItem = paragraph.getLineSeg().addNewLineSegItem();
+            lineSegItem.setTextPartHeight(textSizeMap.get(paramName));
+            lineSegItem.setDistanceBaseLineToLineVerticalPosition(textSizeMap.get(paramName));
+            return;
+        }
+        paragraph.getLineSeg().addNewLineSegItem();
     }
 
     // === Shape 지정 장소 ===
@@ -65,8 +69,9 @@ public class HwpConfigurer {
     }
 
     private void fillTextSizeMap() {
-        textSizeMap.put("title", 2500);
+        textSizeMap.put("title", 2000);
         textSizeMap.put("publishInfo", 1200);
+        textSizeMap.put("body", 1200);
         textSizeMap.put("tdata", 800);
         textSizeMap.put("column", 1000);
     }
@@ -76,6 +81,7 @@ public class HwpConfigurer {
 
         // Title 은 중앙 정렬
         ParaShape originParaShape = paraShapes.get(3);
+
         ParaShape titleParaShape = originParaShape.clone();
         titleParaShape.getProperty1().setAlignment(Alignment.Center);
         titleParaShape.setBottomParaSpace(5000);
@@ -86,6 +92,10 @@ public class HwpConfigurer {
         publishInfoParaShape.getProperty1().setAlignment(Alignment.Right);
         publishInfoParaShape.setBottomParaSpace(2000);
         paraShapeMap.put("publishInfo", publishInfoParaShape);
+
+        ParaShape mapParaShape = originParaShape.clone();
+        mapParaShape.setBottomParaSpace(2000);
+        paraShapeMap.put("map", mapParaShape);
 
         ParaShape tdataParaShape = originParaShape.clone();
         tdataParaShape.getProperty1().setAlignment(Alignment.Center);
@@ -110,6 +120,11 @@ public class HwpConfigurer {
         CharShape publishInfoCharShape = originCharShape.clone();
         publishInfoCharShape.setBaseSize(textSizeMap.get("publishInfo"));
         charShapeMap.put("publishInfo", publishInfoCharShape);
+
+        CharShape bodyCharShape = originCharShape.clone();
+        bodyCharShape.setBaseSize(textSizeMap.get("body"));
+        bodyCharShape.getProperty().setBold(true);
+        charShapeMap.put("body", bodyCharShape);
 
         CharShape tdataCharShape = originCharShape.clone();
         tdataCharShape.setBaseSize(textSizeMap.get("tdata"));

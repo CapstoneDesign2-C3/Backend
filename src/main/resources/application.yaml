@@ -2,4 +2,7 @@ spring:
   application:
     name: control-automation
   profiles:
-    active: db
+    active: db, key
+
+  config:
+    import: optional:dotenv:local.env
