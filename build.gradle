@@ -55,6 +55,7 @@ dependencies {
 	implementation 'io.grpc:grpc-netty-shaded:1.65.1'
 	implementation 'io.grpc:grpc-protobuf:1.65.1'
 	implementation 'io.grpc:grpc-stub:1.65.1'
+	testImplementation "org.testcontainers:qdrant:1.20.1"
 }
 
 tasks.named('test') {
