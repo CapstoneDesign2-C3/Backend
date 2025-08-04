@@ -69,11 +69,13 @@ public class HwpReportProvider implements ReportProvider {
             writeText(bodyLeftColumn, "body",
                 "객체 분류");
             int tableBorderFillId = tableEditor.addBorderFillInfo(hwpFile.getDocInfo());
-            tableEditor.writeVerticalTable(
+            tableEditor.writeTable(
                 bodyLeftColumn,
-                track.mobileObjectInfo(),
+                List.of(track.mobileObjectInfo()),
                 new GsoParam(0, 70, 40, 60),
-                tableBorderFillId
+                tableBorderFillId,
+                false,
+                true
             );
 
             Paragraph bodyRightColumn = createParagraph(section);
@@ -83,7 +85,9 @@ public class HwpReportProvider implements ReportProvider {
                 bodyRightColumn,
                 track.trackOfMobileObject(),
                 new GsoParam(0, 0, 100, 75),
-                tableBorderFillId
+                tableBorderFillId,
+                true,
+                true
             );
 
         }
