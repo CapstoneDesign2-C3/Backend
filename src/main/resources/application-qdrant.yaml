@@ -1,0 +1,5 @@
+qdrant:
+  data:
+    collection_name: event
+    event_type_name: event
+    object_type_name: object

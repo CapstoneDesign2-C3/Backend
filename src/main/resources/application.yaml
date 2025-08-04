@@ -2,7 +2,7 @@ spring:
   application:
     name: control-automation
   profiles:
-    active: db, key
+    active: db, key, qdrant
 
   config:
     import: optional:dotenv:local.env
