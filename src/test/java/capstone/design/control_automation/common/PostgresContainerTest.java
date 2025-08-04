@@ -1,5 +1,6 @@
 package capstone.design.control_automation.common;
 
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
@@ -7,6 +8,7 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Testcontainers
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public abstract class PostgresContainerTest {
 
     private static final String USERNAME = "postgres";
@@ -25,6 +27,7 @@ public abstract class PostgresContainerTest {
         registry.add("spring.datasource.url", postgresContainer::getJdbcUrl);
         registry.add("spring.datasource.username", postgresContainer::getUsername);
         registry.add("spring.datasource.password", postgresContainer::getPassword);
-        registry.add("spring.driver-class-name", postgresContainer::getDriverClassName);
+        registry.add("spring.datasource.driver-class-name", postgresContainer::getDriverClassName);
     }
+
 }

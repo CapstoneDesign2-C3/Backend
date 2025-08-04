@@ -2,6 +2,7 @@ package capstone.design.control_automation.mapper.detection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import capstone.design.control_automation.common.PostgresContainerTest;
 import capstone.design.control_automation.common.config.MyBatisConfig;
 import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult.Position;
 import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult.Track;
@@ -13,12 +14,12 @@ import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.annotation.DirtiesContext;
 
 @MybatisTest
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 @Import(MyBatisConfig.class)
-@ActiveProfiles("test")
-class DetectionMapperTest {
+class DetectionMapperTest extends PostgresContainerTest {
 
     @Autowired
     DetectionMapper detectionMapper;

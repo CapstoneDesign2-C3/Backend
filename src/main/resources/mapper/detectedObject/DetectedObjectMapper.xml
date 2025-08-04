@@ -5,7 +5,7 @@
 
 <mapper namespace="capstone.design.control_automation.mapper.detectedObject.DetectedObjectMapper">
   <select id="findById" resultType="DetectedObjectMobile">
-    SELECT d.id, d.uuid, e.code_name, decode(d.crop_img, 'hex'), d.alias
+    SELECT d.id, d.uuid, e.code_name, d.crop_img, d.alias
     FROM detected_object d
     INNER JOIN event_codes e ON e.code_id = d.code_id
     WHERE d.id = #{mobileObjectId}
@@ -26,7 +26,7 @@
   </select>
 
   <select id="findMobileObjectsByFilterAndIds" resultType="DetectedObjectMobile">
-    SELECT d.id, d.uuid, e.code_name, decode(d.crop_img, 'hex'), d.alias
+    SELECT d.id, d.uuid, e.code_name, d.crop_img, d.alias
     FROM detected_object d
     INNER JOIN event_codes e ON e.code_id = d.code_id
     <where>
