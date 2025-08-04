@@ -8,7 +8,7 @@ import capstone.design.control_automation.report.util.hwp.dto.GsoParam.PaperSize
 import capstone.design.control_automation.report.util.hwp.fragments.HwpColumnMaker;
 import capstone.design.control_automation.report.util.hwp.fragments.HwpConfigurer;
 import capstone.design.control_automation.report.util.hwp.fragments.HwpImageEditor;
-import capstone.design.control_automation.report.util.hwp.fragments.HwpTableEditor;
+import capstone.design.control_automation.report.util.hwp.fragments.table.HwpTableEditor;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
