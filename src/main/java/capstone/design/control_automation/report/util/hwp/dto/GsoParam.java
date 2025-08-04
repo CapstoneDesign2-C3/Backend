@@ -18,7 +18,7 @@ public record GsoParam(
 
     @Getter
     public enum PaperSize {
-        MAX_WIDTH(150);
+        MAX_WIDTH(150), HALF_WIDTH(75);
         private final int value;
 
         PaperSize(int value) {

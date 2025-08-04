@@ -1,6 +1,7 @@
 package capstone.design.control_automation.report.util;
 
 import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult;
+import capstone.design.control_automation.report.util.hwp.dto.TableColumn;
 import capstone.design.control_automation.report.util.hwp.dto.TableDataDto;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -35,8 +36,8 @@ public class ReportParam {
     }
 
     public record DetectionTimeRange(
-        LocalDateTime startTime,
-        LocalDateTime endTime
+        @TableColumn(name = "탐지 시작 시간", order = 1) LocalDateTime startTime,
+        @TableColumn(name = "탐지 종료 시간", order = 2) LocalDateTime endTime
     ) {
 
     }

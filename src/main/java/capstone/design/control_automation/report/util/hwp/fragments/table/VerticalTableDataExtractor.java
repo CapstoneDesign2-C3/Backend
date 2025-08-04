@@ -31,7 +31,9 @@ public class VerticalTableDataExtractor extends HwpTableDataExtractor {
 
         for (int row = 0; row < fields.size(); row++) {
             tableData.add(new ArrayList<>());
-            List<String> rowData = tableData.get(row + 1);
+            List<String> rowData = tableData.get(row);
+            if (appendHeader)
+                rowData = tableData.get(row + 1);
             Field field = fields.get(row);
             rowData.add(field.getAnnotation(TableColumn.class).name());
             for (T t : dataToWrite) {
@@ -39,6 +41,7 @@ public class VerticalTableDataExtractor extends HwpTableDataExtractor {
             }
         }
 
+        System.out.println("tableData = " + tableData);
         return tableData;
 
     }

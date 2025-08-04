@@ -111,6 +111,21 @@ public class HwpReportProvider implements ReportProvider {
             "발행 일자 : " + eventsParam.publishInfo().publishDate().toString() + "\n");
         writeText(publishInfo, "publishInfo",
             "발행자 : " + eventsParam.publishInfo().author());
+
+        Paragraph detectedTimeRange = createParagraph(section);
+        configurer.configureParagraph(detectedTimeRange, "body");
+        int tableBorderFillId = tableEditor.addBorderFillInfo(hwpFile.getDocInfo());
+        tableEditor.writeTable(
+            detectedTimeRange,
+            List.of(
+                eventsParam.timeRange()
+            ),
+            new GsoParam(0, 0, PaperSize.HALF_WIDTH.getValue(), 75),
+            tableBorderFillId,
+            false,
+            false
+        );
+
         return extractBytesFromHwpFile(hwpFile);
     }
 

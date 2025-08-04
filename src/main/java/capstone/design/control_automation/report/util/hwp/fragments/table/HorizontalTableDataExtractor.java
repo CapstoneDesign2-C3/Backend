@@ -31,7 +31,8 @@ public class HorizontalTableDataExtractor extends HwpTableDataExtractor {
 
         for (int row = 0; row < dataToWrite.size(); row++) {
             tableData.add(new ArrayList<>());
-            List<String> rowData = tableData.get(row + 1);
+            List<String> rowData = tableData.get(row);
+            if (appendHeader) rowData = tableData.get(row + 1);
 
             T curRowData = dataToWrite.get(row);
             if (appendHeader && dataToWrite.size() != 1)
