@@ -1,6 +1,6 @@
 package capstone.design.control_automation.report.controller;
 
-import capstone.design.control_automation.report.controller.ReportRequest.CreateMobileObject;
+import capstone.design.control_automation.report.controller.dto.ReportRequest.CreateMobileObject;
 import capstone.design.control_automation.report.service.ReportFacade;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;

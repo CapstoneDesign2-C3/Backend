@@ -1,4 +1,4 @@
-package capstone.design.control_automation.report.controller;
+package capstone.design.control_automation.report.controller.dto;
 
 import java.util.List;
 
