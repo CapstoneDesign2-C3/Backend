@@ -153,4 +153,11 @@ class HwpReportProviderTest {
         HWPWriter.toFile(hwpFile, "./hwptest/report_sample.hwp");
     }
 
+    @Test
+    void createEventReport() throws Exception {
+        byte[] report = hwpReportProvider.createEventReport();
+
+        HWPFile hwpFile = HWPReader.fromInputStream(new ByteArrayInputStream(report));
+        HWPWriter.toFile(hwpFile, "./hwptest/report_event_sample.hwp");
+    }
 }
