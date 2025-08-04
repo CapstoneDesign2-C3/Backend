@@ -11,7 +11,12 @@ import capstone.design.control_automation.detection.repository.dto.DetectionQuer
 import capstone.design.control_automation.detection.service.DetectionService;
 import capstone.design.control_automation.report.util.ReportParam;
 import capstone.design.control_automation.report.util.hwp.TableDataDto.MobileObjectInfo;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -38,6 +43,7 @@ public class ReportFacade {
                 googleStaticMapApiClient.requestStaticMap(new MapRequest(
                     positions
                 )),
+                mobileObject.cropImg(),
                 new MobileObjectInfo(
                     mobileObject.mobileObjectUuid(),
                     mobileObject.alias(),
@@ -49,5 +55,23 @@ public class ReportFacade {
         }).toList();
 
         return reportService.createDetectedObjectReport(reportParams);
+    }
+
+    private byte[] loadFile() throws IOException {
+        File file = new File("./hwptest/crop.png");
+        byte[] buffer = new byte[(int) file.length()];
+        InputStream ios = null;
+        try {
+            ios = new FileInputStream(file);
+            ios.read(buffer);
+        } finally {
+            try {
+                if (ios != null) {
+                    ios.close();
+                }
+            } catch (IOException e) {
+            }
+        }
+        return buffer;
     }
 }

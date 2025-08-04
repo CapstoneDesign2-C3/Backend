@@ -48,4 +48,9 @@ public class DetectedObjectMyBatisRepository implements DetectedObjectRepository
     public void aliasDetectedObject(Long detectedObjectId, String alias) {
         detectedObjectMapper.aliasDetectedObject(detectedObjectId, alias);
     }
+
+    @Override
+    public void changeDetectedObjectImage(Long detectedObjectId, byte[] bytes) {
+        detectedObjectMapper.changeDetectedObjectImage(detectedObjectId, bytes);
+    }
 }

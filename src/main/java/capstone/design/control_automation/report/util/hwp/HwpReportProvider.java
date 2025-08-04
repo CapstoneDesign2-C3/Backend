@@ -62,7 +62,7 @@ public class HwpReportProvider implements ReportProvider {
             Paragraph bodyLeftColumn = createParagraph(section);
             columnMaker.configureColumn(bodyLeftColumn, 40.0, 90.0);
 
-            int cropImageId = imageEditor.addBinDataToHwpFile(hwpFile, loadFile("./hwptest/crop.png"));
+            int cropImageId = imageEditor.addBinDataToHwpFile(hwpFile, track.cropImage());
             imageEditor.writeImage(bodyLeftColumn, cropImageId, new GsoParam(0, 0, 44, 60));
 
             writeText(bodyLeftColumn, "body",

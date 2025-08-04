@@ -46,41 +46,7 @@ class HwpReportProviderTest {
                             new Position(5L, 37.4780259, 127.1067286)
                         )
                     )),
-                    new MobileObjectInfo("uuid", "유승종", "사람", "보라색 옷을 입고 있는 남자"),
-                    List.of(
-                        new Track(1L, "광화문 교차로", "https://example.com/thumbnail1.mp4",
-                            LocalDateTime.parse("2025-07-09T08:00:10"), LocalDateTime.parse("2025-07-09T08:00:12")),
-                        new Track(13L, "북촌 한옥마을 입구", "https://example.com/thumbnail3.mp4",
-                            LocalDateTime.parse("2025-07-09T08:10:30"), LocalDateTime.parse("2025-07-09T08:10:35")),
-                        new Track(25L, "부산 해운대 해수욕장", "https://example.com/thumbnail9.mp4",
-                            LocalDateTime.parse("2025-07-09T09:40:00"), LocalDateTime.parse("2025-07-09T09:40:03")),
-                        new Track(1L, "광화문 교차로", "https://example.com/thumbnail1.mp4",
-                            LocalDateTime.parse("2025-07-09T08:00:10"), LocalDateTime.parse("2025-07-09T08:00:12")),
-                        new Track(13L, "북촌 한옥마을 입구", "https://example.com/thumbnail3.mp4",
-                            LocalDateTime.parse("2025-07-09T08:10:30"), LocalDateTime.parse("2025-07-09T08:10:35")),
-                        new Track(25L, "부산 해운대 해수욕장", "https://example.com/thumbnail9.mp4",
-                            LocalDateTime.parse("2025-07-09T09:40:00"), LocalDateTime.parse("2025-07-09T09:40:03")),
-                        new Track(1L, "광화문 교차로", "https://example.com/thumbnail1.mp4",
-                            LocalDateTime.parse("2025-07-09T08:00:10"), LocalDateTime.parse("2025-07-09T08:00:12")),
-                        new Track(13L, "북촌 한옥마을 입구", "https://example.com/thumbnail3.mp4",
-                            LocalDateTime.parse("2025-07-09T08:10:30"), LocalDateTime.parse("2025-07-09T08:10:35")),
-                        new Track(25L, "부산 해운대 해수욕장", "https://example.com/thumbnail9.mp4",
-                            LocalDateTime.parse("2025-07-09T09:40:00"), LocalDateTime.parse("2025-07-09T09:40:03"))
-                    )
-                ),
-
-                new ReportParam.Track(
-                    LocalDate.of(2025, 7, 25),
-                    "이도훈",
-                    googleStaticMapApiClient.requestStaticMap(new MapRequest(
-                        List.of(
-                            new Position(1L, 37.4730359, 127.1027386),
-                            new Position(2L, 37.4730659, 127.1024386),
-                            new Position(3L, 37.4730959, 127.1027356),
-                            new Position(4L, 37.4730459, 127.1027386),
-                            new Position(5L, 37.4730259, 127.1027286)
-                        )
-                    )),
+                    new byte[0],
                     new MobileObjectInfo("uuid", "유승종", "사람", "보라색 옷을 입고 있는 남자"),
                     List.of(
                         new Track(1L, "광화문 교차로", "https://example.com/thumbnail1.mp4",
@@ -115,6 +81,42 @@ class HwpReportProviderTest {
                             new Position(5L, 37.4730259, 127.1027286)
                         )
                     )),
+                    new byte[0],
+                    new MobileObjectInfo("uuid", "유승종", "사람", "보라색 옷을 입고 있는 남자"),
+                    List.of(
+                        new Track(1L, "광화문 교차로", "https://example.com/thumbnail1.mp4",
+                            LocalDateTime.parse("2025-07-09T08:00:10"), LocalDateTime.parse("2025-07-09T08:00:12")),
+                        new Track(13L, "북촌 한옥마을 입구", "https://example.com/thumbnail3.mp4",
+                            LocalDateTime.parse("2025-07-09T08:10:30"), LocalDateTime.parse("2025-07-09T08:10:35")),
+                        new Track(25L, "부산 해운대 해수욕장", "https://example.com/thumbnail9.mp4",
+                            LocalDateTime.parse("2025-07-09T09:40:00"), LocalDateTime.parse("2025-07-09T09:40:03")),
+                        new Track(1L, "광화문 교차로", "https://example.com/thumbnail1.mp4",
+                            LocalDateTime.parse("2025-07-09T08:00:10"), LocalDateTime.parse("2025-07-09T08:00:12")),
+                        new Track(13L, "북촌 한옥마을 입구", "https://example.com/thumbnail3.mp4",
+                            LocalDateTime.parse("2025-07-09T08:10:30"), LocalDateTime.parse("2025-07-09T08:10:35")),
+                        new Track(25L, "부산 해운대 해수욕장", "https://example.com/thumbnail9.mp4",
+                            LocalDateTime.parse("2025-07-09T09:40:00"), LocalDateTime.parse("2025-07-09T09:40:03")),
+                        new Track(1L, "광화문 교차로", "https://example.com/thumbnail1.mp4",
+                            LocalDateTime.parse("2025-07-09T08:00:10"), LocalDateTime.parse("2025-07-09T08:00:12")),
+                        new Track(13L, "북촌 한옥마을 입구", "https://example.com/thumbnail3.mp4",
+                            LocalDateTime.parse("2025-07-09T08:10:30"), LocalDateTime.parse("2025-07-09T08:10:35")),
+                        new Track(25L, "부산 해운대 해수욕장", "https://example.com/thumbnail9.mp4",
+                            LocalDateTime.parse("2025-07-09T09:40:00"), LocalDateTime.parse("2025-07-09T09:40:03"))
+                    )
+                ),
+                new ReportParam.Track(
+                    LocalDate.of(2025, 7, 25),
+                    "이도훈",
+                    googleStaticMapApiClient.requestStaticMap(new MapRequest(
+                        List.of(
+                            new Position(1L, 37.4730359, 127.1027386),
+                            new Position(2L, 37.4730659, 127.1024386),
+                            new Position(3L, 37.4730959, 127.1027356),
+                            new Position(4L, 37.4730459, 127.1027386),
+                            new Position(5L, 37.4730259, 127.1027286)
+                        )
+                    )),
+                    new byte[0],
                     new MobileObjectInfo("uuid", "유승종", "사람", "보라색 옷을 입고 있는 남자"),
                     List.of(
                         new Track(1L, "광화문 교차로", "https://example.com/thumbnail1.mp4",

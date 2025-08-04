@@ -1,11 +1,9 @@
-package capstone.design.control_automation.report;
+package capstone.design.control_automation.report.controller;
 
 import capstone.design.control_automation.report.controller.ReportRequest.CreateMobileObject;
 import capstone.design.control_automation.report.service.ReportFacade;
-import capstone.design.control_automation.report.service.ReportService;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;

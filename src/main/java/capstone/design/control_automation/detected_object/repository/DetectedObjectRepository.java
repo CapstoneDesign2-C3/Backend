@@ -13,4 +13,6 @@ public interface DetectedObjectRepository {
         Pageable pageable);
 
     void aliasDetectedObject(Long detectedObjectId, String alias);
+
+    void changeDetectedObjectImage(Long detectedObjectId, byte[] bytes);
 }

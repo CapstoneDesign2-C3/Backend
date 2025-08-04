@@ -15,4 +15,6 @@ public interface DetectedObjectMapper {
         Long offset);
 
     void aliasDetectedObject(Long detectedObjectId, String alias);
+
+    void changeDetectedObjectImage(Long detectedObjectId, byte[] image);
 }

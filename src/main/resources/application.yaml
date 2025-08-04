@@ -3,3 +3,6 @@ spring:
     name: control-automation
   profiles:
     active: db, key
+
+  config:
+    import: optional:dotenv:local.env

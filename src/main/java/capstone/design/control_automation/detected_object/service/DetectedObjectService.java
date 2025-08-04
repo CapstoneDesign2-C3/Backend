@@ -40,4 +40,9 @@ public class DetectedObjectService {
     public DetectedObjectQueryResult.MobileObject findById(Long id) {
         return detectedObjectRepository.findById(id);
     }
+
+    @Transactional
+    public void changeDetectedObjectImage(Long detectedObjectId, byte[] bytes) {
+        detectedObjectRepository.changeDetectedObjectImage(detectedObjectId, bytes);
+    }
 }

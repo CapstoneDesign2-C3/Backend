@@ -46,4 +46,10 @@
     SET alias = #{alias}
     WHERE id = #{detectedObjectId}
   </update>
+
+  <select id="changeDetectedObjectImage">
+    UPDATE detected_object
+    SET crop_img = #{image}
+    WHERE id = #{detectedObjectId}
+  </select>
 </mapper>
