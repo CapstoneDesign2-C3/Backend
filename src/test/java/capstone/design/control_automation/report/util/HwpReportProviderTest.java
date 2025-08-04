@@ -5,6 +5,7 @@ import capstone.design.control_automation.common.client.MapRequest;
 import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult;
 import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult.Position;
 import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult.Track;
+import capstone.design.control_automation.report.util.ReportParam.PublishInfo;
 import capstone.design.control_automation.report.util.hwp.HwpReportProvider;
 import capstone.design.control_automation.report.util.hwp.TableDataDto.MobileObjectInfo;
 import java.io.ByteArrayInputStream;
@@ -35,8 +36,10 @@ class HwpReportProviderTest {
         byte[] report = hwpReportProvider.createDetectedObjectReport(
             List.of(
                 new ReportParam.Track(
-                    LocalDate.of(2025, 7, 25),
-                    "이도훈",
+                    new PublishInfo(
+                        LocalDate.of(2025, 7, 25),
+                        "이도훈"
+                    ),
                     googleStaticMapApiClient.requestStaticMap(new MapRequest(
                         List.of(
                             new Position(1L, 37.4740359, 127.1027386),
@@ -70,8 +73,10 @@ class HwpReportProviderTest {
                     )
                 ),
                 new ReportParam.Track(
-                    LocalDate.of(2025, 7, 25),
-                    "이도훈",
+                    new PublishInfo(
+                        LocalDate.of(2025, 7, 25),
+                        "이도훈"
+                    ),
                     googleStaticMapApiClient.requestStaticMap(new MapRequest(
                         List.of(
                             new Position(1L, 37.4730359, 127.1027386),
@@ -105,8 +110,10 @@ class HwpReportProviderTest {
                     )
                 ),
                 new ReportParam.Track(
-                    LocalDate.of(2025, 7, 25),
-                    "이도훈",
+                    new PublishInfo(
+                        LocalDate.of(2025, 7, 25),
+                        "이도훈"
+                    ),
                     googleStaticMapApiClient.requestStaticMap(new MapRequest(
                         List.of(
                             new Position(1L, 37.4730359, 127.1027386),

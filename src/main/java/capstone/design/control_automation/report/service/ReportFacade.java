@@ -10,6 +10,7 @@ import capstone.design.control_automation.detection.repository.dto.DetectionQuer
 import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult.Track;
 import capstone.design.control_automation.detection.service.DetectionService;
 import capstone.design.control_automation.report.util.ReportParam;
+import capstone.design.control_automation.report.util.ReportParam.PublishInfo;
 import capstone.design.control_automation.report.util.hwp.TableDataDto.MobileObjectInfo;
 import java.io.File;
 import java.io.FileInputStream;
@@ -38,8 +39,10 @@ public class ReportFacade {
             List<Position> positions = detectionService.getPositionsByFilterCondition(new Filter(id, null, null));
 
             return new ReportParam.Track(
-                LocalDate.now(),
-                author,
+                new PublishInfo(
+                    LocalDate.now(),
+                    author
+                ),
                 googleStaticMapApiClient.requestStaticMap(new MapRequest(
                     positions
                 )),

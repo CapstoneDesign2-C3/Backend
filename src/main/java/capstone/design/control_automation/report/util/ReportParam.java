@@ -10,8 +10,7 @@ import java.util.List;
 public class ReportParam {
 
     public record Track(
-        LocalDate date,
-        String author,
+        PublishInfo publishInfo,
         byte[] mapImage,
         byte[] cropImage,
         TableDataDto.MobileObjectInfo mobileObjectInfo,

@@ -46,9 +46,9 @@ public class HwpReportProvider implements ReportProvider {
 
             Paragraph publishInfo = createParagraph(section);
             writeText(publishInfo, "publishInfo",
-                "발행 일자 : " + track.date().toString() + "\n");
+                "발행 일자 : " + track.publishInfo().publishDate().toString() + "\n");
             writeText(publishInfo, "publishInfo",
-                "발행자 : " + track.author());
+                "발행자 : " + track.publishInfo().author());
 
             Paragraph map = createParagraph(section);
             configurer.configureParagraph(map, "map");
