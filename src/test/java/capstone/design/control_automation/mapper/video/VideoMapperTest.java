@@ -2,6 +2,7 @@ package capstone.design.control_automation.mapper.video;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import capstone.design.control_automation.common.PostgresContainerTest;
 import capstone.design.control_automation.common.config.MyBatisConfig;
 import capstone.design.control_automation.video.repository.dto.VideoQueryResult.Detail;
 import capstone.design.control_automation.video.repository.dto.VideoQueryResult.SimpleWithEvent;
@@ -15,12 +16,12 @@ import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.annotation.DirtiesContext;
 
 @MybatisTest
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 @Import(MyBatisConfig.class)
-@ActiveProfiles("test")
-class VideoMapperTest {
+class VideoMapperTest extends PostgresContainerTest {
 
     @Autowired
     private VideoMapper mapper;
@@ -34,7 +35,7 @@ class VideoMapperTest {
 
     @Test
     void findById() {
-        List <Detail> expected = List.of(
+        List<Detail> expected = List.of(
             new Detail(1L, "/videos/video1.mp4", "Camera4", 37.5664, 126.9784, 1L, "uuid1", "사람", "/crops/object1.jpg"),
             new Detail(1L, "/videos/video1.mp4", "Camera4", 37.5664, 126.9784, 3L, "uuid3", "사람", "/crops/object3.jpg"),
             new Detail(1L, "/videos/video1.mp4", "Camera4", 37.5664, 126.9784, 6L, "uuid6", "사람", "/crops/object6.jpg"),

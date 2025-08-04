@@ -34,7 +34,7 @@ public class DetectionRestController {
     public ResponseEntity<List<Position>> getPositionsByFilterCondition(
         @ModelAttribute Filter filter
     ) {
-        return ResponseEntity.ok(detectionService.getPositionsByFilterCondition(filter));
+        return ResponseEntity.ok(detectionService.getPositionsByFilterCondition(filter).stream().map(Position::from).toList());
     }
 
 }

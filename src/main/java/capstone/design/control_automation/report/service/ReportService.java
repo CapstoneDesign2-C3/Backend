@@ -1,14 +1,18 @@
 package capstone.design.control_automation.report.service;
 
+import capstone.design.control_automation.report.util.ReportParam;
+import capstone.design.control_automation.report.util.ReportProvider;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-@Slf4j
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class ReportService {
 
+    private final ReportProvider reportProvider;
+
+    public byte[] createDetectedObjectReport(List<ReportParam.Track> reportParams) throws Exception {
+        return reportProvider.createDetectedObjectReport(reportParams);
+    }
 }

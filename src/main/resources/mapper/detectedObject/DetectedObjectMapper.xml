@@ -4,6 +4,13 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="capstone.design.control_automation.mapper.detectedObject.DetectedObjectMapper">
+  <select id="findById" resultType="DetectedObjectMobile">
+    SELECT d.id, d.uuid, e.code_name, d.crop_img, d.alias
+    FROM detected_object d
+    INNER JOIN event_codes e ON e.code_id = d.code_id
+    WHERE d.id = #{mobileObjectId}
+  </select>
+
   <select id="findMobileObjectCountByFilterAndIds" resultType="Long">
     SELECT count(d.id)
     FROM detected_object d
@@ -39,4 +46,10 @@
     SET alias = #{alias}
     WHERE id = #{detectedObjectId}
   </update>
+
+  <select id="changeDetectedObjectImage">
+    UPDATE detected_object
+    SET crop_img = #{image}
+    WHERE id = #{detectedObjectId}
+  </select>
 </mapper>

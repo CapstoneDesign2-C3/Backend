@@ -19,6 +19,11 @@ public class DetectedObjectMyBatisRepository implements DetectedObjectRepository
     private final DetectedObjectMapper detectedObjectMapper;
 
     @Override
+    public MobileObject findById(Long mobileObjectId) {
+        return detectedObjectMapper.findById(mobileObjectId);
+    }
+
+    @Override
     public Page<MobileObject> findMobileObjectsByFilterAndIds(MobileObjectFilter filter, Pageable pageable) {
         Long count = detectedObjectMapper.findMobileObjectCountByFilterAndIds(
             filter.categoryName(),
@@ -42,5 +47,10 @@ public class DetectedObjectMyBatisRepository implements DetectedObjectRepository
     @Override
     public void aliasDetectedObject(Long detectedObjectId, String alias) {
         detectedObjectMapper.aliasDetectedObject(detectedObjectId, alias);
+    }
+
+    @Override
+    public void changeDetectedObjectImage(Long detectedObjectId, byte[] bytes) {
+        detectedObjectMapper.changeDetectedObjectImage(detectedObjectId, bytes);
     }
 }

@@ -41,12 +41,12 @@ public class HwpImageEditor {
     public int addBinDataToHwpFile(HWPFile hwpFile, byte[] fileBinary) {
         int binDataId = hwpFile.getBinData().getEmbeddedBinaryDataList().size() + 1;
         String streamName = "Bin" + String.format("%04X", binDataId) + ".jpg";
-        hwpFile.getBinData().addNewEmbeddedBinaryData(streamName, fileBinary, BinDataCompress.ByStroageDefault);
+        hwpFile.getBinData().addNewEmbeddedBinaryData(streamName, fileBinary, BinDataCompress.ByStorageDefault);
 
         BinData bd = new BinData();
         bd.getProperty().setType(BinDataType.Embedding);
-        bd.getProperty().setCompress(BinDataCompress.ByStroageDefault);
-        bd.getProperty().setState(BinDataState.NotAcceess);
+        bd.getProperty().setCompress(BinDataCompress.ByStorageDefault);
+        bd.getProperty().setState(BinDataState.NotAccess);
         bd.setBinDataID(binDataId);
         bd.setExtensionForEmbedding("jpg");
         hwpFile.getDocInfo().getBinDataList().add(bd);
@@ -58,8 +58,8 @@ public class HwpImageEditor {
         paragraph.getText().addExtendCharForGSO();
 
         Rectangle rectangle = new Rectangle(
-            gsoParam.posX(),
-            gsoParam.posY(),
+            (int) gsoParam.posX(),
+            (int) gsoParam.posY(),
             gsoParam.width(),
             gsoParam.height()
         );
@@ -67,7 +67,7 @@ public class HwpImageEditor {
         ControlRectangle controlRectangle = (ControlRectangle) paragraph.addNewGsoControl(GsoControlType.Rectangle);
 
         CtrlHeaderGso headerGso = controlRectangle.getHeader();
-        configureGsoHeader(headerGso, rectangle);
+        configureGsoHeader(headerGso, rectangle, gsoParam.bottomMargin());
         GsoHeaderProperty headerProperty = headerGso.getProperty();
         configureGsoHeaderProperty(headerProperty);
 
@@ -96,7 +96,7 @@ public class HwpImageEditor {
         sc.setMatrixsNormal();
     }
 
-    private void configureGsoHeader(CtrlHeaderGso hdr, Rectangle shapePosition) {
+    private void configureGsoHeader(CtrlHeaderGso hdr, Rectangle shapePosition, int bottomMargin) {
         hdr.setyOffset(fromMM(shapePosition.y));
         hdr.setxOffset(fromMM(shapePosition.x));
         hdr.setWidth(fromMM(shapePosition.width));
@@ -105,7 +105,7 @@ public class HwpImageEditor {
         hdr.setOutterMarginLeft(0);
         hdr.setOutterMarginRight(0);
         hdr.setOutterMarginTop(0);
-        hdr.setOutterMarginBottom(0);
+        hdr.setOutterMarginBottom(fromMM(bottomMargin));
         hdr.setInstanceId(0x5bb840e1);
         hdr.setPreventPageDivide(false);
         hdr.getExplanation().setBytes(null);
@@ -123,7 +123,7 @@ public class HwpImageEditor {
         prop.setWidthCriterion(WidthCriterion.Absolute);
         prop.setHeightCriterion(HeightCriterion.Absolute);
         prop.setProtectSize(false);
-        prop.setTextFlowMethod(TextFlowMethod.FitWithText);
+        prop.setTextFlowMethod(TextFlowMethod.TakePlace);
         prop.setTextHorzArrange(TextHorzArrange.BothSides);
         prop.setObjectNumberSort(ObjectNumberSort.Figure);
     }
@@ -159,9 +159,9 @@ public class HwpImageEditor {
         li.getProperty().setEndArrowSize(LineArrowSize.MiddleMiddle);
         li.getProperty().setFillStartArrow(true);
         li.getProperty().setFillEndArrow(true);
-        li.getProperty().setLineType(LineType.None);
+        li.getProperty().setLineType(LineType.Solid);
         li.setOutlineStyle(OutlineStyle.Normal);
-        li.setThickness(0);
+        li.setThickness(fromMM(0.5));
         li.getColor().setValue(0);
     }
 
@@ -188,12 +188,12 @@ public class HwpImageEditor {
         scr.setY4(fromMM(shapePosition.height));
     }
 
-    private int fromMM(int mm) {
+    private int fromMM(double mm) {
         if (mm == 0) {
             return 1;
         }
 
-        return (int) ((double) mm * 72000.0f / 254.0f + 0.5f);
+        return (int) (mm * 72000.0f / 254.0f + 0.5f);
     }
 
 }

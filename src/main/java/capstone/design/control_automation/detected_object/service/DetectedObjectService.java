@@ -4,6 +4,7 @@ import capstone.design.control_automation.detected_object.client.MobileObjectFea
 import capstone.design.control_automation.detected_object.controller.dto.DetectedObjectRequest.MobileObjectFilter;
 import capstone.design.control_automation.detected_object.controller.dto.DetectedObjectResponse.MobileObject;
 import capstone.design.control_automation.detected_object.repository.DetectedObjectRepository;
+import capstone.design.control_automation.detected_object.repository.dto.DetectedObjectQueryResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,7 +25,7 @@ public class DetectedObjectService {
             .map(mobileObject -> new MobileObject(
                     mobileObject.mobileObjectId(),
                     mobileObject.categoryName(),
-                    mobileObject.cropImgUrl(),
+                    mobileObject.cropImg(),
                     mobileObject.alias(),
                     mobileObjectFeatureClient.getFeatureByUuid(mobileObject.mobileObjectUuid())
                 )
@@ -33,8 +34,15 @@ public class DetectedObjectService {
 
     @Transactional
     public void aliasDetectedObject(Long detectedObjectId, String alias) {
-        //TODO
         detectedObjectRepository.aliasDetectedObject(detectedObjectId, alias);
     }
 
+    public DetectedObjectQueryResult.MobileObject findById(Long id) {
+        return detectedObjectRepository.findById(id);
+    }
+
+    @Transactional
+    public void changeDetectedObjectImage(Long detectedObjectId, byte[] bytes) {
+        detectedObjectRepository.changeDetectedObjectImage(detectedObjectId, bytes);
+    }
 }
