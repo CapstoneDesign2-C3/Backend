@@ -1,5 +1,6 @@
 package capstone.design.control_automation.qdrant;
 
+import capstone.design.control_automation.common.properties.QdrantProperties;
 import capstone.design.control_automation.detected_object.client.MobileObjectFeatureClient;
 import capstone.design.control_automation.event.client.EventSummaryClient;
 import io.grpc.Grpc;
@@ -13,6 +14,7 @@ import io.qdrant.client.grpc.Points.PointStruct;
 
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -30,6 +32,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 @SpringBootTest
+@EnableConfigurationProperties(QdrantProperties.class)
 @Testcontainers
 public class QdrantClientTest {
     @Container
@@ -41,6 +44,8 @@ public class QdrantClientTest {
     private MobileObjectFeatureClient mobileObjectFeatureClient;
     @Autowired
     private QdrantClient qdrantClient;
+    @Autowired
+    private QdrantProperties qdrantProperties;
 
     @TestConfiguration
     static class TestConfig {
@@ -55,7 +60,7 @@ public class QdrantClientTest {
 
     @BeforeEach
     public void setup() throws ExecutionException, InterruptedException {
-        qdrantClient.createCollectionAsync("event",
+        qdrantClient.createCollectionAsync(qdrantProperties.collectionName(),
                 VectorParams.newBuilder()
                         .setDistance(Distance.Cosine)
                         .setSize(4)
@@ -70,7 +75,7 @@ public class QdrantClientTest {
                                 .putAllPayload(
                                         Map.of(
                                                 "uuid", value("12345"),
-                                                "type", value("event"),
+                                                "type", value(qdrantProperties.eventTypeName()),
                                                 "summary", value("correct_summary")
                                         ))
                                 .build(),
@@ -80,7 +85,7 @@ public class QdrantClientTest {
                                 .putAllPayload(
                                         Map.of(
                                                 "uuid", value("54321"),
-                                                "type", value("event"),
+                                                "type", value(qdrantProperties.eventTypeName()),
                                                 "summary", value("incorrect_summary")
                                         ))
                                 .build(),
@@ -90,7 +95,7 @@ public class QdrantClientTest {
                                 .putAllPayload(
                                         Map.of(
                                                 "uuid", value("54321"),
-                                                "type", value("object"),
+                                                "type", value(qdrantProperties.objectTypeName()),
                                                 "feature", value("incorrect_feature")
                                         ))
                                 .build(),
@@ -100,7 +105,7 @@ public class QdrantClientTest {
                                 .putAllPayload(
                                         Map.of(
                                                 "uuid", value("12345"),
-                                                "type", value("object"),
+                                                "type", value(qdrantProperties.objectTypeName()),
                                                 "feature", value("correct_feature")
                                         ))
                                 .build()
