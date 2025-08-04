@@ -5,6 +5,8 @@ import capstone.design.control_automation.common.client.MapRequest;
 import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult;
 import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult.Position;
 import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult.Track;
+import capstone.design.control_automation.report.util.ReportParam.DetectionTimeRange;
+import capstone.design.control_automation.report.util.ReportParam.Event;
 import capstone.design.control_automation.report.util.ReportParam.PublishInfo;
 import capstone.design.control_automation.report.util.hwp.HwpReportProvider;
 import capstone.design.control_automation.report.util.hwp.TableDataDto.MobileObjectInfo;
@@ -155,7 +157,20 @@ class HwpReportProviderTest {
 
     @Test
     void createEventReport() throws Exception {
-        byte[] report = hwpReportProvider.createEventReport();
+        byte[] report = hwpReportProvider.createEventReport(
+            new Event(
+                new PublishInfo(
+                    LocalDate.of(2025, 7, 25),
+                    "이도훈"
+                ),
+                new DetectionTimeRange(
+                    LocalDateTime.of(2025, 8, 1, 10, 10),
+                    LocalDateTime.of(2025, 8, 1, 23, 10)
+                ),
+                List.of(),
+                List.of()
+            )
+        );
 
         HWPFile hwpFile = HWPReader.fromInputStream(new ByteArrayInputStream(report));
         HWPWriter.toFile(hwpFile, "./hwptest/report_event_sample.hwp");

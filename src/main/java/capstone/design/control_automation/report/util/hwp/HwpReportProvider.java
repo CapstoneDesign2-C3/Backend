@@ -87,6 +87,7 @@ public class HwpReportProvider implements ReportProvider {
     }
 
     public byte[] createEventReport(
+        ReportParam.Event eventsParam
     ) throws Exception {
         HWPFile hwpFile = BlankFileMaker.make();
         configurer.configureHWPFile(hwpFile);
@@ -96,6 +97,11 @@ public class HwpReportProvider implements ReportProvider {
         title.getLineSeg().getLineSegItemList().remove(0);
         writeText(title, "title", "이벤트 발생 보고서");
 
+        Paragraph publishInfo = createParagraph(section);
+        writeText(publishInfo, "publishInfo",
+            "발행 일자 : " + eventsParam.publishInfo().publishDate().toString() + "\n");
+        writeText(publishInfo, "publishInfo",
+            "발행자 : " + eventsParam.publishInfo().author());
         return extractBytesFromHwpFile(hwpFile);
     }
 
