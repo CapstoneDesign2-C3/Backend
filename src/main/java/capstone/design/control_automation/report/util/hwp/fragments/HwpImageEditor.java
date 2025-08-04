@@ -1,5 +1,6 @@
-package capstone.design.control_automation.report.util.hwp;
+package capstone.design.control_automation.report.util.hwp.fragments;
 
+import capstone.design.control_automation.report.util.hwp.dto.GsoParam;
 import java.awt.Rectangle;
 import kr.dogfoot.hwplib.object.HWPFile;
 import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.CtrlHeaderGso;

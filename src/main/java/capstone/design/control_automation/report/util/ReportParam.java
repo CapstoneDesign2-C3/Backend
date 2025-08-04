@@ -1,8 +1,7 @@
 package capstone.design.control_automation.report.util;
 
 import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult;
-import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult.Track;
-import capstone.design.control_automation.report.util.hwp.TableDataDto;
+import capstone.design.control_automation.report.util.hwp.dto.TableDataDto;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;

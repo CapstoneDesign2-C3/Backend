@@ -1,4 +1,4 @@
-package capstone.design.control_automation.report.util.hwp;
+package capstone.design.control_automation.report.util.hwp.dto;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

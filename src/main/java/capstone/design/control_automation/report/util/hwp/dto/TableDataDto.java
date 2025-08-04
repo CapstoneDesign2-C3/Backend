@@ -1,4 +1,4 @@
-package capstone.design.control_automation.report.util.hwp;
+package capstone.design.control_automation.report.util.hwp.dto;
 
 import java.time.LocalDateTime;
 

@@ -1,5 +1,7 @@
-package capstone.design.control_automation.report.util.hwp;
+package capstone.design.control_automation.report.util.hwp.fragments;
 
+import capstone.design.control_automation.report.util.hwp.dto.GsoParam;
+import capstone.design.control_automation.report.util.hwp.dto.TableColumn;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;

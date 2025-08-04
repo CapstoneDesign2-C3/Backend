@@ -1,4 +1,4 @@
-package capstone.design.control_automation.report.util.hwp;
+package capstone.design.control_automation.report.util.hwp.dto;
 
 import lombok.Getter;
 
@@ -17,7 +17,7 @@ public record GsoParam(
     }
 
     @Getter
-    enum PaperSize {
+    public enum PaperSize {
         MAX_WIDTH(150);
         private final int value;
 

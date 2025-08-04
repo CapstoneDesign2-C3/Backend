@@ -2,14 +2,13 @@ package capstone.design.control_automation.report.util;
 
 import capstone.design.control_automation.common.client.GoogleStaticMapApiClient;
 import capstone.design.control_automation.common.client.MapRequest;
-import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult;
 import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult.Position;
 import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult.Track;
 import capstone.design.control_automation.report.util.ReportParam.DetectionTimeRange;
 import capstone.design.control_automation.report.util.ReportParam.Event;
 import capstone.design.control_automation.report.util.ReportParam.PublishInfo;
 import capstone.design.control_automation.report.util.hwp.HwpReportProvider;
-import capstone.design.control_automation.report.util.hwp.TableDataDto.MobileObjectInfo;
+import capstone.design.control_automation.report.util.hwp.dto.TableDataDto.MobileObjectInfo;
 import java.io.ByteArrayInputStream;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
