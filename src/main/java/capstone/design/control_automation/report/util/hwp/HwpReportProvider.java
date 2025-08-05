@@ -156,7 +156,7 @@ public class HwpReportProvider implements ReportProvider {
             note,
             List.of(
                 new TableDataDto.Note(
-                    "\n\n\n\n\n\n아"
+                    "\n\n\n\n\n\n"
                 )
             ),
             new GsoParam(0, 0, PaperSize.MAX_WIDTH.getValue(), 75),
