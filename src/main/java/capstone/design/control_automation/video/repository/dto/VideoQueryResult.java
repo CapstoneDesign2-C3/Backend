@@ -36,7 +36,7 @@ public class VideoQueryResult {
         Long detectedObjectId,
         String detectedObjectUUID,
         String categoryName,
-        String cropImgUrl
+        byte[] cropImg
     ) {
 
     }

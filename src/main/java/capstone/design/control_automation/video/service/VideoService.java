@@ -37,7 +37,7 @@ public class VideoService {
                     detail -> new Common(
                         detail.detectedObjectId(),
                         detail.categoryName(),
-                        detail.cropImgUrl(),
+                        Base64.getEncoder().encodeToString(detail.cropImg()),
                         mobileObjectFeatureClient.getFeatureByUuid(detail.detectedObjectUUID())
                     )
                 )
