@@ -27,7 +27,7 @@ public class HwpTableConfigurator {
         table.setLeftInnerMargin(0);
         table.setRightInnerMargin(0);
         table.setTopInnerMargin(0);
-        table.setBottomInnerMargin(gsoParam.bottomMargin());
+        table.setBottomInnerMargin(0);
         table.setBorderFillId(borderFillId);
     }
 

@@ -38,11 +38,11 @@ public class GsoConfigurator {
         headerGso.setOutterMarginLeft(0);
         headerGso.setOutterMarginRight(0);
         headerGso.setOutterMarginTop(0);
-        headerGso.setOutterMarginBottom(gsoParam.bottomMargin());
+        headerGso.setOutterMarginBottom(mmToHwp(gsoParam.bottomMargin()));
     }
 
-    private long mmToHwp(double mm) {
-        return (long) (mm * 72000.0f / 254.0f + 0.5f);
+    private int mmToHwp(double mm) {
+        return (int) (mm * 72000.0f / 254.0f + 0.5f);
     }
 
 }

@@ -59,7 +59,7 @@ public class HwpReportProvider implements ReportProvider {
             Paragraph map = createParagraph(section);
             configurer.configureParagraph(map, "map");
             int mapImageId = imageEditor.addBinDataToHwpFile(hwpFile, track.mapImage());
-            imageEditor.writeImage(map, mapImageId, new GsoParam(0, 0, PaperSize.MAX_WIDTH.getValue(), 75));
+            imageEditor.writeImage(map, mapImageId, new GsoParam(0, 0, PaperSize.MAX_WIDTH.getValue(), 75, 0));
 
             Paragraph bodyLeftColumn = createParagraph(section);
             columnMaker.configureColumn(bodyLeftColumn, 40.0, 90.0);
@@ -128,7 +128,7 @@ public class HwpReportProvider implements ReportProvider {
         );
 
         Paragraph detectedEventList = createParagraph(section);
-        configurer.configureParagraph(detectedEventList, "body");
+        configurer.configureParagraph(detectedEventList, "detectedEventList");
         tableEditor.writeTable(
             detectedEventList,
             eventsParam.eventInfos(),
@@ -136,6 +136,17 @@ public class HwpReportProvider implements ReportProvider {
             tableBorderFillId,
             TableType.Horizontal,
             true
+        );
+
+        Paragraph eventCountList = createParagraph(section);
+        configurer.configureParagraph(eventCountList, "eventCountList");
+        tableEditor.writeTable(
+            eventCountList,
+            eventsParam.eventCounts(),
+            new GsoParam(0, 0, 50, 75),
+            tableBorderFillId,
+            TableType.Horizontal,
+            false
         );
 
         return extractBytesFromHwpFile(hwpFile);

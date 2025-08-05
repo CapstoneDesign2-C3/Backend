@@ -14,29 +14,31 @@ public class HorizontalTableDataExtractor extends HwpTableDataExtractor {
         throws IllegalAccessException {
         List<List<String>> tableData = new ArrayList<>();
 
+        tableData.add(new ArrayList<>());
+        List<String> header = tableData.get(0);
         if (appendHeader) {
-            tableData.add(new ArrayList<>());
-            List<String> header = tableData.get(0);
             if (dataToWrite.size() == 1) {
                 header.add("분류");
-                header.add("값");
             }
             else {
                 header.add("번호");
-                for (Field f : fields) {
-                    header.add(f.getAnnotation(TableColumn.class).name());
-                }
             }
         }
 
+        for (Field f : fields) {
+            header.add(f.getAnnotation(TableColumn.class).name());
+        }
+
+
         for (int row = 0; row < dataToWrite.size(); row++) {
             tableData.add(new ArrayList<>());
-            List<String> rowData = tableData.get(row);
-            if (appendHeader) rowData = tableData.get(row + 1);
+            List<String> rowData = tableData.get(row + 1);
 
             T curRowData = dataToWrite.get(row);
             if (appendHeader && dataToWrite.size() != 1)
                 rowData.add(String.valueOf(row + 1));
+            if (appendHeader && dataToWrite.size() == 1)
+                rowData.add("값");
             for (Field f : fields) {
                 rowData.add(f.get(curRowData).toString());
             }

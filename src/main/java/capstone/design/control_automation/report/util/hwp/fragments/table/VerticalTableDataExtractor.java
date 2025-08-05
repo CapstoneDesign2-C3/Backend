@@ -41,7 +41,6 @@ public class VerticalTableDataExtractor extends HwpTableDataExtractor {
             }
         }
 
-        System.out.println("tableData = " + tableData);
         return tableData;
 
     }

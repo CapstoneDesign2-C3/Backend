@@ -9,6 +9,7 @@ import capstone.design.control_automation.report.util.ReportParam.Event;
 import capstone.design.control_automation.report.util.ReportParam.PublishInfo;
 import capstone.design.control_automation.report.util.hwp.HwpReportProvider;
 import capstone.design.control_automation.report.util.hwp.dto.TableDataDto;
+import capstone.design.control_automation.report.util.hwp.dto.TableDataDto.EventCount;
 import capstone.design.control_automation.report.util.hwp.dto.TableDataDto.EventInfo;
 import capstone.design.control_automation.report.util.hwp.dto.TableDataDto.MobileObjectInfo;
 import java.io.ByteArrayInputStream;
@@ -191,7 +192,17 @@ class HwpReportProviderTest {
                         LocalDateTime.of(2025, 8, 1, 23, 10)
                     )
                 ),
-                List.of()
+                List.of(
+                    new EventCount(
+                        "화재", 3
+                    ),
+                    new EventCount(
+                        "안전 구역 침입", 2
+                    ),
+                    new EventCount(
+                        "안전모 미 착용", 10
+                    )
+                )
             )
         );
 

@@ -92,8 +92,8 @@ public class HwpImageEditor {
         sc.setWidthAtCurrent(fromMM(shapePosition.width));
         sc.setHeightAtCurrent(fromMM(shapePosition.height));
         sc.setRotateAngle(0);
-        sc.setRotateXCenter(fromMM(shapePosition.width / 2));
-        sc.setRotateYCenter(fromMM(shapePosition.height / 2));
+        sc.setRotateXCenter(fromMM(shapePosition.width / 2f));
+        sc.setRotateYCenter(fromMM(shapePosition.height / 2f));
         sc.setMatrixsNormal();
     }
 
