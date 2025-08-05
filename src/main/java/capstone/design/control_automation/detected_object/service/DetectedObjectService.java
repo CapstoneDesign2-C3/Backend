@@ -11,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Base64;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -25,7 +27,7 @@ public class DetectedObjectService {
             .map(mobileObject -> new MobileObject(
                     mobileObject.mobileObjectId(),
                     mobileObject.categoryName(),
-                    mobileObject.cropImg(),
+                    Base64.getEncoder().encodeToString(mobileObject.cropImg()),
                     mobileObject.alias(),
                     mobileObjectFeatureClient.getFeatureByUuid(mobileObject.mobileObjectUuid())
                 )
