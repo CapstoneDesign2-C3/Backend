@@ -1,5 +1,6 @@
-package capstone.design.control_automation.report.util.hwp;
+package capstone.design.control_automation.report.util.hwp.fragments;
 
+import capstone.design.control_automation.report.util.hwp.dto.GsoParam;
 import java.awt.Rectangle;
 import kr.dogfoot.hwplib.object.HWPFile;
 import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.CtrlHeaderGso;
@@ -91,8 +92,8 @@ public class HwpImageEditor {
         sc.setWidthAtCurrent(fromMM(shapePosition.width));
         sc.setHeightAtCurrent(fromMM(shapePosition.height));
         sc.setRotateAngle(0);
-        sc.setRotateXCenter(fromMM(shapePosition.width / 2));
-        sc.setRotateYCenter(fromMM(shapePosition.height / 2));
+        sc.setRotateXCenter(fromMM(shapePosition.width / 2f));
+        sc.setRotateYCenter(fromMM(shapePosition.height / 2f));
         sc.setMatrixsNormal();
     }
 

@@ -2,11 +2,16 @@ package capstone.design.control_automation.report.util;
 
 import capstone.design.control_automation.common.client.GoogleStaticMapApiClient;
 import capstone.design.control_automation.common.client.MapRequest;
-import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult;
 import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult.Position;
 import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult.Track;
+import capstone.design.control_automation.report.util.ReportParam.DetectionTimeRange;
+import capstone.design.control_automation.report.util.ReportParam.Event;
+import capstone.design.control_automation.report.util.ReportParam.PublishInfo;
 import capstone.design.control_automation.report.util.hwp.HwpReportProvider;
-import capstone.design.control_automation.report.util.hwp.TableDataDto.MobileObjectInfo;
+import capstone.design.control_automation.report.util.hwp.dto.TableDataDto;
+import capstone.design.control_automation.report.util.hwp.dto.TableDataDto.EventCount;
+import capstone.design.control_automation.report.util.hwp.dto.TableDataDto.EventInfo;
+import capstone.design.control_automation.report.util.hwp.dto.TableDataDto.MobileObjectInfo;
 import java.io.ByteArrayInputStream;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -35,8 +40,10 @@ class HwpReportProviderTest {
         byte[] report = hwpReportProvider.createDetectedObjectReport(
             List.of(
                 new ReportParam.Track(
-                    LocalDate.of(2025, 7, 25),
-                    "이도훈",
+                    new PublishInfo(
+                        LocalDate.of(2025, 7, 25),
+                        "이도훈"
+                    ),
                     googleStaticMapApiClient.requestStaticMap(new MapRequest(
                         List.of(
                             new Position(1L, 37.4740359, 127.1027386),
@@ -70,8 +77,10 @@ class HwpReportProviderTest {
                     )
                 ),
                 new ReportParam.Track(
-                    LocalDate.of(2025, 7, 25),
-                    "이도훈",
+                    new PublishInfo(
+                        LocalDate.of(2025, 7, 25),
+                        "이도훈"
+                    ),
                     googleStaticMapApiClient.requestStaticMap(new MapRequest(
                         List.of(
                             new Position(1L, 37.4730359, 127.1027386),
@@ -105,8 +114,10 @@ class HwpReportProviderTest {
                     )
                 ),
                 new ReportParam.Track(
-                    LocalDate.of(2025, 7, 25),
-                    "이도훈",
+                    new PublishInfo(
+                        LocalDate.of(2025, 7, 25),
+                        "이도훈"
+                    ),
                     googleStaticMapApiClient.requestStaticMap(new MapRequest(
                         List.of(
                             new Position(1L, 37.4730359, 127.1027386),
@@ -146,4 +157,56 @@ class HwpReportProviderTest {
         HWPWriter.toFile(hwpFile, "./hwptest/report_sample.hwp");
     }
 
+    @Test
+    void createEventReport() throws Exception {
+        byte[] report = hwpReportProvider.createEventReport(
+            new Event(
+                new PublishInfo(
+                    LocalDate.of(2025, 7, 25),
+                    "이도훈"
+                ),
+                new DetectionTimeRange(
+                    LocalDateTime.of(2025, 8, 1, 10, 10),
+                    LocalDateTime.of(2025, 8, 1, 23, 10)
+                ),
+                List.of(
+                    new EventInfo(
+                        "uuid1",
+                        "화재",
+                        "강남구 도곡로 25",
+                        LocalDateTime.of(2025, 8, 1, 10, 10),
+                        LocalDateTime.of(2025, 8, 1, 23, 10)
+                    ),
+                    new EventInfo(
+                        "uuid1",
+                        "화재",
+                        "강남구 도곡로 25",
+                        LocalDateTime.of(2025, 8, 1, 10, 10),
+                        LocalDateTime.of(2025, 8, 1, 23, 10)
+                    ),
+                    new EventInfo(
+                        "uuid1",
+                        "화재",
+                        "강남구 도곡로 25",
+                        LocalDateTime.of(2025, 8, 1, 10, 10),
+                        LocalDateTime.of(2025, 8, 1, 23, 10)
+                    )
+                ),
+                List.of(
+                    new EventCount(
+                        "화재", 3
+                    ),
+                    new EventCount(
+                        "안전 구역 침입", 2
+                    ),
+                    new EventCount(
+                        "안전모 미 착용", 10
+                    )
+                )
+            )
+        );
+
+        HWPFile hwpFile = HWPReader.fromInputStream(new ByteArrayInputStream(report));
+        HWPWriter.toFile(hwpFile, "./hwptest/report_event_sample.hwp");
+    }
 }

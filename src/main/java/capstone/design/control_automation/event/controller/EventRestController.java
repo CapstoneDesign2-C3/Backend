@@ -26,7 +26,7 @@ public class EventRestController {
         @ModelAttribute EventRequest.Filter filter,
         Pageable pageable
     ) {
-        return ResponseEntity.ok(eventService.findEventsByFilter(filter, pageable));
+        return ResponseEntity.ok(eventService.findEventPageByFilter(filter, pageable));
     }
 
     @GetMapping("/code")

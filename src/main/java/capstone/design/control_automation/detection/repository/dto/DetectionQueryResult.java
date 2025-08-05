@@ -1,6 +1,6 @@
 package capstone.design.control_automation.detection.repository.dto;
 
-import capstone.design.control_automation.report.util.hwp.TableColumn;
+import capstone.design.control_automation.report.util.hwp.dto.TableColumn;
 import com.querydsl.core.annotations.QueryProjection;
 import java.time.LocalDateTime;
 

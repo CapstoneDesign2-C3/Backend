@@ -1,4 +1,4 @@
-package capstone.design.control_automation.report.util.hwp;
+package capstone.design.control_automation.report.util.hwp.fragments;
 
 import java.util.HashMap;
 import java.util.Map;

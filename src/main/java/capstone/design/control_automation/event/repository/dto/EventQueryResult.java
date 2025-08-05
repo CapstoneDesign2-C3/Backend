@@ -22,4 +22,21 @@ public class EventQueryResult {
     ) {
 
     }
+
+    public record InfoForTable(
+        String uuid,
+        String eventType,
+        String detectedPlace,
+        LocalDateTime startFrameAt,
+        LocalDateTime endFrameAt
+    ) {
+
+    }
+
+    public record CountForTable(
+        String eventType,
+        Integer count
+    ) {
+
+    }
 }

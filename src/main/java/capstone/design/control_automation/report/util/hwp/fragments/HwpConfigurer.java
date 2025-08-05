@@ -1,4 +1,4 @@
-package capstone.design.control_automation.report.util.hwp;
+package capstone.design.control_automation.report.util.hwp.fragments;
 
 import jakarta.annotation.PostConstruct;
 import java.util.ArrayList;
@@ -72,6 +72,8 @@ public class HwpConfigurer {
         textSizeMap.put("title", 2000);
         textSizeMap.put("publishInfo", 1200);
         textSizeMap.put("body", 1200);
+        textSizeMap.put("detectedEventList", 800);
+        textSizeMap.put("eventCountList",800);
         textSizeMap.put("tdata", 800);
         textSizeMap.put("column", 1000);
     }
@@ -93,8 +95,20 @@ public class HwpConfigurer {
         publishInfoParaShape.setBottomParaSpace(2000);
         paraShapeMap.put("publishInfo", publishInfoParaShape);
 
+        ParaShape bodyParaShape = originParaShape.clone();
+        bodyParaShape.setBottomParaSpace(5000);
+        paraShapeMap.put("body", bodyParaShape);
+
+        ParaShape detectedEventListParaShape = originParaShape.clone();
+        detectedEventListParaShape.setBottomParaSpace(5000);
+        paraShapeMap.put("detectedEventList", detectedEventListParaShape);
+
+        ParaShape eventCountListParaShape = originParaShape.clone();
+        eventCountListParaShape.setBottomParaSpace(5000);
+        paraShapeMap.put("eventCountList", eventCountListParaShape);
+
         ParaShape mapParaShape = originParaShape.clone();
-        mapParaShape.setBottomParaSpace(2000);
+        mapParaShape.setBottomParaSpace(1000);
         paraShapeMap.put("map", mapParaShape);
 
         ParaShape tdataParaShape = originParaShape.clone();
@@ -125,6 +139,14 @@ public class HwpConfigurer {
         bodyCharShape.setBaseSize(textSizeMap.get("body"));
         bodyCharShape.getProperty().setBold(true);
         charShapeMap.put("body", bodyCharShape);
+
+        CharShape DetectedEventListCharShape = originCharShape.clone();
+        DetectedEventListCharShape.setBaseSize(textSizeMap.get("detectedEventList"));
+        charShapeMap.put("detectedEventList", DetectedEventListCharShape);
+
+        CharShape eventCountListCharShape = originCharShape.clone();
+        eventCountListCharShape.setBaseSize(textSizeMap.get("eventCountList"));
+        charShapeMap.put("eventCountList", eventCountListCharShape);
 
         CharShape tdataCharShape = originCharShape.clone();
         tdataCharShape.setBaseSize(textSizeMap.get("tdata"));

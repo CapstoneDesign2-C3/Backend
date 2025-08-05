@@ -3,7 +3,14 @@ package capstone.design.control_automation.report.util.hwp;
 import capstone.design.control_automation.report.util.ReportParam;
 import capstone.design.control_automation.report.util.ReportParam.Track;
 import capstone.design.control_automation.report.util.ReportProvider;
-import capstone.design.control_automation.report.util.hwp.GsoParam.PaperSize;
+import capstone.design.control_automation.report.util.hwp.dto.GsoParam;
+import capstone.design.control_automation.report.util.hwp.dto.GsoParam.PaperSize;
+import capstone.design.control_automation.report.util.hwp.dto.TableDataDto;
+import capstone.design.control_automation.report.util.hwp.dto.TableType;
+import capstone.design.control_automation.report.util.hwp.fragments.HwpColumnMaker;
+import capstone.design.control_automation.report.util.hwp.fragments.HwpConfigurer;
+import capstone.design.control_automation.report.util.hwp.fragments.HwpImageEditor;
+import capstone.design.control_automation.report.util.hwp.fragments.table.HwpTableEditor;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
@@ -46,14 +53,14 @@ public class HwpReportProvider implements ReportProvider {
 
             Paragraph publishInfo = createParagraph(section);
             writeText(publishInfo, "publishInfo",
-                "발행 일자 : " + track.date().toString() + "\n");
+                "발행 일자 : " + track.publishInfo().publishDate().toString() + "\n");
             writeText(publishInfo, "publishInfo",
-                "발행자 : " + track.author());
+                "발행자 : " + track.publishInfo().author());
 
             Paragraph map = createParagraph(section);
             configurer.configureParagraph(map, "map");
             int mapImageId = imageEditor.addBinDataToHwpFile(hwpFile, track.mapImage());
-            imageEditor.writeImage(map, mapImageId, new GsoParam(0, 0, PaperSize.MAX_WIDTH.getValue(), 75));
+            imageEditor.writeImage(map, mapImageId, new GsoParam(0, 0, PaperSize.MAX_WIDTH.getValue(), 75, 0));
 
             Paragraph bodyLeftColumn = createParagraph(section);
             columnMaker.configureColumn(bodyLeftColumn, 40.0, 90.0);
@@ -64,11 +71,13 @@ public class HwpReportProvider implements ReportProvider {
             writeText(bodyLeftColumn, "body",
                 "객체 분류");
             int tableBorderFillId = tableEditor.addBorderFillInfo(hwpFile.getDocInfo());
-            tableEditor.writeVerticalTable(
+            tableEditor.writeTable(
                 bodyLeftColumn,
-                track.mobileObjectInfo(),
-                new GsoParam(0, 70, 40, 60),
-                tableBorderFillId
+                List.of(track.mobileObjectInfo()),
+                new GsoParam(0, 70, 44, 60),
+                tableBorderFillId,
+                TableType.Vertical,
+                true
             );
 
             Paragraph bodyRightColumn = createParagraph(section);
@@ -78,10 +87,83 @@ public class HwpReportProvider implements ReportProvider {
                 bodyRightColumn,
                 track.trackOfMobileObject(),
                 new GsoParam(0, 0, 100, 75),
-                tableBorderFillId
+                tableBorderFillId,
+                TableType.Horizontal,
+                true
             );
 
         }
+
+        return extractBytesFromHwpFile(hwpFile);
+    }
+
+    public byte[] createEventReport(
+        ReportParam.Event eventsParam
+    ) throws Exception {
+        HWPFile hwpFile = BlankFileMaker.make();
+        configurer.configureHWPFile(hwpFile);
+
+        Section section = hwpFile.getBodyText().getSectionList().get(0);
+        Paragraph title = section.getParagraph(0);
+        title.getLineSeg().getLineSegItemList().remove(0);
+        writeText(title, "title", "이벤트 발생 보고서");
+
+        Paragraph publishInfo = createParagraph(section);
+        writeText(publishInfo, "publishInfo",
+            "발행 일자 : " + eventsParam.publishInfo().publishDate().toString() + "\n");
+        writeText(publishInfo, "publishInfo",
+            "발행자 : " + eventsParam.publishInfo().author());
+
+        Paragraph detectedTimeRange = createParagraph(section);
+        configurer.configureParagraph(detectedTimeRange, "body");
+        int tableBorderFillId = tableEditor.addBorderFillInfo(hwpFile.getDocInfo());
+        tableEditor.writeTable(
+            detectedTimeRange,
+            List.of(
+                eventsParam.timeRange()
+            ),
+            new GsoParam(0, 0, PaperSize.MAX_WIDTH.getValue(), 75),
+            tableBorderFillId,
+            TableType.Division,
+            false
+        );
+
+        Paragraph detectedEventList = createParagraph(section);
+        configurer.configureParagraph(detectedEventList, "detectedEventList");
+        tableEditor.writeTable(
+            detectedEventList,
+            eventsParam.eventInfos(),
+            new GsoParam(0, 0, PaperSize.MAX_WIDTH.getValue(), 75),
+            tableBorderFillId,
+            TableType.Horizontal,
+            true
+        );
+
+        Paragraph eventCountList = createParagraph(section);
+        configurer.configureParagraph(eventCountList, "eventCountList");
+        tableEditor.writeTable(
+            eventCountList,
+            eventsParam.eventCounts(),
+            new GsoParam(0, 0, 50, 75),
+            tableBorderFillId,
+            TableType.Horizontal,
+            false
+        );
+
+        Paragraph note = createParagraph(section);
+        configurer.configureParagraph(note, "body");
+        tableEditor.writeTable(
+            note,
+            List.of(
+                new TableDataDto.Note(
+                    "\n\n\n\n\n\n"
+                )
+            ),
+            new GsoParam(0, 0, PaperSize.MAX_WIDTH.getValue(), 75),
+            tableBorderFillId,
+            TableType.Horizontal,
+            false
+        );
 
         return extractBytesFromHwpFile(hwpFile);
     }
@@ -104,4 +186,5 @@ public class HwpReportProvider implements ReportProvider {
         paragraph.createText();
         return paragraph;
     }
+
 }
