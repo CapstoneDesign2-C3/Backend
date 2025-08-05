@@ -5,6 +5,7 @@ import capstone.design.control_automation.event.repository.dto.EventQueryResult;
 import capstone.design.control_automation.event.repository.dto.EventQueryResult.Code;
 import capstone.design.control_automation.event.repository.dto.EventQueryResult.InfoForTable;
 import capstone.design.control_automation.mapper.event.EventMapper;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -48,10 +49,10 @@ public class EventMyBatisRepository implements EventRepository {
     }
 
     @Override
-    public List<InfoForTable> findEventsByTimeRange(Filter filter) {
+    public List<InfoForTable> findEventsByTimeRange(LocalDateTime startTime, LocalDateTime endTime) {
         return eventMapper.getEventsByTimeRange(
-            filter.startTime(),
-            filter.endTime()
+            startTime,
+            endTime
         );
     }
 }

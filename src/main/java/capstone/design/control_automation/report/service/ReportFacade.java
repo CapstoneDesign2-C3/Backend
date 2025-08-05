@@ -63,8 +63,7 @@ public class ReportFacade {
     }
 
     public byte[] createEventReport(LocalDateTime startTime, LocalDateTime endTime, String author) throws Exception {
-        EventRequest.Filter filter = new EventRequest.Filter(null, startTime, endTime);
-        List<TableDataDto.EventInfo> events = eventService.findEventsByFilter(filter);
+        List<TableDataDto.EventInfo> events = eventService.findEventsByFilter(startTime, endTime);
 
         return reportService.createEventReport(
             new Event(
