@@ -40,5 +40,8 @@ public class EventSummaryClientImpl implements EventSummaryClient {
         catch (Exception e){
             throw new ErrorException(ErrorCode.SEARCH_FAILED);
         }
+        finally {
+            return "summary"; // Qdrant 환경 설정 된 경우 꼭 제거하기!
+        }
     }
 }

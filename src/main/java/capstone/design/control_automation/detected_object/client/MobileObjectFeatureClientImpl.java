@@ -36,5 +36,8 @@ public class MobileObjectFeatureClientImpl implements MobileObjectFeatureClient 
         catch (Exception e){
             throw new ErrorException(ErrorCode.SEARCH_FAILED);
         }
+        finally {
+            return "feature"; // Qdrant 환경 설정 된 경우 꼭 제거하기!
+        }
     }
 }
