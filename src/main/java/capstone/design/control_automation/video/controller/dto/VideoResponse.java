@@ -11,7 +11,7 @@ public class VideoResponse {
         String videoUrl,
         String detectedObjectUUID,
         String detectedObjectAlias,
-        String detectedObjectCropUrl,
+        String detectedObjectCropImg,
         LocalDateTime appearedTime,
         LocalDateTime exitTime,
         String categoryName,

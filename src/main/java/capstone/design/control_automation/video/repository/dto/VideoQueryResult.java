@@ -8,7 +8,7 @@ public class VideoQueryResult {
         String videoUrl,
         String detectedObjectUUID,
         String detectedObjectAlias,
-        String detectedObjectCropUrl,
+        byte[] detectedObjectCropImg,
         LocalDateTime appearedTime,
         LocalDateTime exitTime,
         String categoryName

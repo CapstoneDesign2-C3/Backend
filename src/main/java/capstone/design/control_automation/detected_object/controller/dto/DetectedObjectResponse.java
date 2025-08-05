@@ -5,7 +5,7 @@ public class DetectedObjectResponse {
     public record Common(
         Long detectedObjectId,
         String categoryName,
-        String cropImgUrl,
+        String cropImg,
         String feature
     ) {
 

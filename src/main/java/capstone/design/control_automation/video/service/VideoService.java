@@ -9,6 +9,8 @@ import capstone.design.control_automation.video.controller.dto.VideoResponse.Sim
 import capstone.design.control_automation.video.repository.VideoRepository;
 import capstone.design.control_automation.video.repository.dto.VideoQueryResult;
 import capstone.design.control_automation.video.repository.dto.VideoQueryResult.Detail;
+
+import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -62,7 +64,7 @@ public class VideoService {
             simpleWithMobileObject.videoUrl(),
             simpleWithMobileObject.detectedObjectUUID(),
             simpleWithMobileObject.detectedObjectAlias(),
-            simpleWithMobileObject.detectedObjectCropUrl(),
+            Base64.getEncoder().encodeToString(simpleWithMobileObject.detectedObjectCropImg()),
             simpleWithMobileObject.appearedTime(),
             simpleWithMobileObject.exitTime(),
             simpleWithMobileObject.categoryName(),
