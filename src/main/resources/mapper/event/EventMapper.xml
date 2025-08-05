@@ -58,4 +58,14 @@
        OR ei.end_frame_at BETWEEN #{startTime} AND #{endTime}
     ORDER BY ei.start_frame_at
   </select>
+
+  <select id="getEventCountsByTimeRange" resultType="EventCountForTable">
+    SELECT ec.code_name, count(ei.event_id)
+    FROM event_info ei
+    JOIN event_codes ec ON ei.code_id = ec.code_id
+    WHERE
+      ei.start_frame_at BETWEEN #{startTime} AND #{endTime}
+       OR ei.end_frame_at BETWEEN #{startTime} AND #{endTime}
+    GROUP BY ec.code_name
+  </select>
 </mapper>

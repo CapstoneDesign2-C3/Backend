@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import capstone.design.control_automation.common.PostgresContainerTest;
 import capstone.design.control_automation.common.config.MyBatisConfig;
 import capstone.design.control_automation.event.repository.dto.EventQueryResult.Code;
+import capstone.design.control_automation.event.repository.dto.EventQueryResult.CountForTable;
 import capstone.design.control_automation.event.repository.dto.EventQueryResult.Info;
 import capstone.design.control_automation.event.repository.dto.EventQueryResult.InfoForTable;
 import java.time.LocalDateTime;
@@ -152,6 +153,35 @@ public class EventMapperTest extends PostgresContainerTest {
         //when
 
         List<InfoForTable> actual = eventMapper.getEventsByTimeRange(startTime, endTime);
+        //then
+
+        assertThat(actual).hasSameElementsAs(expected);
+    }
+
+    @Test
+    @DisplayName("TimeRange 로 이벤트 종류별 수 가져오기")
+    void getEventCountsByTimeRange() {
+        //given
+        LocalDateTime startTime = LocalDateTime.parse("2025-07-21 08:00:00", formatter);
+        LocalDateTime endTime = LocalDateTime.parse("2025-07-21 08:30:00", formatter);
+
+        List<CountForTable> expected = List.of(
+            new CountForTable(
+                "배회", 1
+            ),
+            new CountForTable(
+                "화재", 3
+            ),
+            new CountForTable(
+                "안전조끼", 6
+            ),
+            new CountForTable(
+                "위험구역 침입", 1
+            )
+        );
+
+        //when
+        List<CountForTable> actual = eventMapper.getEventCountsByTimeRange(startTime, endTime);
         //then
 
         assertThat(actual).hasSameElementsAs(expected);

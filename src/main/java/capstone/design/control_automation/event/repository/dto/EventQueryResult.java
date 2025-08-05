@@ -32,4 +32,11 @@ public class EventQueryResult {
     ) {
 
     }
+
+    public record CountForTable(
+        String eventType,
+        Integer count
+    ) {
+
+    }
 }

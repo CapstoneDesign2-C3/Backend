@@ -9,7 +9,6 @@ import capstone.design.control_automation.detection.controller.dto.DetectionRequ
 import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult.Position;
 import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult.Track;
 import capstone.design.control_automation.detection.service.DetectionService;
-import capstone.design.control_automation.event.controller.dto.EventRequest;
 import capstone.design.control_automation.event.service.EventService;
 import capstone.design.control_automation.report.util.ReportParam;
 import capstone.design.control_automation.report.util.ReportParam.DetectionTimeRange;
@@ -63,7 +62,8 @@ public class ReportFacade {
     }
 
     public byte[] createEventReport(LocalDateTime startTime, LocalDateTime endTime, String author) throws Exception {
-        List<TableDataDto.EventInfo> events = eventService.findEventsByFilter(startTime, endTime);
+        List<TableDataDto.EventInfo> events = eventService.findEventsByTimeRange(startTime, endTime);
+        List<TableDataDto.EventCount> counts = eventService.findEventCountsByTimeRange(startTime, endTime);
 
         return reportService.createEventReport(
             new Event(
@@ -76,7 +76,7 @@ public class ReportFacade {
                     endTime
                 ),
                 events,
-                List.of()
+                counts
             )
         );
     }

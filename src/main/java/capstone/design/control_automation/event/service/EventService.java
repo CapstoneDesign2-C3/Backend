@@ -6,6 +6,7 @@ import capstone.design.control_automation.event.controller.dto.EventResponse.Cod
 import capstone.design.control_automation.event.controller.dto.EventResponse.Info;
 import capstone.design.control_automation.event.repository.EventRepository;
 import capstone.design.control_automation.report.util.hwp.dto.TableDataDto;
+import capstone.design.control_automation.report.util.hwp.dto.TableDataDto.EventCount;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -31,8 +32,13 @@ public class EventService {
             .map(EventResponse.Code::from).toList();
     }
 
-    public List<TableDataDto.EventInfo> findEventsByFilter(LocalDateTime startTime, LocalDateTime endTime) {
+    public List<TableDataDto.EventInfo> findEventsByTimeRange(LocalDateTime startTime, LocalDateTime endTime) {
         return eventRepository.findEventsByTimeRange(startTime, endTime).stream()
             .map(TableDataDto.EventInfo::from).toList();
+    }
+
+    public List<EventCount> findEventCountsByTimeRange(LocalDateTime startTime, LocalDateTime endTime) {
+        return eventRepository.findEventCountsByTimeRange(startTime, endTime).stream()
+            .map(TableDataDto.EventCount::from).toList();
     }
 }

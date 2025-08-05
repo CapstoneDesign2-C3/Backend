@@ -3,6 +3,7 @@ package capstone.design.control_automation.event.repository;
 import capstone.design.control_automation.event.controller.dto.EventRequest.Filter;
 import capstone.design.control_automation.event.repository.dto.EventQueryResult;
 import capstone.design.control_automation.event.repository.dto.EventQueryResult.Code;
+import capstone.design.control_automation.event.repository.dto.EventQueryResult.CountForTable;
 import capstone.design.control_automation.event.repository.dto.EventQueryResult.InfoForTable;
 import capstone.design.control_automation.mapper.event.EventMapper;
 import java.time.LocalDateTime;
@@ -51,6 +52,14 @@ public class EventMyBatisRepository implements EventRepository {
     @Override
     public List<InfoForTable> findEventsByTimeRange(LocalDateTime startTime, LocalDateTime endTime) {
         return eventMapper.getEventsByTimeRange(
+            startTime,
+            endTime
+        );
+    }
+
+    @Override
+    public List<CountForTable> findEventCountsByTimeRange(LocalDateTime startTime, LocalDateTime endTime) {
+        return eventMapper.getEventCountsByTimeRange(
             startTime,
             endTime
         );

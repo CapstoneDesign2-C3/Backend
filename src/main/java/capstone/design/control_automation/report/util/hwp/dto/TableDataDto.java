@@ -1,5 +1,6 @@
 package capstone.design.control_automation.report.util.hwp.dto;
 
+import capstone.design.control_automation.event.repository.dto.EventQueryResult.CountForTable;
 import capstone.design.control_automation.event.repository.dto.EventQueryResult.InfoForTable;
 import java.time.LocalDateTime;
 
@@ -38,6 +39,12 @@ public class TableDataDto {
         @TableColumn(name = "발생 건 수", order = 2) Integer count
     ) {
 
+        public static EventCount from(CountForTable countForTable) {
+            return new EventCount(
+                countForTable.eventType(),
+                countForTable.count()
+            );
+        }
     }
 
     public record Note(

@@ -19,5 +19,6 @@
     <typeAlias alias="Data" type="capstone.design.control_automation.dashboard.repository.dto.DashboardQueryResult$Data"/>
     <typeAlias alias="Bar" type="capstone.design.control_automation.dashboard.repository.dto.DashboardQueryResult$Bar"/>
     <typeAlias alias="EventInfoForTable" type="capstone.design.control_automation.event.repository.dto.EventQueryResult$InfoForTable"/>
+    <typeAlias alias="EventCountForTable" type="capstone.design.control_automation.event.repository.dto.EventQueryResult$CountForTable"/>
   </typeAliases>
 </configuration>

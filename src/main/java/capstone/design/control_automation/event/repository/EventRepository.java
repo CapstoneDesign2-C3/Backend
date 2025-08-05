@@ -5,6 +5,7 @@ import capstone.design.control_automation.event.repository.dto.EventQueryResult;
 import capstone.design.control_automation.event.repository.dto.EventQueryResult.Code;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.zip.ZipFile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -15,4 +16,6 @@ public interface EventRepository {
     List<Code> findAllEventCodes();
 
     List<EventQueryResult.InfoForTable> findEventsByTimeRange(LocalDateTime startTime, LocalDateTime endTime);
+
+    List<EventQueryResult.CountForTable> findEventCountsByTimeRange(LocalDateTime startTime, LocalDateTime endTime);
 }
