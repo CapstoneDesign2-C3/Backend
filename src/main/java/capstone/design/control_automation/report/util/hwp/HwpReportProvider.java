@@ -5,6 +5,7 @@ import capstone.design.control_automation.report.util.ReportParam.Track;
 import capstone.design.control_automation.report.util.ReportProvider;
 import capstone.design.control_automation.report.util.hwp.dto.GsoParam;
 import capstone.design.control_automation.report.util.hwp.dto.GsoParam.PaperSize;
+import capstone.design.control_automation.report.util.hwp.dto.TableType;
 import capstone.design.control_automation.report.util.hwp.fragments.HwpColumnMaker;
 import capstone.design.control_automation.report.util.hwp.fragments.HwpConfigurer;
 import capstone.design.control_automation.report.util.hwp.fragments.HwpImageEditor;
@@ -74,7 +75,7 @@ public class HwpReportProvider implements ReportProvider {
                 List.of(track.mobileObjectInfo()),
                 new GsoParam(0, 70, 40, 60),
                 tableBorderFillId,
-                false,
+                TableType.Vertical,
                 true
             );
 
@@ -86,7 +87,7 @@ public class HwpReportProvider implements ReportProvider {
                 track.trackOfMobileObject(),
                 new GsoParam(0, 0, 100, 75),
                 tableBorderFillId,
-                true,
+                TableType.Horizontal,
                 true
             );
 
@@ -122,7 +123,7 @@ public class HwpReportProvider implements ReportProvider {
             ),
             new GsoParam(0, 0, PaperSize.HALF_WIDTH.getValue(), 75),
             tableBorderFillId,
-            false,
+            TableType.Division,
             false
         );
 

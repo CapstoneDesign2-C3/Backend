@@ -1,12 +1,11 @@
 package capstone.design.control_automation.report.util.hwp.fragments.table;
 
 import capstone.design.control_automation.report.util.hwp.dto.GsoParam;
-import capstone.design.control_automation.report.util.hwp.dto.TableColumn;
+import capstone.design.control_automation.report.util.hwp.dto.TableType;
 import capstone.design.control_automation.report.util.hwp.fragments.HwpConfigurer;
 import capstone.design.control_automation.report.util.hwp.fragments.style.BorderFillStyler;
 import capstone.design.control_automation.report.util.hwp.fragments.style.GsoConfigurator;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +39,7 @@ public class HwpTableEditor {
         List<T> dataToWrite,
         GsoParam gsoParam,
         Integer borderFillId,
-        boolean isHorizontal,
+        TableType tableType,
         boolean appendHeader
     ) throws UnsupportedEncodingException, IllegalAccessException {
         paragraph.getText().addExtendCharForTable();
@@ -51,14 +50,20 @@ public class HwpTableEditor {
         Table table = controlTable.getTable();
         hwpTableConfigurator.configureTable(table, borderFillId, gsoParam);
 
-        HwpTableDataExtractor hwpTableDataExtractor = tableDataExtractors.get("verticalTableDataExtractor");
-        if (isHorizontal)
-            hwpTableDataExtractor = tableDataExtractors.get("horizontalTableDataExtractor");
+        HwpTableDataExtractor hwpTableDataExtractor = getHwpTableDataExtractor(tableType);
 
         List<List<String>> tableData = hwpTableDataExtractor.convertToTableData(dataToWrite, appendHeader);
 
         hwpTableConfigurator.makeTableCells(table, controlTable, tableData.size(), tableData.get(0).size(), borderFillId);
         writeDataInTable(controlTable, tableData);
+    }
+
+    private HwpTableDataExtractor getHwpTableDataExtractor(TableType tableType) {
+        if (tableType.equals(TableType.Horizontal))
+            return tableDataExtractors.get("horizontalTableDataExtractor");
+        if (tableType.equals(TableType.Division))
+            return tableDataExtractors.get("divisionTableDataExtractor");
+        return tableDataExtractors.get("verticalTableDataExtractor");
     }
 
     private void writeDataInTable(ControlTable controlTable, List<List<String>> tableData) throws UnsupportedEncodingException {
