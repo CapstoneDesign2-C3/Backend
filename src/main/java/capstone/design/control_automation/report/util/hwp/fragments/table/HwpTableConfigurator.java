@@ -2,6 +2,8 @@ package capstone.design.control_automation.report.util.hwp.fragments.table;
 
 import capstone.design.control_automation.report.util.hwp.dto.GsoParam;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import kr.dogfoot.hwplib.object.bodytext.control.ControlTable;
 import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.sectiondefine.TextDirection;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.textbox.LineChange;
@@ -64,11 +66,26 @@ public class HwpTableConfigurator {
         lh.setFieldName("");
     }
 
-    public void configureCellSize(Cell cell, String text) {
-        long width = mmToHwp(getAutoWidthByText(text));
+    public List<Long> calculateCellSize(List<List<String>> tableData, int maxWidth) {
+        double[] lengths = new double[tableData.get(0).size()];
+        for (List<String> tableDatum : tableData) {
+            for (int j = 0; j < tableDatum.size(); j++) {
+                lengths[j] = Math.max(lengths[j], getAutoWidthByText(tableDatum.get(j)));
+            }
+        }
+
+        double lengthSum = Arrays.stream(lengths).sum();
+        return Arrays.stream(lengths)
+            .map(length -> maxWidth * length / lengthSum)
+            .mapToLong(this::mmToHwp)
+            .boxed()
+            .toList();
+    }
+
+    public void configureCellSize(Cell cell, Long cellSize) {
         ListHeaderForCell listHeader = cell.getListHeader();
-        listHeader.setWidth(width);
-        listHeader.setTextWidth(width);
+        listHeader.setWidth(cellSize);
+        listHeader.setTextWidth(cellSize);
     }
 
     public Paragraph createParagraphForCell(Cell cell) {
@@ -92,8 +109,7 @@ public class HwpTableConfigurator {
             }
         }
 
-        double width = koreanCount * 2.8 + otherCount * 1.7;
-        return Math.max(Math.min(width, 36), 8);
+        return koreanCount * 2.8 + otherCount * 1.7;
     }
 
     private boolean isKorean(char c) {

@@ -73,7 +73,7 @@ public class HwpReportProvider implements ReportProvider {
             tableEditor.writeTable(
                 bodyLeftColumn,
                 List.of(track.mobileObjectInfo()),
-                new GsoParam(0, 70, 40, 60),
+                new GsoParam(0, 70, 44, 60),
                 tableBorderFillId,
                 TableType.Vertical,
                 true
@@ -81,7 +81,7 @@ public class HwpReportProvider implements ReportProvider {
 
             Paragraph bodyRightColumn = createParagraph(section);
             writeText(bodyRightColumn, "body",
-                "객체 이동 현황\n");
+                "\n객체 이동 현황\n");
             tableEditor.writeTable(
                 bodyRightColumn,
                 track.trackOfMobileObject(),
@@ -121,7 +121,7 @@ public class HwpReportProvider implements ReportProvider {
             List.of(
                 eventsParam.timeRange()
             ),
-            new GsoParam(0, 0, PaperSize.HALF_WIDTH.getValue(), 75),
+            new GsoParam(0, 0, PaperSize.MAX_WIDTH.getValue(), 75),
             tableBorderFillId,
             TableType.Division,
             false
@@ -148,4 +148,5 @@ public class HwpReportProvider implements ReportProvider {
         paragraph.createText();
         return paragraph;
     }
+
 }

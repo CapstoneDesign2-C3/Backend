@@ -55,7 +55,7 @@ public class HwpTableEditor {
         List<List<String>> tableData = hwpTableDataExtractor.convertToTableData(dataToWrite, appendHeader);
 
         hwpTableConfigurator.makeTableCells(table, controlTable, tableData.size(), tableData.get(0).size(), borderFillId);
-        writeDataInTable(controlTable, tableData);
+        writeDataInTable(controlTable, tableData, gsoParam.width());
     }
 
     private HwpTableDataExtractor getHwpTableDataExtractor(TableType tableType) {
@@ -66,8 +66,9 @@ public class HwpTableEditor {
         return tableDataExtractors.get("verticalTableDataExtractor");
     }
 
-    private void writeDataInTable(ControlTable controlTable, List<List<String>> tableData) throws UnsupportedEncodingException {
+    private void writeDataInTable(ControlTable controlTable, List<List<String>> tableData, int maxWidth) throws UnsupportedEncodingException {
         ArrayList<Row> rows = controlTable.getRowList();
+        List<Long> cellSizes = hwpTableConfigurator.calculateCellSize(tableData, maxWidth);
         for (int i = 0; i < rows.size(); i++) {
             Row row = rows.get(i);
 
@@ -75,7 +76,7 @@ public class HwpTableEditor {
             for (int j = 0; j < cells.size(); j++) {
                 Cell cell = cells.get(j);
                 String text = tableData.get(i).get(j);
-                hwpTableConfigurator.configureCellSize(cell, text);
+                hwpTableConfigurator.configureCellSize(cell, cellSizes.get(j));
 
                 Paragraph paragraph = hwpTableConfigurator.createParagraphForCell(cell);
                 configurer.configureParagraph(paragraph, "tdata");
