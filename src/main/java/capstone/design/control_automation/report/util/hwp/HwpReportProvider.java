@@ -5,6 +5,7 @@ import capstone.design.control_automation.report.util.ReportParam.Track;
 import capstone.design.control_automation.report.util.ReportProvider;
 import capstone.design.control_automation.report.util.hwp.dto.GsoParam;
 import capstone.design.control_automation.report.util.hwp.dto.GsoParam.PaperSize;
+import capstone.design.control_automation.report.util.hwp.dto.TableDataDto;
 import capstone.design.control_automation.report.util.hwp.dto.TableType;
 import capstone.design.control_automation.report.util.hwp.fragments.HwpColumnMaker;
 import capstone.design.control_automation.report.util.hwp.fragments.HwpConfigurer;
@@ -144,6 +145,21 @@ public class HwpReportProvider implements ReportProvider {
             eventCountList,
             eventsParam.eventCounts(),
             new GsoParam(0, 0, 50, 75),
+            tableBorderFillId,
+            TableType.Horizontal,
+            false
+        );
+
+        Paragraph note = createParagraph(section);
+        configurer.configureParagraph(note, "body");
+        tableEditor.writeTable(
+            note,
+            List.of(
+                new TableDataDto.Note(
+                    "\n\n\n\n\n\n아"
+                )
+            ),
+            new GsoParam(0, 0, PaperSize.MAX_WIDTH.getValue(), 75),
             tableBorderFillId,
             TableType.Horizontal,
             false

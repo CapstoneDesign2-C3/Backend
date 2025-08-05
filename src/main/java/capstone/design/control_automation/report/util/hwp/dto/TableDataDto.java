@@ -29,4 +29,10 @@ public class TableDataDto {
     ) {
 
     }
+
+    public record Note(
+        @TableColumn(name = "비고") String content
+    ) {
+
+    }
 }
