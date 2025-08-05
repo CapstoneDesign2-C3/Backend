@@ -93,6 +93,10 @@ public class HwpConfigurer {
         publishInfoParaShape.setBottomParaSpace(2000);
         paraShapeMap.put("publishInfo", publishInfoParaShape);
 
+        ParaShape bodyParaShape = originParaShape.clone();
+        bodyParaShape.setBottomParaSpace(5000);
+        paraShapeMap.put("body", bodyParaShape);
+
         ParaShape mapParaShape = originParaShape.clone();
         mapParaShape.setBottomParaSpace(2000);
         paraShapeMap.put("map", mapParaShape);

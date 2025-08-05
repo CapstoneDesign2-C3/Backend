@@ -8,6 +8,8 @@ import capstone.design.control_automation.report.util.ReportParam.DetectionTimeR
 import capstone.design.control_automation.report.util.ReportParam.Event;
 import capstone.design.control_automation.report.util.ReportParam.PublishInfo;
 import capstone.design.control_automation.report.util.hwp.HwpReportProvider;
+import capstone.design.control_automation.report.util.hwp.dto.TableDataDto;
+import capstone.design.control_automation.report.util.hwp.dto.TableDataDto.EventInfo;
 import capstone.design.control_automation.report.util.hwp.dto.TableDataDto.MobileObjectInfo;
 import java.io.ByteArrayInputStream;
 import java.time.LocalDate;
@@ -166,7 +168,29 @@ class HwpReportProviderTest {
                     LocalDateTime.of(2025, 8, 1, 10, 10),
                     LocalDateTime.of(2025, 8, 1, 23, 10)
                 ),
-                List.of(),
+                List.of(
+                    new EventInfo(
+                        "uuid1",
+                        "화재",
+                        "강남구 도곡로 25",
+                        LocalDateTime.of(2025, 8, 1, 10, 10),
+                        LocalDateTime.of(2025, 8, 1, 23, 10)
+                    ),
+                    new EventInfo(
+                        "uuid1",
+                        "화재",
+                        "강남구 도곡로 25",
+                        LocalDateTime.of(2025, 8, 1, 10, 10),
+                        LocalDateTime.of(2025, 8, 1, 23, 10)
+                    ),
+                    new EventInfo(
+                        "uuid1",
+                        "화재",
+                        "강남구 도곡로 25",
+                        LocalDateTime.of(2025, 8, 1, 10, 10),
+                        LocalDateTime.of(2025, 8, 1, 23, 10)
+                    )
+                ),
                 List.of()
             )
         );

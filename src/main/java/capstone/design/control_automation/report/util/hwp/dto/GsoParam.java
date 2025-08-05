@@ -6,13 +6,13 @@ public record GsoParam(
     double posX,
     double posY,
     int width,
-    int height,
+    Integer height,
     int bottomMargin
 ) {
 
     private static final Integer DEFAULT_BOTTOM_MARGIN = 5;
 
-    public GsoParam(double posX, double posY, int width, int height) {
+    public GsoParam(double posX, double posY, int width, Integer height) {
         this(posX, posY, width, height, DEFAULT_BOTTOM_MARGIN);
     }
 
