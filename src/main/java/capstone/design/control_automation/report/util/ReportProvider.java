@@ -8,4 +8,7 @@ public interface ReportProvider {
         List<ReportParam.Track> tracks
     ) throws Exception;
 
+    byte[] createEventReport(
+        ReportParam.Event eventsParam
+    ) throws Exception;
 }

@@ -9,7 +9,9 @@ import org.springframework.data.domain.Pageable;
 
 public interface EventRepository {
 
-    Page<EventQueryResult.Info> findEventsByFilter(Filter filter, Pageable pageable);
+    Page<EventQueryResult.Info> findEventPageByFilter(Filter filter, Pageable pageable);
 
     List<Code> findAllEventCodes();
+
+    List<EventQueryResult.InfoForTable> findEventsByTimeRange(Filter filter);
 }

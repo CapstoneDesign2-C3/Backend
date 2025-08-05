@@ -6,6 +6,7 @@ import capstone.design.control_automation.common.PostgresContainerTest;
 import capstone.design.control_automation.common.config.MyBatisConfig;
 import capstone.design.control_automation.event.repository.dto.EventQueryResult.Code;
 import capstone.design.control_automation.event.repository.dto.EventQueryResult.Info;
+import capstone.design.control_automation.event.repository.dto.EventQueryResult.InfoForTable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -26,6 +27,8 @@ public class EventMapperTest extends PostgresContainerTest {
     private EventMapper mapper;
 
     private DateTimeFormatter formatter;
+    @Autowired
+    private EventMapper eventMapper;
 
     @BeforeEach
     void setUp() {
@@ -104,6 +107,51 @@ public class EventMapperTest extends PostgresContainerTest {
         );
         //when
         List<Code> actual = mapper.getAllEventCodes();
+        //then
+
+        assertThat(actual).hasSameElementsAs(expected);
+    }
+
+    @Test
+    @DisplayName("탐지 시작시간, 끝시간으로 Event 들 가져오기")
+    void getEventsByTimeRange() {
+        //given
+        LocalDateTime startTime = LocalDateTime.parse("2025-07-21 08:00:00", formatter);
+        LocalDateTime endTime = LocalDateTime.parse("2025-07-21 08:10:00", formatter);
+
+        List<InfoForTable> expected = List.of(
+            new InfoForTable(
+                "a9778202-6320-43c7-b4a4-404d03513921",
+                "배회",
+                "Camera3",
+                LocalDateTime.parse("2025-07-21 08:00:00", formatter),
+                LocalDateTime.parse("2025-07-21 08:02:47", formatter)
+            ),
+            new InfoForTable(
+                "337af53c-1922-44bd-aa77-ad8277b697fc",
+                "화재",
+                "Camera4",
+                LocalDateTime.parse("2025-07-21 08:03:00", formatter),
+                LocalDateTime.parse("2025-07-21 08:03:53", formatter)
+            ),
+            new InfoForTable(
+                "6d7fac0a-1123-48f3-b127-fdb656cbbe3a",
+                "안전조끼",
+                "Camera2",
+                LocalDateTime.parse("2025-07-21 08:06:00", formatter),
+                LocalDateTime.parse("2025-07-21 08:07:21", formatter)
+            ),
+            new InfoForTable(
+                "37c5c261-5e9a-4eb2-b4c0-074b6867f8b0",
+                "안전조끼",
+                "Camera2",
+                LocalDateTime.parse("2025-07-21 08:09:00", formatter),
+                LocalDateTime.parse("2025-07-21 08:10:32", formatter)
+            )
+        );
+        //when
+
+        List<InfoForTable> actual = eventMapper.getEventsByTimeRange(startTime, endTime);
         //then
 
         assertThat(actual).hasSameElementsAs(expected);

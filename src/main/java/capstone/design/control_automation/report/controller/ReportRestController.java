@@ -1,6 +1,6 @@
 package capstone.design.control_automation.report.controller;
 
-import capstone.design.control_automation.report.controller.dto.ReportRequest.CreateMobileObject;
+import capstone.design.control_automation.report.controller.dto.ReportRequest.CreateMobileObjectReport;
 import capstone.design.control_automation.report.service.ReportFacade;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -23,10 +23,10 @@ public class ReportRestController {
     private final ReportFacade reportFacade;
 
     @PostMapping("/create-mobile-object-track")
-    public ResponseEntity<byte[]> createMobileObjectTrackingReport(@RequestBody CreateMobileObject createMobileObject) throws Exception {
+    public ResponseEntity<byte[]> createMobileObjectTrackingReport(@RequestBody CreateMobileObjectReport createMobileObjectREport) throws Exception {
         byte[] report = reportFacade.createMobileObjectTrackReport(
-            createMobileObject.mobileObjectIds(),
-            createMobileObject.author()
+            createMobileObjectREport.mobileObjectIds(),
+            createMobileObjectREport.author()
         );
 
         String filename = URLEncoder.encode("sample.hwp", StandardCharsets.UTF_8);

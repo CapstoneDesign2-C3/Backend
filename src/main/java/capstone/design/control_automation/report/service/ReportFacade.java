@@ -9,10 +9,16 @@ import capstone.design.control_automation.detection.controller.dto.DetectionRequ
 import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult.Position;
 import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult.Track;
 import capstone.design.control_automation.detection.service.DetectionService;
+import capstone.design.control_automation.event.controller.dto.EventRequest;
+import capstone.design.control_automation.event.service.EventService;
 import capstone.design.control_automation.report.util.ReportParam;
+import capstone.design.control_automation.report.util.ReportParam.DetectionTimeRange;
+import capstone.design.control_automation.report.util.ReportParam.Event;
 import capstone.design.control_automation.report.util.ReportParam.PublishInfo;
+import capstone.design.control_automation.report.util.hwp.dto.TableDataDto;
 import capstone.design.control_automation.report.util.hwp.dto.TableDataDto.MobileObjectInfo;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -26,6 +32,7 @@ public class ReportFacade {
     private final DetectedObjectService detectedObjectService;
     private final MobileObjectFeatureClient mobileObjectFeatureClient;
     private final GoogleStaticMapApiClient googleStaticMapApiClient;
+    private final EventService eventService;
 
     public byte[] createMobileObjectTrackReport(List<Long> mobileObjectIds, String author) throws Exception {
         List<ReportParam.Track> reportParams = mobileObjectIds.stream().map(id -> {
@@ -53,5 +60,25 @@ public class ReportFacade {
         }).toList();
 
         return reportService.createDetectedObjectReport(reportParams);
+    }
+
+    public byte[] createEventReport(LocalDateTime startTime, LocalDateTime endTime, String author) throws Exception {
+        EventRequest.Filter filter = new EventRequest.Filter(null, startTime, endTime);
+        List<TableDataDto.EventInfo> events = eventService.findEventsByFilter(filter);
+
+        return reportService.createEventReport(
+            new Event(
+                new PublishInfo(
+                    LocalDate.now(),
+                    author
+                ),
+                new DetectionTimeRange(
+                    startTime,
+                    endTime
+                ),
+                events,
+                List.of()
+            )
+        );
     }
 }

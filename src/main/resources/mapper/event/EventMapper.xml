@@ -47,4 +47,15 @@
     SELECT ec.code_id, ec.code_name
     FROM event_codes ec
   </select>
+
+  <select id="getEventsByTimeRange" resultType="EventInfoForTable">
+    SELECT ei.event_uuid, ec.code_name, ci.camera_name, ei.start_frame_at, ei.end_frame_at
+    FROM event_info ei
+    JOIN event_codes ec ON ei.code_id = ec.code_id
+    JOIN camera_info ci ON ei.camera_id = ci.camera_id
+    WHERE
+      ei.start_frame_at BETWEEN #{startTime} AND #{endTime}
+       OR ei.end_frame_at BETWEEN #{startTime} AND #{endTime}
+    ORDER BY ei.start_frame_at
+  </select>
 </mapper>

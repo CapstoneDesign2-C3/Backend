@@ -3,6 +3,7 @@ package capstone.design.control_automation.event.repository;
 import capstone.design.control_automation.event.controller.dto.EventRequest.Filter;
 import capstone.design.control_automation.event.repository.dto.EventQueryResult;
 import capstone.design.control_automation.event.repository.dto.EventQueryResult.Code;
+import capstone.design.control_automation.event.repository.dto.EventQueryResult.InfoForTable;
 import capstone.design.control_automation.mapper.event.EventMapper;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,7 @@ public class EventMyBatisRepository implements EventRepository {
     private final EventMapper eventMapper;
 
     @Override
-    public Page<EventQueryResult.Info> findEventsByFilter(Filter filter, Pageable pageable) {
+    public Page<EventQueryResult.Info> findEventPageByFilter(Filter filter, Pageable pageable) {
 
         Long count = eventMapper.getEventCountByFilter(
             filter.eventCodeName(),
@@ -44,5 +45,13 @@ public class EventMyBatisRepository implements EventRepository {
     @Override
     public List<Code> findAllEventCodes() {
         return eventMapper.getAllEventCodes();
+    }
+
+    @Override
+    public List<InfoForTable> findEventsByTimeRange(Filter filter) {
+        return eventMapper.getEventsByTimeRange(
+            filter.startTime(),
+            filter.endTime()
+        );
     }
 }

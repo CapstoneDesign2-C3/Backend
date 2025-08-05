@@ -1,5 +1,6 @@
 package capstone.design.control_automation.report.util.hwp.dto;
 
+import capstone.design.control_automation.event.repository.dto.EventQueryResult.InfoForTable;
 import java.time.LocalDateTime;
 
 public class TableDataDto {
@@ -21,6 +22,15 @@ public class TableDataDto {
         @TableColumn(name = "탐지 종료 시간", order = 5) LocalDateTime endTime
     ) {
 
+        public static EventInfo from(InfoForTable infoForTable) {
+            return new EventInfo(
+                infoForTable.uuid(),
+                infoForTable.eventType(),
+                infoForTable.detectedPlace(),
+                infoForTable.startFrameAt(),
+                infoForTable.endFrameAt()
+            );
+        }
     }
 
     public record EventCount(

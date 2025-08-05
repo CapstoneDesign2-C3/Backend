@@ -15,4 +15,8 @@ public class ReportService {
     public byte[] createDetectedObjectReport(List<ReportParam.Track> reportParams) throws Exception {
         return reportProvider.createDetectedObjectReport(reportParams);
     }
+
+    public byte[] createEventReport(ReportParam.Event eventParams) throws Exception {
+        return reportProvider.createEventReport(eventParams);
+    }
 }
