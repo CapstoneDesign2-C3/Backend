@@ -1,5 +1,6 @@
 package capstone.design.control_automation.mapper.dashboard;
 
+import capstone.design.control_automation.common.PostgresContainerTest;
 import capstone.design.control_automation.common.config.MyBatisConfig;
 import capstone.design.control_automation.dashboard.repository.dto.DashboardQueryResult.*;
 import org.junit.jupiter.api.DisplayName;
@@ -8,6 +9,7 @@ import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 
@@ -18,11 +20,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @MybatisTest
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 @Import(MyBatisConfig.class)
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@ActiveProfiles("test-postgresql")
-@TestPropertySource("classpath:local.env")
-public class DashboardMapperTest {
+public class DashboardMapperTest extends PostgresContainerTest {
     @Autowired
     private DashboardMapper mapper;
 
