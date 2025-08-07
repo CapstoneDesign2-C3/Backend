@@ -197,7 +197,6 @@ CREATE TABLE detected_object (
   id SERIAL PRIMARY KEY,
   uuid VARCHAR(255),
   alias VARCHAR(255),
-  crop_img_url VARCHAR(255),
   feature VARCHAR(255),
   code_id BIGINT,
   crop_img bytea,

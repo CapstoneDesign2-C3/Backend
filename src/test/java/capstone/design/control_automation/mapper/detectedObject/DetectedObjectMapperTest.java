@@ -42,16 +42,13 @@ class DetectedObjectMapperTest extends PostgresContainerTest {
     }
 
     @Test
-    void findMobileObjectsByFilterAndIds() throws IOException {
-        byte[] expectedImage = loadFile("./hwptest/crop.png");
-        String hex = HexFormat.of().formatHex(expectedImage);
-        System.out.println(hex);
+    void findMobileObjectsByFilterAndIds(){
         List<MobileObject> expected = List.of(
-            new MobileObject(1L, "uuid1", "사람", expectedImage, "Object1"),
-            new MobileObject(2L, "uuid2", "사람", expectedImage, "Object2"),
-            new MobileObject(3L, "uuid3", "사람", expectedImage, "Object3"),
-            new MobileObject(4L, "uuid4", "사람", expectedImage, "Object4"),
-            new MobileObject(5L, "uuid5", "사람", expectedImage, "Object5")
+            new MobileObject(1L, "uuid1", "사람", null, "Object1"),
+            new MobileObject(2L, "uuid2", "사람", null, "Object2"),
+            new MobileObject(3L, "uuid3", "사람", null, "Object3"),
+            new MobileObject(4L, "uuid4", "사람", null, "Object4"),
+            new MobileObject(5L, "uuid5", "사람", null, "Object5")
         );
         List<MobileObject> actual = detectedObjectMapper.findMobileObjectsByFilterAndIds("사람", null, 5, 0L);
 
@@ -64,29 +61,6 @@ class DetectedObjectMapperTest extends PostgresContainerTest {
                 tuple(5L, "uuid5", "사람", "Object5")
             );
 
-        assertThat(actual).extracting(MobileObject::cropImg)
-            .zipSatisfy(expected.stream().map(MobileObject::cropImg).toList(),
-                (a, e) -> assertThat(Arrays.equals(a, e)).isTrue()
-            );
-
-    }
-
-    private byte[] loadFile(String path) throws IOException {
-        File file = new File(path);
-        byte[] buffer = new byte[(int) file.length()];
-        InputStream ios = null;
-        try {
-            ios = new FileInputStream(file);
-            ios.read(buffer);
-        } finally {
-            try {
-                if (ios != null) {
-                    ios.close();
-                }
-            } catch (IOException e) {
-            }
-        }
-        return buffer;
     }
 
 

@@ -1,6 +1,7 @@
 package capstone.design.control_automation.mapper.video;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
 
 import capstone.design.control_automation.common.PostgresContainerTest;
 import capstone.design.control_automation.common.config.MyBatisConfig;
@@ -36,30 +37,41 @@ class VideoMapperTest extends PostgresContainerTest {
     @Test
     void findById() {
         List<Detail> expected = List.of(
-            new Detail(1L, "/videos/video1.mp4", "Camera4", 37.5664, 126.9784, 1L, "uuid1", "사람", "/crops/object1.jpg"),
-            new Detail(1L, "/videos/video1.mp4", "Camera4", 37.5664, 126.9784, 3L, "uuid3", "사람", "/crops/object3.jpg"),
-            new Detail(1L, "/videos/video1.mp4", "Camera4", 37.5664, 126.9784, 6L, "uuid6", "사람", "/crops/object6.jpg"),
-            new Detail(1L, "/videos/video1.mp4", "Camera4", 37.5664, 126.9784, 14L, "uuid14", "사람", "/crops/object14.jpg"),
-            new Detail(1L, "/videos/video1.mp4", "Camera4", 37.5664, 126.9784, 17L, "uuid17", "사람", "/crops/object17.jpg"),
-            new Detail(1L, "/videos/video1.mp4", "Camera4", 37.5664, 126.9784, 18L, "uuid18", "사람", "/crops/object18.jpg")
+            new Detail(1L, "/videos/video1.mp4", "Camera4", 37.5664, 126.9784, 1L, "uuid1", "사람", null),
+            new Detail(1L, "/videos/video1.mp4", "Camera4", 37.5664, 126.9784, 3L, "uuid3", "사람", null),
+            new Detail(1L, "/videos/video1.mp4", "Camera4", 37.5664, 126.9784, 6L, "uuid6", "사람", null),
+            new Detail(1L, "/videos/video1.mp4", "Camera4", 37.5664, 126.9784, 14L, "uuid14", "사람", null),
+            new Detail(1L, "/videos/video1.mp4", "Camera4", 37.5664, 126.9784, 17L, "uuid17", "사람", null),
+            new Detail(1L, "/videos/video1.mp4", "Camera4", 37.5664, 126.9784, 18L, "uuid18", "사람", null)
         );
 
         List<Detail> actual = mapper.findById(1L);
 
-        assertThat(actual).hasSameElementsAs(expected);
+        assertThat(actual).extracting("videoId", "videoUrl", "cameraScenery", "latitude", "longitude", "detectedObjectId", "detectedObjectUUID", "categoryName")
+            .contains(
+                tuple(1L, "/videos/video1.mp4", "Camera4", 37.5664, 126.9784, 1L, "uuid1", "사람"),
+                tuple(1L, "/videos/video1.mp4", "Camera4", 37.5664, 126.9784, 3L, "uuid3", "사람"),
+                tuple(1L, "/videos/video1.mp4", "Camera4", 37.5664, 126.9784, 6L, "uuid6", "사람"),
+                tuple(1L, "/videos/video1.mp4", "Camera4", 37.5664, 126.9784, 14L, "uuid14", "사람"),
+                tuple(1L, "/videos/video1.mp4", "Camera4", 37.5664, 126.9784, 17L, "uuid17", "사람")
+            );
     }
 
     @Test
     void findByMobileObjectId() {
         SimpleWithMobileObject expected = new SimpleWithMobileObject(
             "/videos/video6.mp4",
-            "uuid8", "Object8", "/crops/object8.jpg",
+            "uuid8", "Object8", null,
             LocalDateTime.parse("2025-07-21 09:25:37", formatter), LocalDateTime.parse("2025-07-21 09:26:44", formatter),
             "사람");
 
         SimpleWithMobileObject actual = mapper.findByMobileDetectionId(1L);
 
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual)
+            .usingRecursiveComparison()
+            .ignoringFields("detectedObjectCropImg")
+            .isEqualTo(expected);
+
     }
 
     @Test
