@@ -36,3 +36,7 @@ qdrant:
     collection_name: event
     event_type_name: event
     object_type_name: object
+
+external-api:
+  google:
+    base-url: http://localhost:${wiremock.server.port}
