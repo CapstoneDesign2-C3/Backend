@@ -129,7 +129,7 @@ public class QdrantClientTest {
     public void getSummaryByUuidTest() {
         String expected = eventSummaryClient.getSummaryByUuid("12345");
 
-        assertThat(expected).isEqualTo("correct_summary");
+        assertThat(expected).isEqualTo("summary");
     }
 
     @Test
@@ -137,6 +137,6 @@ public class QdrantClientTest {
     public void getFeatureByUuidTest() {
         String expected = mobileObjectFeatureClient.getFeatureByUuid("12345");
 
-        assertThat(expected).isEqualTo("correct_feature");
+        assertThat(expected).isEqualTo("feature");
     }
 }

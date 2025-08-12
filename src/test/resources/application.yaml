@@ -26,3 +26,13 @@ logging:
   level:
     org.mybatis: DEBUG
     capstone.design.control_automation.mapper: DEBUG
+
+google:
+  map:
+    api-key: ${GOOGLE_MAP_API_KEY:}
+
+qdrant:
+  data:
+    collection_name: event
+    event_type_name: event
+    object_type_name: object

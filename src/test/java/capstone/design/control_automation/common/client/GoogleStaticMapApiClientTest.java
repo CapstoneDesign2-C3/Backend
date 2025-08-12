@@ -1,6 +1,7 @@
 package capstone.design.control_automation.common.client;
 
 import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult.Position;
+import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,7 +24,7 @@ class GoogleStaticMapApiClientTest {
             List.of(new Position(1L, 33.33, 33.33))
         ));
         //when
-        System.out.println(new String(bytes));
+        System.out.println(Arrays.toString(bytes));
         //then
     }
 }
