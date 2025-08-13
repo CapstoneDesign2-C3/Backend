@@ -30,6 +30,12 @@ logging:
 google:
   map:
     api-key: ${GOOGLE_MAP_API_KEY:}
+  static-map:
+    style:
+      color: blue
+      width: 600
+      height: 300
+      weight: 5
 
 qdrant:
   data:

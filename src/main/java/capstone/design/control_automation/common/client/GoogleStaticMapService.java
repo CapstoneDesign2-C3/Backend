@@ -2,6 +2,7 @@ package capstone.design.control_automation.common.client;
 
 import capstone.design.control_automation.common.exception.ExternalApiErrorCode;
 import capstone.design.control_automation.common.exception.ExternalApiException;
+import capstone.design.control_automation.common.properties.GoogleStaticMapProperties;
 import java.net.URI;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,10 +20,11 @@ public class GoogleStaticMapService {
 
     private final GoogleStaticMapApiClient googleStaticMapApiClient;
     private final GoogleStaticMapUriBuilder uriBuilder;
-    private final GoogleMapProperties googleMapProperties;
+    private final GoogleStaticMapProperties googleStaticMapProperties;
 
     public byte[] getStaticMap(MapRequest request) throws ExternalApiException {
-        URI uri = uriBuilder.buildUri(request, googleMapProperties.getApiKey());
+        URI uri = uriBuilder.buildUri(request, googleStaticMapProperties.apiKey());
+        System.out.println(uri.toString());
 
         ResponseEntity<byte[]> response = googleStaticMapApiClient.exchange(uri);
 
