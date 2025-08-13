@@ -1,4 +1,4 @@
-package capstone.design.control_automation.common.client;
+package capstone.design.control_automation.common.exception;
 
 import org.springframework.http.HttpStatus;
 

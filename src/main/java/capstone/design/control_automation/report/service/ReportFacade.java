@@ -1,6 +1,6 @@
 package capstone.design.control_automation.report.service;
 
-import capstone.design.control_automation.common.client.GoogleStaticMapApiClient;
+import capstone.design.control_automation.common.client.GoogleStaticMapService;
 import capstone.design.control_automation.common.client.MapRequest;
 import capstone.design.control_automation.detected_object.client.MobileObjectFeatureClient;
 import capstone.design.control_automation.detected_object.repository.dto.DetectedObjectQueryResult.MobileObject;

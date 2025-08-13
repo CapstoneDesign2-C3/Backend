@@ -1,6 +1,5 @@
-package capstone.design.control_automation.report.service;
+package capstone.design.control_automation.common.client;
 
-import capstone.design.control_automation.common.client.MapRequest;
 import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult.Position;
 import java.net.URI;
 import java.util.List;

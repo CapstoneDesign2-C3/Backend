@@ -3,7 +3,7 @@ package capstone.design.control_automation.report.util;
 import capstone.design.control_automation.common.client.MapRequest;
 import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult.Position;
 import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult.Track;
-import capstone.design.control_automation.report.service.GoogleStaticMapService;
+import capstone.design.control_automation.common.client.GoogleStaticMapService;
 import capstone.design.control_automation.report.util.ReportParam.DetectionTimeRange;
 import capstone.design.control_automation.report.util.ReportParam.Event;
 import capstone.design.control_automation.report.util.ReportParam.PublishInfo;

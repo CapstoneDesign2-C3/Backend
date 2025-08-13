@@ -1,10 +1,7 @@
-package capstone.design.control_automation.report.service;
+package capstone.design.control_automation.common.client;
 
-import capstone.design.control_automation.common.client.ExternalApiErrorCode;
-import capstone.design.control_automation.common.client.ExternalApiException;
-import capstone.design.control_automation.common.client.GoogleMapProperties;
-import capstone.design.control_automation.common.client.GoogleStaticMapApiClient;
-import capstone.design.control_automation.common.client.MapRequest;
+import capstone.design.control_automation.common.exception.ExternalApiErrorCode;
+import capstone.design.control_automation.common.exception.ExternalApiException;
 import java.net.URI;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
