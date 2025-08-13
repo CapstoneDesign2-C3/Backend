@@ -24,7 +24,6 @@ public class GoogleStaticMapService {
 
     public byte[] getStaticMap(MapRequest request) throws ExternalApiException {
         URI uri = uriBuilder.buildUri(request, googleStaticMapProperties.apiKey());
-        System.out.println(uri.toString());
 
         ResponseEntity<byte[]> response = googleStaticMapApiClient.exchange(uri);
 

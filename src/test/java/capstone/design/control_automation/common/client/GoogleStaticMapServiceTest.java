@@ -25,7 +25,7 @@ class GoogleStaticMapServiceTest {
     void googleStaticMapTest() throws IOException {
         //given
         ClassPathResource resource = new ClassPathResource("images/sample-map.png");
-        byte[] expectedImageBytes = StreamUtils.copyToByteArray(resource.getInputStream());
+        byte[] expected = StreamUtils.copyToByteArray(resource.getInputStream());
 
         //when
         byte[] actual = googleStaticMapService.getStaticMap(
@@ -41,6 +41,6 @@ class GoogleStaticMapServiceTest {
         );
 
         //then
-        assertThat(actual).isEqualTo(expectedImageBytes);
+        assertThat(actual).isEqualTo(expected);
     }
 }
