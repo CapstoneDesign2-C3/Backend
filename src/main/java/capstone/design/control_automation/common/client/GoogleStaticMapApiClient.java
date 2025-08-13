@@ -34,6 +34,9 @@ public class GoogleStaticMapApiClient {
                     throw new ExternalApiException(ExternalApiErrorCode.GOOGLE_STATIC_MAP_INVALID_KEY);
                 }
 
+                if (statusCode.isSameCodeAs(HttpStatus.INTERNAL_SERVER_ERROR)) {
+                    throw new ExternalApiException(ExternalApiErrorCode.EXTERNAL_SERVER_ERROR);
+                }
                 HttpHeaders headers = res.getHeaders();
                 if (statusCode.is2xxSuccessful() && headers.containsKey(STATIC_MAP_WARNING_HEADER)) {
                     log.warn("Google Static Map warning : {}", headers.get(STATIC_MAP_WARNING_HEADER));
