@@ -30,7 +30,7 @@ public class ReportFacade {
     private final DetectionService detectionService;
     private final DetectedObjectService detectedObjectService;
     private final MobileObjectFeatureClient mobileObjectFeatureClient;
-    private final GoogleStaticMapApiClient googleStaticMapApiClient;
+    private final GoogleStaticMapService googleStaticMapService;
     private final EventService eventService;
 
     public byte[] createMobileObjectTrackReport(List<Long> mobileObjectIds, String author) throws Exception {
@@ -44,9 +44,11 @@ public class ReportFacade {
                     LocalDate.now(),
                     author
                 ),
-                googleStaticMapApiClient.requestStaticMap(new MapRequest(
-                    positions
-                )),
+                googleStaticMapService.getStaticMap(
+                    new MapRequest(
+                        positions
+                    )
+                ),
                 mobileObject.cropImg(),
                 new MobileObjectInfo(
                     mobileObject.mobileObjectUuid(),

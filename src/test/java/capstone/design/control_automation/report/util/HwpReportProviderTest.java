@@ -1,14 +1,13 @@
 package capstone.design.control_automation.report.util;
 
-import capstone.design.control_automation.common.client.GoogleStaticMapApiClient;
 import capstone.design.control_automation.common.client.MapRequest;
 import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult.Position;
 import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult.Track;
+import capstone.design.control_automation.report.service.GoogleStaticMapService;
 import capstone.design.control_automation.report.util.ReportParam.DetectionTimeRange;
 import capstone.design.control_automation.report.util.ReportParam.Event;
 import capstone.design.control_automation.report.util.ReportParam.PublishInfo;
 import capstone.design.control_automation.report.util.hwp.HwpReportProvider;
-import capstone.design.control_automation.report.util.hwp.dto.TableDataDto;
 import capstone.design.control_automation.report.util.hwp.dto.TableDataDto.EventCount;
 import capstone.design.control_automation.report.util.hwp.dto.TableDataDto.EventInfo;
 import capstone.design.control_automation.report.util.hwp.dto.TableDataDto.MobileObjectInfo;
@@ -33,7 +32,7 @@ class HwpReportProviderTest {
     HwpReportProvider hwpReportProvider;
 
     @Autowired
-    GoogleStaticMapApiClient googleStaticMapApiClient;
+    GoogleStaticMapService googleStaticMapService;
 
     @Test
     void createDetectedObjectReport() throws Exception {
@@ -44,7 +43,7 @@ class HwpReportProviderTest {
                         LocalDate.of(2025, 7, 25),
                         "이도훈"
                     ),
-                    googleStaticMapApiClient.requestStaticMap(new MapRequest(
+                    googleStaticMapService.getStaticMap(new MapRequest(
                         List.of(
                             new Position(1L, 37.4740359, 127.1027386),
                             new Position(2L, 37.4750659, 127.1034386),
@@ -81,7 +80,7 @@ class HwpReportProviderTest {
                         LocalDate.of(2025, 7, 25),
                         "이도훈"
                     ),
-                    googleStaticMapApiClient.requestStaticMap(new MapRequest(
+                    googleStaticMapService.getStaticMap(new MapRequest(
                         List.of(
                             new Position(1L, 37.4730359, 127.1027386),
                             new Position(2L, 37.4730659, 127.1024386),
@@ -118,7 +117,7 @@ class HwpReportProviderTest {
                         LocalDate.of(2025, 7, 25),
                         "이도훈"
                     ),
-                    googleStaticMapApiClient.requestStaticMap(new MapRequest(
+                    googleStaticMapService.getStaticMap(new MapRequest(
                         List.of(
                             new Position(1L, 37.4730359, 127.1027386),
                             new Position(2L, 37.4730659, 127.1024386),
