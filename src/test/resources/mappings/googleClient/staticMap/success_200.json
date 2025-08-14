@@ -1,7 +1,7 @@
 {
   "request": {
     "method": "GET",
-    "url": "/maps/api/staticmap"
+    "urlPath": "/maps/api/staticmap"
   },
   "response": {
     "status": 200,
