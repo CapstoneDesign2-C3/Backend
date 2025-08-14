@@ -1,0 +1,9 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/maps/api/staticmap/internal-server-error"
+  },
+  "response": {
+    "status": 500
+  }
+}

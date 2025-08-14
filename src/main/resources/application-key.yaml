@@ -7,3 +7,7 @@ google:
       width: 600
       height: 300
       weight: 5
+
+external-api:
+  google:
+    base-url: https://maps.googleapis.com

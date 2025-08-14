@@ -1,0 +1,9 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/maps/api/staticmap/bad-request"
+  },
+  "response": {
+    "status": 400
+  }
+}
