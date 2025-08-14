@@ -26,3 +26,23 @@ logging:
   level:
     org.mybatis: DEBUG
     capstone.design.control_automation.mapper: DEBUG
+
+google:
+  map:
+    api-key: ${GOOGLE_MAP_API_KEY:}
+  static-map:
+    style:
+      color: blue
+      width: 600
+      height: 300
+      weight: 5
+
+qdrant:
+  data:
+    collection_name: event
+    event_type_name: event
+    object_type_name: object
+
+external-api:
+  google:
+    base-url: http://localhost:${wiremock.server.port}

@@ -1,0 +1,9 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/maps/api/staticmap/forbidden"
+  },
+  "response": {
+    "status": 403
+  }
+}
