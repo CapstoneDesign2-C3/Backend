@@ -16,6 +16,8 @@
    - camera위치정보와 Camera에 담긴 Video 정보들을 조회할 수 있습니다.
 6. report 작성
    - detected_object 정보와 event 정보를 통해 각각의 보고서를 작성할 수 있습니다.
+<img width="947" height="753" alt="image" src="https://github.com/user-attachments/assets/b88ae142-fef1-4623-a9c7-6703c9bbda5d" />
+
 
 ## 시스템 구조도
 
