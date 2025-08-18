@@ -2,6 +2,7 @@ package capstone.design.control_automation.detection.controller.dto;
 
 import capstone.design.control_automation.detection.repository.dto.DetectionQueryResult;
 import java.time.LocalDateTime;
+import java.util.Base64;
 
 public class DetectionResponse {
 
@@ -23,7 +24,7 @@ public class DetectionResponse {
     public record Track(
         Long detectionId,
         String cameraScenery,
-        String thumbnailUrl,
+        String detectionCropImg,
         LocalDateTime appearedTime,
         LocalDateTime exitTime
     ) {
@@ -32,7 +33,7 @@ public class DetectionResponse {
             return new Track(
                 track.detectionId(),
                 track.cameraScenery(),
-                track.thumbnailUrl(),
+                Base64.getEncoder().encodeToString(track.detectionCropImg()),
                 track.appearedTime(),
                 track.exitTime()
             );

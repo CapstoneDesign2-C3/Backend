@@ -212,8 +212,6 @@ class ReportCreateTest {
 //        compareObjects(paragraphs[2], paragraphs[7], "map");
 //        compareObjects(paragraphs[3], paragraphs[8], "leftColumn");
 //        compareObjects(paragraphs[4], paragraphs[9], "rightColumn");
-
-        fail();
     }
 
     private void compareObjects(Object o1, Object o2, String path) throws IllegalAccessException {

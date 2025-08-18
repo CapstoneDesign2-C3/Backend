@@ -9,7 +9,7 @@ public class DetectionQueryResult {
     public record Track(
         Long detectionId,
         @TableColumn(name = "출현 장소", order = 1) String cameraScenery,
-        String thumbnailUrl,
+        byte[] detectionCropImg,
         @TableColumn(name = "출현 시간", order = 2) LocalDateTime appearedTime,
         @TableColumn(name = "퇴장 시간", order = 3) LocalDateTime exitTime
     ) {

@@ -211,6 +211,7 @@ CREATE TABLE detection (
   appeared_time TIMESTAMP,
   exit_time TIMESTAMP,
   video_id BIGINT,
+  crop_img bytea,
   CONSTRAINT fk_detection_video FOREIGN KEY (video_id) REFERENCES video(id),
   CONSTRAINT fk_detection_object FOREIGN KEY (detected_object_id) REFERENCES detected_object(id)
 );

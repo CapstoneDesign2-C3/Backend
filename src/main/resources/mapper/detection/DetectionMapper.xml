@@ -21,7 +21,7 @@
   </select>
 
   <select id="getTracksOfMobileObject" resultType="DetectionTrack">
-    SELECT d.id, c.camera_name , v.thumbnail_url, d.appeared_time, d.exit_time
+    SELECT d.id, c.camera_name , d.crop_img, d.appeared_time, d.exit_time
     FROM detection d
     INNER JOIN video v on d.video_id = v.id
     INNER JOIN camera_info c on v.camera_id = c.camera_id

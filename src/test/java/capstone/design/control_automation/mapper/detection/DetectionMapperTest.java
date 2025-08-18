@@ -1,6 +1,7 @@
 package capstone.design.control_automation.mapper.detection;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
 
 import capstone.design.control_automation.common.PostgresContainerTest;
 import capstone.design.control_automation.common.config.MyBatisConfig;
@@ -44,22 +45,21 @@ class DetectionMapperTest extends PostgresContainerTest {
 
     @Test
     void getTracksOfMobileObject() {
-        List<Track> expected = List.of(
-            new Track(2L, "Camera5", "/thumbs/thumb9.jpg", LocalDateTime.parse("2025-07-21 09:40:33", formatter),
-                LocalDateTime.parse("2025-07-21 09:41:59", formatter)),
-            new Track(62L, "Camera4", "/thumbs/thumb1.jpg", LocalDateTime.parse("2025-07-21 09:00:22", formatter),
-                LocalDateTime.parse("2025-07-21 09:00:51", formatter)),
-            new Track(79L, "Camera2", "/thumbs/thumb10.jpg", LocalDateTime.parse("2025-07-21 09:45:35", formatter),
-                LocalDateTime.parse("2025-07-21 09:46:37", formatter))
-        );
-
         List<Track> actual = detectionMapper.getTracksOfMobileObject(
             1L,
             LocalDateTime.parse("2025-07-21 09:00:00", formatter),
             LocalDateTime.parse("2025-07-21 10:00:00", formatter),
             5, 0L);
 
-        assertThat(actual).hasSameElementsAs(expected);
+        assertThat(actual).extracting("detectionId", "cameraScenery", "appearedTime", "exitTime")
+            .contains(
+                tuple(2L, "Camera5", LocalDateTime.parse("2025-07-21 09:40:33", formatter),
+                    LocalDateTime.parse("2025-07-21 09:41:59", formatter)),
+                tuple(62L, "Camera4", LocalDateTime.parse("2025-07-21 09:00:22", formatter),
+                    LocalDateTime.parse("2025-07-21 09:00:51", formatter)),
+                tuple(79L, "Camera2", LocalDateTime.parse("2025-07-21 09:45:35", formatter),
+                    LocalDateTime.parse("2025-07-21 09:46:37", formatter))
+            );
     }
 
     @Test
