@@ -29,4 +29,32 @@
     SELECT c.camera_id, c.camera_ip, c.camera_port, c.lat, c.lon, c.location_name, c.location_address, c.location_address_detail, c.rtsp_id, c.rtsp_password, c.stream_path, c.camera_name
     FROM camera_info c
   </select>
+
+  <insert id="insertCamera" parameterType="CameraReqeust" useGeneratedKeys="true" keyProperty="cameraId">
+    INSERT INTO camera_info (
+    camera_ip,
+    camera_port,
+    lat,
+    lon,
+    location_name,
+    location_address,
+    location_address_detail,
+    rtsp_id,
+    rtsp_password,
+    stream_path,
+    camera_name
+    ) VALUES (
+    #{cameraIP},
+    #{cameraPort},
+    #{latitude},
+    #{longitude},
+    #{locationName},
+    #{locationAddress},
+    #{locationAddressDetail},
+    #{rtspID},
+    #{rtspPassword},
+    #{streamPath},
+    #{cameraName}
+    )
+  </insert>
 </mapper>

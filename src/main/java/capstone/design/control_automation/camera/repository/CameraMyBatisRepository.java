@@ -1,5 +1,6 @@
 package capstone.design.control_automation.camera.repository;
 
+import capstone.design.control_automation.camera.controller.dto.CameraRequest;
 import capstone.design.control_automation.camera.controller.dto.CameraRequest.Filter;
 import capstone.design.control_automation.camera.repository.dto.CameraQueryResult.*;
 import capstone.design.control_automation.mapper.camera.CameraMapper;
@@ -33,5 +34,10 @@ public class CameraMyBatisRepository implements CameraRepository {
     @Override
     public List<Camera> getCameras(){
         return cameraMapper.getCameras();
+    }
+
+    @Override
+    public void insertCamera(CameraRequest.Camera camera){
+        cameraMapper.insertCamera(camera);
     }
 }

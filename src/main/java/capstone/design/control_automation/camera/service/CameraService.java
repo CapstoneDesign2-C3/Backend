@@ -1,5 +1,6 @@
 package capstone.design.control_automation.camera.service;
 
+import capstone.design.control_automation.camera.controller.dto.CameraRequest;
 import capstone.design.control_automation.camera.controller.dto.CameraRequest.Filter;
 import capstone.design.control_automation.camera.controller.dto.CameraResponse.*;
 import capstone.design.control_automation.camera.repository.CameraRepository;
@@ -43,5 +44,10 @@ public class CameraService {
 
     public List<Camera> getCameras(){
         return cameraRepository.getCameras().stream().map(Camera::from).toList();
+    }
+
+    @Transactional
+    public void insertCamera(CameraRequest.Camera camera){
+        cameraRepository.insertCamera(camera);
     }
 }
