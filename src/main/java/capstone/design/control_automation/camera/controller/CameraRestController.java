@@ -32,4 +32,8 @@ public class CameraRestController {
         return ResponseEntity.ok(cameraService.getCameraInfo(cameraId));
     }
 
+    @GetMapping("/cameras")
+    public ResponseEntity<List<CameraResponse.Camera>> getCameras() {
+        return ResponseEntity.ok(cameraService.getCameras());
+    }
 }

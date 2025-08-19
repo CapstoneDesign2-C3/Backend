@@ -1,8 +1,7 @@
 package capstone.design.control_automation.camera.service;
 
 import capstone.design.control_automation.camera.controller.dto.CameraRequest.Filter;
-import capstone.design.control_automation.camera.controller.dto.CameraResponse;
-import capstone.design.control_automation.camera.controller.dto.CameraResponse.Info;
+import capstone.design.control_automation.camera.controller.dto.CameraResponse.*;
 import capstone.design.control_automation.camera.repository.CameraRepository;
 import capstone.design.control_automation.camera.repository.dto.CameraQueryResult;
 import capstone.design.control_automation.video.controller.dto.VideoResponse.Simple;
@@ -20,9 +19,9 @@ public class CameraService {
 
     private final CameraRepository cameraRepository;
 
-    public List<CameraResponse.Position> getCameraPositionByFilterCondition(Filter filter) {
+    public List<Position> getCameraPositionByFilterCondition(Filter filter) {
         return cameraRepository.findAllByFilterCondition(filter)
-            .stream().map(CameraResponse.Position::from).toList();
+            .stream().map(Position::from).toList();
     }
 
     public Info getCameraInfo(Long cameraId) {
@@ -40,5 +39,9 @@ public class CameraService {
             baseCamera.longitude(),
             videos
         );
+    }
+
+    public List<Camera> getCameras(){
+        return cameraRepository.getCameras().stream().map(Camera::from).toList();
     }
 }

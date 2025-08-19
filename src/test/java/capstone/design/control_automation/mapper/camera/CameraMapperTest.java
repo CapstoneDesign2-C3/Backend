@@ -2,22 +2,19 @@ package capstone.design.control_automation.mapper.camera;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import capstone.design.control_automation.camera.repository.dto.CameraQueryResult.Info;
-import capstone.design.control_automation.camera.repository.dto.CameraQueryResult.Position;
+import capstone.design.control_automation.camera.repository.dto.CameraQueryResult.*;
 import capstone.design.control_automation.common.PostgresContainerTest;
 import capstone.design.control_automation.common.config.MyBatisConfig;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
 @MybatisTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
@@ -115,5 +112,81 @@ class CameraMapperTest extends PostgresContainerTest {
 
         assertThat(actual).hasSize(expected.size());
         assertThat(actual).hasSameElementsAs(expected);
+    }
+
+    @Test
+    @DisplayName("getCameras 테스트")
+    public void getCamerasTest(){
+        List<Camera> expected = List.of(
+                new Camera(1L,
+                        "192.168.1.101",
+                        554,
+                        37.5661,
+                        126.9781,
+                        "카메라1 위치",
+                        "서울특별시",
+                        "주소1 상세",
+                        "user1",
+                        "pw1",
+                        "/stream/1",
+                        "Camera1"
+                ),
+                new Camera(2L,
+                        "192.168.1.102",
+                        554,
+                        37.5662,
+                        126.9782,
+                        "카메라2 위치",
+                        "서울특별시",
+                        "주소2 상세",
+                        "user2",
+                        "pw2",
+                        "/stream/2",
+                        "Camera2"
+                ),
+                new Camera(3L,
+                        "192.168.1.103",
+                        554,
+                        37.5663,
+                        126.9783,
+                        "카메라3 위치",
+                        "서울특별시",
+                        "주소3 상세",
+                        "user3",
+                        "pw3",
+                        "/stream/3",
+                        "Camera3"
+                ),
+                new Camera(4L,
+                        "192.168.1.104",
+                        554,
+                        37.5664,
+                        126.9784,
+                        "카메라4 위치",
+                        "서울특별시",
+                        "주소4 상세",
+                        "user4",
+                        "pw4",
+                        "/stream/4",
+                        "Camera4"
+                ),
+                new Camera(5L,
+                        "192.168.1.105",
+                        554,
+                        37.5665,
+                        126.9785,
+                        "카메라5 위치",
+                        "서울특별시",
+                        "주소5 상세",
+                        "user5",
+                        "pw5",
+                        "/stream/5",
+                        "Camera5"
+                )
+        );
+
+        List<Camera> actual = cameraMapper.getCameras();
+
+        assertThat(actual).isEqualTo(expected);
     }
 }

@@ -24,4 +24,9 @@
     LEFT JOIN public.video v on c.camera_id = v.camera_id
     WHERE c.camera_id = #{cameraId}
   </select>
+
+  <select id="getCameras" resultType="Camera">
+    SELECT c.camera_id, c.camera_ip, c.camera_port, c.lat, c.lon, c.location_name, c.location_address, c.location_address_detail, c.rtsp_id, c.rtsp_password, c.stream_path, c.camera_name
+    FROM camera_info c
+  </select>
 </mapper>

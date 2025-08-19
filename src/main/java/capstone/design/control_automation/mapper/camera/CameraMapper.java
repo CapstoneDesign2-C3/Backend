@@ -1,7 +1,6 @@
 package capstone.design.control_automation.mapper.camera;
 
-import capstone.design.control_automation.camera.repository.dto.CameraQueryResult.Info;
-import capstone.design.control_automation.camera.repository.dto.CameraQueryResult.Position;
+import capstone.design.control_automation.camera.repository.dto.CameraQueryResult.*;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -12,4 +11,6 @@ public interface CameraMapper {
         Double bottomRightLongitude);
 
     List<Info> findWithVideosById(Long cameraId);
+
+    List<Camera> getCameras();
 }

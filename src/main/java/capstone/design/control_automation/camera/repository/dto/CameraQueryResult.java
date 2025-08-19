@@ -28,4 +28,17 @@ public class CameraQueryResult {
     ) {
 
     }
+
+    public record Camera(Long cameraId,
+                        String cameraIP,
+                         int cameraPort,
+                         Double latitude,
+                         Double longitude,
+                         String locationName,
+                         String locationAddress,
+                         String locationAddressDetail,
+                         String rtspID,
+                         String rtspPassword,
+                         String streamPath,
+                         String cameraName){}
 }

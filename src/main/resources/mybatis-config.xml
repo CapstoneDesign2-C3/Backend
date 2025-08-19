@@ -7,6 +7,7 @@
   <typeAliases>
     <typeAlias alias="CameraPosition" type="capstone.design.control_automation.camera.repository.dto.CameraQueryResult$Position"/>
     <typeAlias alias="CameraInfo" type="capstone.design.control_automation.camera.repository.dto.CameraQueryResult$Info"/>
+    <typeAlias alias="Camera" type="capstone.design.control_automation.camera.repository.dto.CameraQueryResult$Camera"/>
     <typeAlias alias="DetectionTrack" type="capstone.design.control_automation.detection.repository.dto.DetectionQueryResult$Track"/>
     <typeAlias alias="DetectionPosition" type="capstone.design.control_automation.detection.repository.dto.DetectionQueryResult$Position"/>
     <typeAlias alias="DetectedObjectMobile" type="capstone.design.control_automation.detected_object.repository.dto.DetectedObjectQueryResult$MobileObject"/>
