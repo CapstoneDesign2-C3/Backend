@@ -42,4 +42,11 @@ public class CameraRestController {
 
         return ResponseEntity.ok(ErrorCode.OK.getMessage());
     }
+
+    @DeleteMapping("/{cameraId}")
+    public ResponseEntity<String> deleteCameraById(@PathVariable Long cameraId){
+        cameraService.deleteCameraById(cameraId);
+
+        return ResponseEntity.ok(ErrorCode.OK.getMessage());
+    }
 }

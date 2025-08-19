@@ -14,4 +14,6 @@ public interface CameraRepository {
     List<Camera> getCameras();
 
     void insertCamera(CameraRequest.Camera camera);
+
+    void deleteCameraById(Long cameraId);
 }

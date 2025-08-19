@@ -50,4 +50,9 @@ public class CameraService {
     public void insertCamera(CameraRequest.Camera camera){
         cameraRepository.insertCamera(camera);
     }
+
+    @Transactional
+    public void deleteCameraById(Long cameraId){
+        cameraRepository.deleteCameraById(cameraId);
+    }
 }

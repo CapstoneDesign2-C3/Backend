@@ -40,4 +40,9 @@ public class CameraMyBatisRepository implements CameraRepository {
     public void insertCamera(CameraRequest.Camera camera){
         cameraMapper.insertCamera(camera);
     }
+
+    @Override
+    public void deleteCameraById(Long cameraId){
+        cameraMapper.deleteCameraById(cameraId);
+    }
 }

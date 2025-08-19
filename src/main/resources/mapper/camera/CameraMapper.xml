@@ -57,4 +57,9 @@
     #{cameraName}
     )
   </insert>
+
+  <delete id="deleteCameraById" parameterType="long">
+    DELETE FROM camera_info
+    WHERE camera_id = #{cameraId}
+  </delete>
 </mapper>
