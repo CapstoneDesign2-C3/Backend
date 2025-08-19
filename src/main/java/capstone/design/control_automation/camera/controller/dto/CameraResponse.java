@@ -34,9 +34,6 @@ public class CameraResponse {
                          String locationName,
                          String locationAddress,
                          String locationAddressDetail,
-                         String rtspID,
-                         String rtspPassword,
-                         String streamPath,
                          String cameraName){
         public static Camera from(CameraQueryResult.Camera camera){
             return new Camera(camera.cameraId(),
@@ -47,9 +44,6 @@ public class CameraResponse {
                     camera.locationName(),
                     camera.locationAddress(),
                     camera.locationAddressDetail(),
-                    camera.rtspID(),
-                    camera.rtspPassword(),
-                    camera.streamPath(),
                     camera.cameraName());
         }
     }
