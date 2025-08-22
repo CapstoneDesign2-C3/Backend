@@ -74,7 +74,8 @@ class DetectionMapperTest extends PostgresContainerTest {
 
         List<Position> actual = detectionMapper.getPositionsOfMobileObject(3L,
             LocalDateTime.parse("2025-07-21 09:00:00", formatter),
-            LocalDateTime.parse("2025-07-21 10:00:40", formatter));
+            LocalDateTime.parse("2025-07-21 10:00:40", formatter),
+            10);
 
         assertThat(actual).hasSameElementsAs(expected);
     }

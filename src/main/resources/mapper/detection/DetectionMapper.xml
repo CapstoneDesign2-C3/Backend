@@ -62,5 +62,9 @@
       </if>
     </where>
     ORDER BY d.appeared_time ASC
+    <if test="count != null">
+      LIMIT #{count}
+    </if>
   </select>
+
 </mapper>

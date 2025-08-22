@@ -5,9 +5,11 @@ import capstone.design.control_automation.detection.repository.dto.DetectionQuer
 import java.net.URI;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class GoogleStaticMapUriBuilder {
@@ -29,14 +31,14 @@ public class GoogleStaticMapUriBuilder {
                 addPathToQueryParam(builder, position, next);
             }
         }
-
+        log.info("google static map uri = {}", builder.toUriString());
         return builder.build().toUri();
     }
 
     private void addMarkerToQueryParam(UriComponentsBuilder builder, int num, Position position) {
         String markerValue = String.format("color:%s|label:%d|%s,%s",
             styleProperties.color(),
-            num + 1,
+            num,
             position.latitudeY(),
             position.longitudeX());
         builder.queryParam("markers", markerValue);

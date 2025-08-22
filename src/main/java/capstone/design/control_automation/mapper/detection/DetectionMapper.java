@@ -14,5 +14,5 @@ public interface DetectionMapper {
     List<Track> getTracksOfMobileObject(Long mobileObjectId, LocalDateTime startTime, LocalDateTime endTime, Integer pageSize,
         Long offset);
 
-    List<Position> getPositionsOfMobileObject(Long mobileObjectId, LocalDateTime startTime, LocalDateTime endTime);
+    List<Position> getPositionsOfMobileObject(Long mobileObjectId, LocalDateTime startTime, LocalDateTime endTime, Integer count);
 }

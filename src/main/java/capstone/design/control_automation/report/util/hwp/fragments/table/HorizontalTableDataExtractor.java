@@ -37,7 +37,7 @@ public class HorizontalTableDataExtractor extends HwpTableDataExtractor {
 
             T curRowData = dataToWrite.get(row);
             if (appendHeader && dataToWrite.size() != 1)
-                rowData.add(String.valueOf(row + 1));
+                rowData.add(String.valueOf(row));
             if (appendHeader && dataToWrite.size() == 1)
                 rowData.add("값");
             for (Field field : fields) {

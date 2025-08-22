@@ -28,7 +28,7 @@ public class DetectionService {
         return detectionRepository.getPositionsByFilterCondition(filter);
     }
 
-    public List<DetectionQueryResult.Track> getTracksByMobileObjectId(Long id) {
-        return detectionRepository.getTracksByMobileObjectId(id);
+    public List<DetectionQueryResult.Track> getRecent10TracksByMobileObjectId(Long id) {
+        return detectionRepository.getRecent10TracksByMobileObjectId(id);
     }
 }

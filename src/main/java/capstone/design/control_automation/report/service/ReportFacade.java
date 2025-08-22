@@ -36,8 +36,8 @@ public class ReportFacade {
     public byte[] createMobileObjectTrackReport(List<Long> mobileObjectIds, String author) throws Exception {
         List<ReportParam.Track> reportParams = mobileObjectIds.stream().map(id -> {
             MobileObject mobileObject = detectedObjectService.findById(id);
-            List<Track> tracks = detectionService.getTracksByMobileObjectId(id);
-            List<Position> positions = detectionService.getPositionsByFilterCondition(new Filter(id, null, null));
+            List<Track> tracks = detectionService.getRecent10TracksByMobileObjectId(id);
+            List<Position> positions = detectionService.getPositionsByFilterCondition(new Filter(id, null, null, 10));
 
             return new ReportParam.Track(
                 new PublishInfo(

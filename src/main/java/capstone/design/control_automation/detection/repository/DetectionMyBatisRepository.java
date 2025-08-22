@@ -40,8 +40,8 @@ public class DetectionMyBatisRepository implements DetectionRepository {
     }
 
     @Override
-    public List<Track> getTracksByMobileObjectId(Long mobileObjectId) {
-        return detectionMapper.getTracksOfMobileObject(mobileObjectId, null, null, null, null);
+    public List<Track> getRecent10TracksByMobileObjectId(Long mobileObjectId) {
+        return detectionMapper.getTracksOfMobileObject(mobileObjectId, null, null, 10, null);
     }
 
     @Override
@@ -49,7 +49,8 @@ public class DetectionMyBatisRepository implements DetectionRepository {
         return detectionMapper.getPositionsOfMobileObject(
             filter.detectedObjectId(),
             filter.startTime(),
-            filter.endTime()
+            filter.endTime(),
+            filter.count()
         );
     }
 

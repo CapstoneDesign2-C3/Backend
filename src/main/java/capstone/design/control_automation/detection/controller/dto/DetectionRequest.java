@@ -7,7 +7,8 @@ public class DetectionRequest {
     public record Filter(
         Long detectedObjectId,
         LocalDateTime startTime,
-        LocalDateTime endTime
+        LocalDateTime endTime,
+        Integer count
     ) {
 
     }
