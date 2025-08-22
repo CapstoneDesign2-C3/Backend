@@ -30,6 +30,7 @@ public class GoogleStaticMapApiClient {
                 if (statusCode.isSameCodeAs(HttpStatus.BAD_REQUEST)) {
                     throw new ExternalApiException(ExternalApiErrorCode.GOOGLE_STATIC_MAP_INVALID_PARAM);
                 }
+
                 if (statusCode.isSameCodeAs(HttpStatus.FORBIDDEN)) {
                     throw new ExternalApiException(ExternalApiErrorCode.GOOGLE_STATIC_MAP_INVALID_KEY);
                 }

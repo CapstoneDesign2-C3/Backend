@@ -4,6 +4,7 @@ import capstone.design.control_automation.report.util.hwp.dto.TableColumn;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -36,12 +37,21 @@ public class VerticalTableDataExtractor extends HwpTableDataExtractor {
                 rowData = tableData.get(row + 1);
             Field field = fields.get(row);
             rowData.add(field.getAnnotation(TableColumn.class).name());
-            for (T t : dataToWrite) {
-                rowData.add(field.get(t).toString());
+            for (T data : dataToWrite) {
+                if (isNotEmptyInField(field, data)) {
+                    rowData.add(field.get(data).toString());
+                }
+                else {
+                    rowData.add("-");
+                }
             }
         }
 
         return tableData;
 
+    }
+
+    private <T> Boolean isNotEmptyInField(Field field, T data) throws IllegalAccessException {
+        return !Objects.isNull(field.get(data));
     }
 }
